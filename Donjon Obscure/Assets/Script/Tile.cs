@@ -7,8 +7,9 @@ public class Tile : MonoBehaviour
 {
     [SerializeField]
     protected GameObject content = null;
-     [SerializeField]
+    [SerializeField]
     protected UnityEvent uEvent;
+    protected Vector2 position;
     
     void Start()
     {
@@ -18,7 +19,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    private void OnMouseDown()
     {
         uEvent.Invoke();
     }

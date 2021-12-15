@@ -6,12 +6,12 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField] int with, heigh, groundSize; // controle la taille de la map (groundside est la taille d'une tuille)
-    [SerializeField] GameObject[] wall, ground, enemy, player, doorStart, doorEnd, hole, chest, item, levier, key; // liste des prefab utilisé dans une map pour en ajouter des nouveau facilement
+    [SerializeField] GameObject[] wall, ground, enemy, player, doorStart, doorEnd, hole, chest, item, levier, key; // liste des prefab utilisï¿½ dans une map pour en ajouter des nouveau facilement
     [SerializeField] int nbMonster, nbChest, nbItem, nbLevier, nbKey;
     int nbChestSpawned, nbChestToSpawn;
     bool startDoorIsPresent, endDoorIsPresent;
     int startDoorSide, endDoorSide;
-    public Vector3[] interneGroundPosition, chestPosition, endDoorPosition ;
+    public Vector3[] interneGroundPosition, chestPosition, endDoorPosition;
 
     public int wallPrefab, groundPrefab, enemyPrefab, playerPrefab, doorStartPrefab, doorEndPrefab, holePrefab, chestPrefab, itemPrefab, levierPrefab, keyPrefab; // [le choix du skin] quel prefab de quel object on utilise dans la liste (exemple: chest[chestP] = je veux l'object chest avec le numero chestP de la liste) 
 
@@ -28,7 +28,13 @@ public class MapGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
+<<<<<<< HEAD
             GenerateMap();
+=======
+            //GenerateChest();
+            GenerateMap();
+            GenerateDoor();
+>>>>>>> 65357375eda64eb9feec668cce860c4ef1f8cb3e
         }
     }
     public void GenerateMap()
@@ -76,9 +82,8 @@ public class MapGenerator : MonoBehaviour
         Instantiate(wall[wallPrefab], _origine, Quaternion.identity);
 
         //GROUND && HOLE//
-
-
     }
+<<<<<<< HEAD
     public void GenerateGround()
     {
         Vector3 _origine = new Vector3(1.0f, 0.0f, 1.0f);
@@ -96,6 +101,9 @@ public class MapGenerator : MonoBehaviour
             _origine = new Vector3(1.0f + i, 0.0f, 1.0f);
         }
     }
+=======
+    
+>>>>>>> 65357375eda64eb9feec668cce860c4ef1f8cb3e
     public void GenerateDoor() 
     {
         if (!startDoorIsPresent)
@@ -125,8 +133,8 @@ public class MapGenerator : MonoBehaviour
             startDoorSide = _randomSide;
             GenerateEndDoor();
         }
-        
     }
+
     public void GenerateEndDoor()
     {
         Vector3 _doorEndPosition = new Vector3(0.0f, 0.0f, 0.0f);

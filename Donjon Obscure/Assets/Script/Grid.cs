@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Grid : MonoBehaviour
 {
-
     [SerializeField]
     protected Transform tile;
     protected int WIDTH = 8;
@@ -15,12 +15,12 @@ public class Grid : MonoBehaviour
     
     void Start()
     {
-        createGrid();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     public Tile[] getTiles()
@@ -30,22 +30,19 @@ public class Grid : MonoBehaviour
 
     protected void createGrid()
     {
-        if(0 == 0)
+        if(this.listTiles.transform.childCount != 0) return;
+
+        for (var x = 0; x < WIDTH; x++)
         {
-            for (var x = 0; x < WIDTH; x++)
+            for (var y = 0; y < HEIGHT; y++)
             {
-                for (var y = 0; y < HEIGHT; y++)
-                {
-                    Instantiate(tile, new Vector3(x,0,y), transform.rotation, listTiles.transform);
-                    //Debug.Log(x + HEIGHT * y);
-                    //listTiles.transform.GetChild(WIDTH + HEIGHT * y);
-                }
-            }   
+                Tile tile = Instantiate(Resources.Load("Prefabs/Tile"), new Vector3(x,0,y), transform.rotation, listTiles.transform) as Tile;
+            }
         }
     }
 
     private void OnDrawGizmos()
     {
-        //createGrid();
+        createGrid();
     }
 }
