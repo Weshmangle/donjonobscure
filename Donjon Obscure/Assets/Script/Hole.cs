@@ -6,6 +6,6 @@ public class Hole : MonoBehaviour
 {
     //OnEntry(Entity entity)
     //{
-    //    entity.Die();
+    //    entity.TakeDamage();
     //}
 }
