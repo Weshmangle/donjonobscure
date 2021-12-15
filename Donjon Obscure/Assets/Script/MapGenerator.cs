@@ -4,9 +4,10 @@ using UnityEngine;
 
 
 public class MapGenerator : MonoBehaviour
-{
-    [SerializeField] int with, heigh, groundSize; // controle la taille de la map (groundside est la taille d'une tuille)
-    [SerializeField] GameObject[] wall, hole,enemy, player, doorStart, doorEnd, chest, item, levier, key; // liste des prefab utilis� dans une map pour en ajouter des nouveau facilement
+{// controle la taille de la map (groundside est la taille d'une tuille)
+    [SerializeField] int with, heigh, groundSize; 
+    // liste des prefab utilis� dans une map pour en ajouter des nouveau facilement
+    [SerializeField] GameObject[] wall, hole,enemy, player, doorStart, doorEnd, chest, item, levier, key; 
     [SerializeField] Tile[] ground;
     [SerializeField] int nbEnemy, nbChest, nbItem, nbLevier, nbKey, nbHole;
     int nbChestSpawned, nbChestToSpawn;
