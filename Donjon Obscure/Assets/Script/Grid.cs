@@ -7,11 +7,14 @@ public class Grid : MonoBehaviour
 {
     [SerializeField]
     protected Transform tile;
-    protected int WIDTH = 8;
-    protected int HEIGHT = 8;
+    protected int WIDTH = 15;
+    protected int HEIGHT = 10;
     
     [SerializeField]
     protected GameObject listTiles;
+
+    [SerializeField]
+    protected MapGenerator mapGenerator;
     
     void Start()
     {
@@ -25,12 +28,16 @@ public class Grid : MonoBehaviour
 
     public Tile[] getTiles()
     {
+        //return listTiles.transform.GetComponentsInChildren<Tile>();
+        
         return listTiles.transform.GetComponentsInChildren<Tile>();
     }
 
     protected void createGrid()
     {
         if(this.listTiles.transform.childCount != 0) return;
+
+        Debug.Log("Create MAP");
 
         for (var x = 0; x < WIDTH; x++)
         {

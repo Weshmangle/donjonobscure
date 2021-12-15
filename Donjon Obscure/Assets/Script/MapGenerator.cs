@@ -13,30 +13,21 @@ public class MapGenerator : MonoBehaviour
     bool startDoorIsPresent, endDoorIsPresent;
     int startDoorSide, endDoorSide;
     public Vector3[] interneGroundPosition, chestPosition, endDoorPosition;
-
     public Vector3[] originePosition;
     public int originePositionInTabler;
     public int wallPrefab, groundPrefab, enemyPrefab, playerPrefab, doorStartPrefab, doorEndPrefab, holePrefab, chestPrefab, itemPrefab, levierPrefab, keyPrefab; // [le choix du skin] quel prefab de quel object on utilise dans la liste (exemple: chest[chestP] = je veux l'object chest avec le numero chestP de la liste) 
-
-
 
     //List mapEllementCoordonnee<> = n
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        GenerateMap();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            
-            GenerateMap();
-            
-        }
     }
     public void GenerateMap()
     {
@@ -47,23 +38,24 @@ public class MapGenerator : MonoBehaviour
         Quaternion _rotationWallTop = new Quaternion(0.0f, 180.0f, 0.0f, 1);
         Quaternion _rotationWallLeft = new Quaternion(0.0f, -90.0f, 0.0f, 1);
         Quaternion _rotationWallRight = new Quaternion(0.0f, 90.0f, 0.0f, 1);
+        //Quaternion _rotationWallRight = Quaternion.EulerAngles();
 
         for (int i = 0; i < with; i++)
         {
-            Instantiate(wall[wallPrefab], _origine, _rotationWallBot);
+            Instantiate(wall[wallPrefab], _origine, _rotationWallBot, this.transform);
             _origine.z += groundSize;
             Debug.Log("Z+ : " + _origine);
         }
         for (int j = 0; j < heigh; j++)
         {
-            Instantiate(wall[wallPrefab], _origine, _rotationWallTop);
+            Instantiate(wall[wallPrefab], _origine, _rotationWallTop, this.transform);
             _origine.x += groundSize;
             Debug.Log("X+ : " + _origine);
         }
         _origine = originePosition[originePositionInTabler];
         for (int l = 0; l < heigh; l++)
         {
-            Instantiate(wall[wallPrefab], _origine, _rotationWallLeft);
+            Instantiate(wall[wallPrefab], _origine, _rotationWallLeft, this.transform);
             //if (!Physics.CheckBox(_origine, _origine))
             // {
 
@@ -73,13 +65,13 @@ public class MapGenerator : MonoBehaviour
         }
         for (int k = 0; k < with; k++)
         {
-            Instantiate(wall[wallPrefab], _origine, _rotationWallRight);           
+            Instantiate(wall[wallPrefab], _origine, _rotationWallRight, this.transform);           
             _origine.z += groundSize;
             Debug.Log("Z- : " + _origine);
         }
         _origine.z = with;
         _origine.x = heigh;
-        Instantiate(wall[wallPrefab], _origine, _rotationWallBot);
+        Instantiate(wall[wallPrefab], _origine, _rotationWallBot, this.transform);
 
         //GROUND && HOLE//
         GenerateGround();
@@ -95,7 +87,7 @@ public class MapGenerator : MonoBehaviour
             
             for (int j = 0; j< heigh; j++)
             {
-                Instantiate(ground[groundPrefab], _groundPosition, Quaternion.identity);
+                Instantiate(ground[groundPrefab], _groundPosition, Quaternion.identity, this.transform);
                 _groundPosition.z++;
             }
             //_groundPosition = new Vector3(1.)
@@ -125,7 +117,7 @@ public class MapGenerator : MonoBehaviour
             {
                 _doorStartPosition = new Vector3(_randDoorStartPositionHeigh, 1.0f, heigh);
             }
-            Instantiate(doorStart[doorStartPrefab], _doorStartPosition, Quaternion.identity);
+            Instantiate(doorStart[doorStartPrefab], _doorStartPosition, Quaternion.identity, this.transform);
             startDoorIsPresent = true;
             startDoorSide = _randomSide;
             GenerateEndDoor();
@@ -172,7 +164,7 @@ public class MapGenerator : MonoBehaviour
 
             //if (!Physics.CheckBox(_randomPosition, _randomPosition))
             //{
-                Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity);
+                Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
                 nbChestSpawned++;
             //}
         }
