@@ -21,6 +21,14 @@ public abstract class Entity : MonoBehaviour
     
     protected int attackStrenght;
 
+    protected Vector2 position;
+
+    public Vector2 Position
+    {
+        get { return position; }
+        set { position = value; }
+    }
+
 
     protected virtual void Move(Vector2 tilePosition)
     {

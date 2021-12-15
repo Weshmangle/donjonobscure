@@ -5,6 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     protected string type;
+    
     void Start()
     {
         
@@ -14,5 +15,6 @@ public class Item : MonoBehaviour
     void Update()
     {
         
+
     }
 }

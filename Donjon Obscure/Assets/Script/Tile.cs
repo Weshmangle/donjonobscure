@@ -6,18 +6,13 @@ using UnityEngine.Events;
 public class Tile : MonoBehaviour
 {
     [SerializeField]
-    protected GameObject content = null;
+    protected IElementGrid content = null;
     [SerializeField]
     protected UnityEvent<Tile> uEvent;
     protected Vector2 position;
     
     void Start()
     {
-        if(content)
-        {
-            
-            Instantiate(content, new Vector3(0,.25f,0), Quaternion.Euler(0,0,0), transform);
-        }
     }
 
     private void OnMouseDown()
@@ -35,7 +30,7 @@ public class Tile : MonoBehaviour
         uEvent.AddListener(action);
     }
 
-    public GameObject getContent()
+    public IElementGrid getContent()
     {
         return this.content;
     }
