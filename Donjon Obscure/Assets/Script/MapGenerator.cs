@@ -32,9 +32,18 @@ public class MapGenerator : MonoBehaviour
     }
     public void GenerateMap()
     {
+        GenerateExternWall();
+        GenerateGround();
+        GenerateHole();
+        GenerateDoor();
+        GenerateChest();
+        GenerateEnemy();
+    }    
+    public void GenerateExternWall()
+    {
         //MUR EXTERIEUR//
         Vector3 _origine = originePosition[originePositionInTabler];
-        
+
         Quaternion _rotationWallBot = Quaternion.Euler(0.0f, 90.0f, 0.0f);
         Quaternion _rotationWallTop = Quaternion.Euler(0.0f, 180.0f, 0.0f);
         Quaternion _rotationWallLeft = Quaternion.Euler(0.0f, 0.0f, 0.0f);
@@ -63,15 +72,8 @@ public class MapGenerator : MonoBehaviour
         {
             _origine.z += groundSize;
             Instantiate(wall[wallPrefab], _origine, _rotationWallRight, this.transform);
-        }      
-
-        //GROUND && HOLE//
-        GenerateGround();
-        GenerateHole();
-        GenerateDoor();
-        GenerateChest();
-        GenerateEnemy();
-    }    
+        }
+    }
     public void GenerateGround()
     {
         
@@ -170,14 +172,9 @@ public class MapGenerator : MonoBehaviour
         {
             int _myRandPositionX = Random.Range(1, 9);
             int _myRandPositionZ = Random.Range(1, 9);
-
             Vector3 _randomPosition = new Vector3(_myRandPositionX, 0.0f, _myRandPositionZ);
-
-            //if (!Physics.CheckBox(_randomPosition, _randomPosition))
-            //{
-                Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
-                nbChestSpawned++;
-            //}
+            Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
+            nbChestSpawned++;            
         }
     }
     public void GenerateEnemy()
