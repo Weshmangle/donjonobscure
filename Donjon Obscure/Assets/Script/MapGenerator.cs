@@ -70,9 +70,8 @@ public class MapGenerator : MonoBehaviour
         Instantiate(wall[wallPrefab], _origine, Quaternion.identity);
 
         //GROUND && HOLE//
-
-
     }
+    
     public void GenerateDoor() 
     {
         if (!startDoorIsPresent)
@@ -102,8 +101,8 @@ public class MapGenerator : MonoBehaviour
             startDoorSide = _randomSide;
             GenerateEndDoor();
         }
-        
     }
+
     public void GenerateEndDoor()
     {
         Vector3 _doorEndPosition = new Vector3(0.0f, 0.0f, 0.0f);

@@ -7,20 +7,28 @@ public class Game : MonoBehaviour
     [SerializeField]
     protected Room room;
 
+    public static Game game = null;
+
     protected bool eventSet = false;
+    
     void Start()
     {
-        this.room.grid.setEvent(addEventsOnTiles);
+        if(Game.game == null)
+        {
+            Game.game = this;
+        }
+        
+        addEventsOnTiles();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     public void addEventsOnTiles()
     {
-        Debug.Log("addEventsOnTiles");
         foreach (var tile in this.room.grid.getTiles())
         {
             tile.setEvent(check);
