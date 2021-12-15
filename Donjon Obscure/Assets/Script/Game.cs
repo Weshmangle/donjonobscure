@@ -6,21 +6,25 @@ public class Game : MonoBehaviour
 {
     [SerializeField]
     protected Room room;
+
+    protected bool eventSet = false;
     void Start()
     {
-        Debug.Log("lol " + this.room.grid.getTiles());
-        Debug.Log("tile " + this.room.grid.getTiles().Length);
-        foreach (var tile in this.room.grid.getTiles())
-        {
-            Debug.Log(tile);
-            tile.setEvent(check);
-        }
+        this.room.grid.setEvent(addEventsOnTiles);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+    }
+
+    public void addEventsOnTiles()
+    {
+        Debug.Log("addEventsOnTiles");
+        foreach (var tile in this.room.grid.getTiles())
+        {
+            tile.setEvent(check);
+        }
     }
 
     void check()

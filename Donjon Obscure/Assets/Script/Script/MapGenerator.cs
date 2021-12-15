@@ -6,12 +6,12 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField] int with, heigh, groundSize; // controle la taille de la map (groundside est la taille d'une tuille)
-    [SerializeField] GameObject[] wall, ground, enemy, player, doorStart, doorEnd, hole, chest, item, levier, key; // liste des prefab utilisé dans une map pour en ajouter des nouveau facilement
+    [SerializeField] GameObject[] wall, ground, enemy, player, doorStart, doorEnd, hole, chest, item, levier, key; // liste des prefab utilisï¿½ dans une map pour en ajouter des nouveau facilement
     [SerializeField] int nbMonster, nbChest, nbItem, nbLevier, nbKey;
     int nbChestSpawned, nbChestToSpawn;
     bool startDoorIsPresent, endDoorIsPresent;
     int startDoorSide, endDoorSide;
-    public Vector3[] interneGroundPosition, chestPosition, endDoorPosition ;
+    public Vector3[] interneGroundPosition, chestPosition, endDoorPosition;
 
     public int wallPrefab, groundPrefab, enemyPrefab, playerPrefab, doorStartPrefab, doorEndPrefab, holePrefab, chestPrefab, itemPrefab, levierPrefab, keyPrefab; // [le choix du skin] quel prefab de quel object on utilise dans la liste (exemple: chest[chestP] = je veux l'object chest avec le numero chestP de la liste) 
 
@@ -27,12 +27,9 @@ public class MapGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-
             //GenerateChest();
             GenerateMap();
             GenerateDoor();
-            
-
         }
     }
     public void GenerateMap()
