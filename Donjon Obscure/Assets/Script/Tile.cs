@@ -8,20 +8,21 @@ public class Tile : MonoBehaviour
     [SerializeField]
     protected GameObject content = null;
     [SerializeField]
-    protected UnityEvent uEvent;
+    protected UnityEvent<Tile> uEvent;
     protected Vector2 position;
     
     void Start()
     {
         if(content)
         {
+            
             Instantiate(content, new Vector3(0,.25f,0), Quaternion.Euler(0,0,0), transform);
         }
     }
 
     private void OnMouseDown()
     {
-        uEvent.Invoke();
+        uEvent.Invoke(this);
     }
 
     void Update()
@@ -29,8 +30,13 @@ public class Tile : MonoBehaviour
         
     }
 
-    public void setEvent(UnityAction action)
+    public void setEvent(UnityAction<Tile> action)
     {
         uEvent.AddListener(action);
+    }
+
+    public GameObject getContent()
+    {
+        return this.content;
     }
 }
