@@ -31,12 +31,12 @@ public class Game : MonoBehaviour
     {
         foreach (var tile in this.room.grid.getTiles())
         {
-            tile.setEvent(check);
+            tile.setEvent(CheckTileContent);
         }
     }
 
-    void check()
+    void CheckTileContent(Tile tile)
     {
-        Debug.Log("Tile clicked");
+        Debug.Log("Tile " + tile.transform);
     }
 }
