@@ -6,6 +6,9 @@ public class Game : MonoBehaviour
 {
     [SerializeField]
     protected Room room;
+    
+    [SerializeField]
+    protected Character character;
 
     public static Game game = null;
 
@@ -19,6 +22,8 @@ public class Game : MonoBehaviour
         }
         
         addEventsOnTiles();
+
+        character.transform.SetParent(this.transform);
     }
 
     // Update is called once per frame
@@ -35,8 +40,35 @@ public class Game : MonoBehaviour
         }
     }
 
+    protected void EnemyTurn()
+    {
+        
+    }
+
     void CheckTileContent(Tile tile)
     {
         Debug.Log("Tile " + tile.transform);
+        
+        switch (tile.getContent())
+        {
+            /*case IElementGrid game:
+                EnemyTurn();
+                break;
+            case "MOB":
+                EnemyTurn();
+                break;
+            case "EMPTY":
+                EnemyTurn();
+                break;
+            case "DOOR":
+                break;
+            case "HOLE":
+                break;
+            case "WALL":
+                break;
+            default:
+                throw new System.Exception("ERROR - Quelqu'un n'a pas bien fait sont boulot ! ");*/
+        }
+
     }
 }
