@@ -15,7 +15,6 @@ public class MapGenerator : MonoBehaviour
 
     public int wallPrefab, groundPrefab, enemyPrefab, playerPrefab, doorStartPrefab, doorEndPrefab, holePrefab, chestPrefab, itemPrefab, levierPrefab, keyPrefab; // [le choix du skin] quel prefab de quel object on utilise dans la liste (exemple: chest[chestP] = je veux l'object chest avec le numero chestP de la liste) 
 
-    [SerializeField] GameObject[] objectSpawnedInMap;
 
     // Start is called before the first frame update
     void Start()
@@ -28,29 +27,18 @@ public class MapGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-<<<<<<< HEAD
-            GenerateMap();
-=======
             //GenerateChest();
             GenerateMap();
             GenerateDoor();
->>>>>>> 65357375eda64eb9feec668cce860c4ef1f8cb3e
         }
     }
     public void GenerateMap()
-    {
-        GenerateExternWall();
-        GenerateGround();
-        GenerateDoor();
-        GenerateChest();
-    }
-    public void GenerateExternWall()
     {
         //MUR EXTERIEUR//
         Vector3 _origine = new Vector3(0.0f, 0.0f, 0.0f);
         for (int i = 0; i < with; i++)
         {
-            GameObject _wall = Instantiate(wall[wallPrefab], _origine, Quaternion.identity);
+            Instantiate(wall[wallPrefab], _origine, Quaternion.identity);
             _origine.z += groundSize;
             Debug.Log("Z+ : " + _origine);
         }
@@ -73,7 +61,7 @@ public class MapGenerator : MonoBehaviour
         }
         for (int k = 0; k < with; k++)
         {
-            Instantiate(wall[wallPrefab], _origine, Quaternion.identity);
+            Instantiate(wall[wallPrefab], _origine, Quaternion.identity);           
             _origine.z += groundSize;
             Debug.Log("Z- : " + _origine);
         }
@@ -83,27 +71,7 @@ public class MapGenerator : MonoBehaviour
 
         //GROUND && HOLE//
     }
-<<<<<<< HEAD
-    public void GenerateGround()
-    {
-        Vector3 _origine = new Vector3(1.0f, 0.0f, 1.0f);
-        for (int i = 0; i < with; i++)
-        {
-            for (int j = 0; j < heigh; j++)
-            {
-                //if (!Physics.CheckBox(_origine, _origine))
-                //{
-                    Instantiate(ground[groundPrefab], _origine, Quaternion.identity, this.transform);
-                    _origine.z++;
-                    Debug.Log("origine dans J : " + _origine);                    
-                //}
-            }
-            _origine = new Vector3(1.0f + i, 0.0f, 1.0f);
-        }
-    }
-=======
     
->>>>>>> 65357375eda64eb9feec668cce860c4ef1f8cb3e
     public void GenerateDoor() 
     {
         if (!startDoorIsPresent)
@@ -176,7 +144,7 @@ public class MapGenerator : MonoBehaviour
 
             if (!Physics.CheckBox(_randomPosition, _randomPosition))
             {
-                Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity,this.transform);
+                Instantiate(chest[0], _randomPosition, Quaternion.identity);
                 nbChestSpawned++;
             }
         }
