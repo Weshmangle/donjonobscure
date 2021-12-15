@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour
     {
         if(content)
         {
+            
             Instantiate(content, new Vector3(0,.25f,0), Quaternion.Euler(0,0,0), transform);
         }
     }
