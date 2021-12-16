@@ -1,0 +1,13 @@
+diff a/Donjon Obscure/Assets/Script/Grid.cs b/Donjon Obscure/Assets/Script/Grid.cs	(rejected hunks)
+@@ -47,7 +47,10 @@
+ 
+     protected void createGrid()
+     {
+-        if(this.listTiles.transform.childCount != 0) return;
++        
++        Destroy(this.listTiles);
++
++        this.listTiles = Instantiate(new GameObject(), transform);
+ 
+         Debug.Log("Create MAP");
+ 
