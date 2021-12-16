@@ -26,9 +26,10 @@ public class ElementsGenerator : MonoBehaviour
     {
         //Tile chestTile = tiles[0,0];
         //GenerateChestList(tiles);
-
+        
         GenerateExternWall(tiles);
-        GenerateDoor(tiles);
+        GenerateDoor(tiles,true);
+        GenerateDoor(tiles,false);
         GenerateChest(tiles);
         GenerateHole(tiles);
         GenerateEnemy(tiles);
@@ -41,43 +42,56 @@ public class ElementsGenerator : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             tiles[i,0].setContent(wall);
+            InstantiateElementGrid(hole, tiles[i, 0].getPosition());
         }
         for (int i = 0; i < 10; i++)
         {
             tiles[i, 10].setContent(wall);
+            InstantiateElementGrid(hole, tiles[i, 10].getPosition());
         }
         for (int i = 0; i < 10; i++)
         {
             tiles[0, i].setContent(wall);
+            InstantiateElementGrid(hole, tiles[0, i].getPosition());
         }
         for (int i = 0; i < 10; i++)
         {
             tiles[10, i].setContent(wall);
+            InstantiateElementGrid(hole, tiles[10, i].getPosition());
         }
 
     }
-    public void GenerateDoor(Tile[,] tiles)
+    public void GenerateDoor(Tile[,] tiles, bool isEndDoor)
     {
-        int _sideRandPosition = Random.Range(0, 4);
-        int _myRandPositionX = Random.Range(1, 9);
-        int _myRandPositionZ = Random.Range(1, 9);
-        if (_sideRandPosition == 0)
+        int _sideRandPosition = Random.Range(0, 4);        
+        Tile currentTile = null;
+        do
         {
-            tiles[_myRandPositionX, 0].setContent(door);
+            int _myRandPosition = Random.Range(1, 9);
+            switch (_sideRandPosition)
+            {
+                case 0:
+                    currentTile = tiles[_myRandPosition, 0];                    
+                    break;
+                case 1:
+                    currentTile = tiles[_myRandPosition, 10];                    
+                    break;
+                case 2:
+                    currentTile = tiles[0, _myRandPosition];
+                    
+                    break;
+                case 3:
+                    currentTile = tiles[10, _myRandPosition];                    
+                    break;
+                default:
+                    Debug.Log("Provided stat does not exist.");
+                    break;
+            }
         }
-        if (_sideRandPosition == 1)
-        {
-            tiles[0, _myRandPositionZ].setContent(door);
-        }
-        if (_sideRandPosition == 2)
-        {
-            tiles[_myRandPositionX, 10].setContent(door);
-        }
-        if (_sideRandPosition == 3)
-        {
-            tiles[10, _myRandPositionZ].setContent(door);
-        }
-    }
+        while (typeof(Gate).IsInstanceOfType(currentTile.getContent()));
+        currentTile.setContent(door);
+        
+        }    
     public void GenerateChest(Tile[,] tiles)
     {        
         for (int i = 0; i < nbChestToSpawn; i++)
@@ -99,6 +113,7 @@ public class ElementsGenerator : MonoBehaviour
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
                 tiles[_myRandPositionX, _myRandPositionZ].setContent(hole);
+                InstantiateElementGrid( hole, tiles[_myRandPositionX, _myRandPositionZ].getPosition());
             }
         }
     }
@@ -114,7 +129,12 @@ public class ElementsGenerator : MonoBehaviour
             }
         }
     }
+    public void InstantiateElementGrid(ElementGrid element, Vector2 position)
+    {
 
+        Instantiate(element, position, Quaternion.identity, this.transform);
+
+    }
 
     /*
     public void GenerateChestList(List<Tile> tiles)
