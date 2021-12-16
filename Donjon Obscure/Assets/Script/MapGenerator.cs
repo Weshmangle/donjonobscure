@@ -7,7 +7,7 @@ public class MapGenerator : MonoBehaviour
 {   // controle la taille de la map (groundside est la taille d'une tuille)
     [SerializeField] int with, heigh, groundSize; 
     // liste des prefab utilis� dans une map pour en ajouter des nouveau facilement
-    [SerializeField] GameObject[] wall, hole,enemy, player, doorStart, doorEnd, chest, item, levier, key; 
+    [SerializeField] ElementGrid[] wall, hole,enemy, player, doorStart, doorEnd, chest, item, levier, key; 
     [SerializeField] Tile[] ground;
     [SerializeField] int nbEnemy, nbChest, nbItem, nbLevier, nbKey, nbHole;
     int nbChestSpawned, nbChestToSpawn;
@@ -187,7 +187,8 @@ public class MapGenerator : MonoBehaviour
             int _myRandPositionX = Random.Range(1, 9);
             int _myRandPositionZ = Random.Range(1, 9);
             Vector3 _randomPosition = new Vector3(_myRandPositionX, 0.0f, _myRandPositionZ);
-            Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
+            ElementGrid chest = Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
+            //addItemToList(item, position);
             nbChestSpawned++;            
         }
     }
@@ -200,6 +201,11 @@ public class MapGenerator : MonoBehaviour
             Vector3 enemyPosition = new Vector3(randomx, 0.0f, randomy);
             Instantiate(enemy[enemyPrefab], enemyPosition, Quaternion.identity, this.transform);
         }
+    }
+
+    public void addItemToList(ElementGrid item,Tile position)
+    {
+
     }
 }
 

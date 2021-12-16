@@ -15,10 +15,11 @@ public class Grid : MonoBehaviour
 
     [SerializeField]
     protected MapGenerator mapGenerator;
-    
+    protected ElementsGenerator elementGenerator;
+
     void Start()
     {
-        mapGenerator.GenerateMap();
+        elementGenerator.GenerateElement(new Tile[10,10]);
     }
 
     // Update is called once per frame
