@@ -107,8 +107,8 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i<nbHole; i++)
         {
-            int randomx = Random.Range(1, with);
-            int randomy = Random.Range(1, heigh);
+            int randomx = Random.Range(1, with-1);
+            int randomy = Random.Range(1, heigh-1);
             Vector3 holePosition = new Vector3(randomx, 0.0f, randomy);
             Instantiate(hole[holePrefab], holePosition, Quaternion.identity, this.transform);
         }        
