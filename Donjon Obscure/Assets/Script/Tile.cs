@@ -49,4 +49,9 @@ public class Tile : MonoBehaviour
     {
         return this.content;
     }
+
+    public void setContent(ElementGrid element)
+    {
+        this.content = element;
+    }
 }
