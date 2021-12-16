@@ -1,8 +1,8 @@
 public class Node
 {
-    protected float g;
-    protected float h;
-    protected float f;
+    public float g;
+    public float h;
+    public float f;
     protected Node parent;
     protected Node position;
 
