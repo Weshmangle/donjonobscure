@@ -1,4 +1,6 @@
-public interface IElementGrid
+using UnityEngine;
+
+public abstract class ElementGrid : MonoBehaviour
 {
     
 }
