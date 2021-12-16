@@ -26,13 +26,16 @@ public abstract class Entity : MonoBehaviour
     public Vector2Int Position
     {
         get { return position; }
-        set { position = value; }
+        set
+        {
+            position = value;
+            transform.position = new Vector3(value.x, 0, value.y);
+        }
     }
 
-
-    public virtual void Move(Vector2 tilePosition)
+    public virtual void Move(Vector2Int tilePosition)
     {
-        transform.position = tilePosition;
+        Position = tilePosition;
     }
     public void Attack(Entity target)
     {

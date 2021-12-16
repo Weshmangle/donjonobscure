@@ -1,0 +1,9 @@
+diff a/Donjon Obscure/Assets/Script/Entity.cs b/Donjon Obscure/Assets/Script/Entity.cs	(rejected hunks)
+@@ -34,6 +34,7 @@
+         set
+         { 
+             position = value;
++            transform.position = new Vector3(value.x, 0, value.y);
+         }
+     }
+ 

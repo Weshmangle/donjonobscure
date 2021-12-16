@@ -77,8 +77,9 @@ public class Game : MonoBehaviour
             switch (tile.getContent())
             {
                 case null:
-                    character.Move(tile.getPosition());
-                    character.transform.position = new Vector3(tile.getPosition().x, 0, tile.getPosition().y);
+                    //character.Move(tile.getPosition());
+                    character.Move(new Vector2Int(tile.getPosition().x, tile.getPosition().y));
+                    Debug.Log(character.Position);
                     //tile.setContent(character);
                     break;
                 case Chest chest:
