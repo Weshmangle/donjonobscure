@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Gate : ElementGrid
 {
-    bool playerCanPass;
+    bool isExitGate = false;
+    public bool IsExitGate{ get; set; }
     bool isOpen, isLocked;
     public void GameSetEnd()
     {
