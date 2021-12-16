@@ -64,33 +64,45 @@ public class Game : MonoBehaviour
         }
     }
 
+    protected bool tileIsClickable()
+    {
+        return true;
+    }
+
     void CheckTileContent(Tile tile)
     {
-        Debug.Log("Tile " + tile.transform);
-        
-        switch (tile.getContent())
+        if(tileIsClickable())
         {
-            case null:
-                character.Move(tile.getPosition());
-                break;
-            case Chest chest:
-                chest.Open();
-                break;/*
-            case "MOB":
-                EnemyTurn();
-                break;
-            case "EMPTY":
-                EnemyTurn();
-                break;
-            case "DOOR":
-                break;
-            case "HOLE":
-                break;
-            case "WALL":
-                break;
-            default:
-                throw new System.Exception("ERROR - Quelqu'un n'a pas bien fait sont boulot ! ");*/
-        }
+            switch (tile.getContent())
+            {
+                case null:
+                    character.Move(tile.getPosition());
+                    character.transform.position = tile.transform.position;
+                    //tile.setContent(character);
+                    break;
+                case Chest chest:
+                    chest.Open();
+                    break;/*
+                case "MOB":
+                    EnemyTurn();
+                    break;
+                case "EMPTY":
+                    EnemyTurn();
+                    break;
+                case "DOOR":
+                    break;
+                case "HOLE":
+                    break;
+                case "WALL":
+                    break;
+                default:
+                    throw new System.Exception("ERROR - Quelqu'un n'a pas bien fait sont boulot ! ");*/
+            }
 
+            if(character.lantern.IsActive())
+            {
+                character.lantern.ConsumeFuel();
+            }
+        }
     }
 }

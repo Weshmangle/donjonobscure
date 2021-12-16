@@ -19,7 +19,7 @@ public class Grid : MonoBehaviour
 
     void Start()
     {
-        //elementGenerator.GenerateElement(new Tile[10,10]);
+        elementGenerator.GenerateElement(tiles);
     }
 
     // Update is called once per frame
@@ -39,6 +39,12 @@ public class Grid : MonoBehaviour
         return this.getTiles()[0];
     }
 
+    protected IEnumerator lol()
+    {
+        yield return new WaitForSeconds(1.0f);
+    }
+    
+
     protected void createGrid()
     {
         if(this.listTiles.transform.childCount != 0) return;
@@ -50,8 +56,8 @@ public class Grid : MonoBehaviour
             for (var y = 0; y < HEIGHT; y++)
             {
                 GameObject obj = Instantiate(Resources.Load("Prefabs/Tile"), new Vector3(x,0,y), transform.rotation, listTiles.transform) as GameObject;
-                //obj.setPosition(new Vector3(x,0,y));
-                //tiles[x,y] = null;
+                obj.GetComponent<Tile>().setPosition(new Vector2Int(x,y));
+                tiles[x,y] = obj.GetComponent<Tile>();
             }
         }
     }
