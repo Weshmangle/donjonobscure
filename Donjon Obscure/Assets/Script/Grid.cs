@@ -47,7 +47,10 @@ public class Grid : MonoBehaviour
 
     protected void createGrid()
     {
-        if(this.listTiles.transform.childCount != 0) return;
+        
+        Destroy(this.listTiles);
+
+        this.listTiles = Instantiate(new GameObject(), transform);
 
         Debug.Log("Create MAP");
 
@@ -65,6 +68,7 @@ public class Grid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        createGrid();
+        //createGrid();
+        //this.listTiles = Instantiate(new GameObject(), transform.position, transform.rotation, this.transform);
     }
 }

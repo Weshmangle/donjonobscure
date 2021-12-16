@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c7b1d51c7e7154b8d23eb1d6e3fbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemies: []
   grid: {fileID: 732916141824144774}
 --- !u!1001 &2543311264823652462
 PrefabInstance:
@@ -59,15 +58,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 255442952129397556, guid: ed7bb0c96699e394ca1c15fad6861455, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.025466532
       objectReference: {fileID: 0}
     - target: {fileID: 255442952129397556, guid: ed7bb0c96699e394ca1c15fad6861455, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.26920617
       objectReference: {fileID: 0}
     - target: {fileID: 255442952129397556, guid: ed7bb0c96699e394ca1c15fad6861455, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.0450053
       objectReference: {fileID: 0}
     - target: {fileID: 255442952129397556, guid: ed7bb0c96699e394ca1c15fad6861455, type: 3}
       propertyPath: m_LocalRotation.w

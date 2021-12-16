@@ -13,9 +13,7 @@ public class Game : MonoBehaviour
     public static Game game = null;
 
     protected bool eventSet = false;
-    [SerializeField]
-    Vector2Int characterSpawnPosition;
-
+    
     void Start()
     {
         if(Game.game == null)
@@ -24,8 +22,7 @@ public class Game : MonoBehaviour
         }
         
         addEventsOnTiles();
-
-        character.Position = characterSpawnPosition;
+        //character.transform.SetParent(this.transform);
     }
 
     // Update is called once per frame
@@ -70,7 +67,6 @@ public class Game : MonoBehaviour
     protected bool tileIsClickable(Tile tile)
     {
         float distance = Vector2Int.Distance(tile.getPosition(), character.Position);
-
         return distance == 1 || distance == 0;
     }
 
@@ -80,8 +76,8 @@ public class Game : MonoBehaviour
         {
             switch (tile.getContent())
             {
-                case null: 
-                    character.Move(tile.getPosition()); 
+                case null:
+                    character.Move(tile.getPosition());
                     character.transform.position = new Vector3(tile.getPosition().x, 0, tile.getPosition().y);
                     //tile.setContent(character);
                     break;
