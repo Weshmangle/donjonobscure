@@ -50,8 +50,6 @@ public class Grid : MonoBehaviour
         
         tiles = new Tile[WIDTH, HEIGHT];
 
-        Debug.Log("Create MAP");
-
         for (var x = 0; x < WIDTH; x++)
         {
             for (var y = 0; y < HEIGHT; y++)

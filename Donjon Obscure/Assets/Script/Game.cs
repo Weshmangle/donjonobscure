@@ -14,7 +14,7 @@ public class Game : MonoBehaviour
 
     protected bool eventSet = false;
     
-    void Start()
+    void Awake()
     {
         if(Game.game == null)
         {

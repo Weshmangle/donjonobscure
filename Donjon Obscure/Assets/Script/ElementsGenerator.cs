@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ElementsGenerator : MonoBehaviour
 {
+    [SerializeField]
     int nbChestToSpawn, nbHoleToSpawn, nbEnemyToSpawn;
     
-    [SerializeField] ElementGrid chest, hole, enemy, gate, wall;
+    [SerializeField] ElementGrid chest, hole, enemy, gate, wall, obstacle;
 
     int width = 10;
     int height = 10;
@@ -29,7 +30,7 @@ public class ElementsGenerator : MonoBehaviour
     {
         //Tile chestTile = tiles[0,0];
         //GenerateChestList(tiles);
-        
+
         GenerateExternWall(tiles);
         GenerateDoor(tiles,true);
         GenerateDoor(tiles,false);
@@ -39,9 +40,12 @@ public class ElementsGenerator : MonoBehaviour
     }
     public void GenerateExternWall(Tile[,] tiles)
     {
+        GameObject obj = Resources.Load("Prefabs/Wall") as GameObject;
+        
+        Debug.Log(obj);
+        
         for (int i = 0; i < width; i++)
         {
-            Debug.Log(tiles);
             ElementGrid wallExternElement = InstantiateElementGrid(wall, tiles[i, 0].getPosition());
             tiles[i,0].setContent(wallExternElement);
             
@@ -94,19 +98,20 @@ public class ElementsGenerator : MonoBehaviour
         }
         while (typeof(Gate).IsInstanceOfType(currentTile.getContent()));
 
-        ElementGrid doorElement = InstantiateElementGrid(chest, currentTile.getPosition());
+        ElementGrid doorElement = InstantiateElementGrid(gate, currentTile.getPosition());
         currentTile.setContent(doorElement);
         
         }    
     public void GenerateChest(Tile[,] tiles)
-    {        
+    {
         for (int i = 0; i < nbChestToSpawn; i++)
         {
-            int _myRandPositionX = Random.Range(1, width);
-            int _myRandPositionZ = Random.Range(1, height);            
+            int _myRandPositionX = Random.Range(1, width-1);
+            int _myRandPositionZ = Random.Range(1, height-1);
+
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
-                ElementGrid chestElement = InstantiateElementGrid(chest, tiles[i, 0].getPosition());
+                ElementGrid chestElement = InstantiateElementGrid(chest, tiles[_myRandPositionX, _myRandPositionZ].getPosition());
                 tiles[_myRandPositionX, _myRandPositionZ].setContent(chestElement);                
             }
         }
@@ -139,17 +144,10 @@ public class ElementsGenerator : MonoBehaviour
             }
         }
     }
-    public ElementGrid InstantiateElementGrid(ElementGrid element, Vector2 position)
+    public ElementGrid InstantiateElementGrid(ElementGrid element, Vector2Int position)
     {
-
-        ElementGrid elementReturn = Instantiate(element, position, Quaternion.identity, this.transform);
+        ElementGrid elementReturn = Instantiate(element, new Vector3(position.x, 0, position.y), Quaternion.identity, this.transform);
         return elementReturn;
-
-    }
-
-    public int lol()
-    {
-        return 0;
     }
 
     /*
