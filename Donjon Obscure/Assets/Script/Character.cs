@@ -10,6 +10,9 @@ public class Character : Entity
     protected int armorPoint;
     protected int armorPointMax;
 
+    [SerializeField]
+    public Lantern lantern;
+
 
     public Character(int _healthPointMax, int _mentalSanityMax, int _attackStrength)
     {
@@ -66,7 +69,10 @@ public class Character : Entity
                 break;
         }
     }
-
+    /// <summary>
+    /// Inflige n damage to Character.
+    /// </summary>
+    /// <param name="damage">Damage value to inflige</param>
     public override void TakeDamage(int damage)
     {
         damage -= armorPoint;
@@ -76,6 +82,11 @@ public class Character : Entity
         }
     }
 
+    public void LightLantern()
+    {
+        lantern.SetActiveLantern();
+        
+    }
 
     protected override void Die()
     {
