@@ -11,16 +11,8 @@ public class Node
         
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(Node other)
     {
-        if(other.GetType() == typeof(Node))
-        {
-            Node node = other as Node;
-            return this.position == node.position;
-        }
-        else
-        {
-            return false;
-        }
+        return this.position == other.position;
     }
 }
