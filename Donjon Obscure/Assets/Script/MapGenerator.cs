@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {// controle la taille de la map (groundside est la taille d'une tuille)
-    [SerializeField] int with, heigh, groundSize; 
+    [SerializeField] int with, heigh, groundSize;
     // liste des prefab utilis� dans une map pour en ajouter des nouveau facilement
-    [SerializeField] GameObject[] wall, hole,enemy, player, doorStart, doorEnd, chest, item, levier, key; 
+    [SerializeField] ElementGrid[] wall, hole, enemy, player, doorStart, doorEnd, chest, item, levier, key;
     [SerializeField] Tile[] ground;
     [SerializeField] int nbEnemy, nbChest, nbItem, nbLevier, nbKey, nbHole;
     int nbChestSpawned, nbChestToSpawn;
@@ -19,12 +19,26 @@ public class MapGenerator : MonoBehaviour
     public int originePositionInTabler;
     public int wallPrefab, groundPrefab, enemyPrefab, playerPrefab, doorStartPrefab, doorEndPrefab, holePrefab, chestPrefab, itemPrefab, levierPrefab, keyPrefab; // [le choix du skin] quel prefab de quel object on utilise dans la liste (exemple: chest[chestP] = je veux l'object chest avec le numero chestP de la liste) 
 
+    public List<GameObject> elements = new List<GameObject>();
+    public List<Tile> elementsPosition = new List<Tile>();
+
+    /*public class List
+    {
+        public List<Transform> elements = new List<Transform>();
+        // You can add some properties like interest of the path, the name, ...
+        public float intereset = 0f;
+    }
+
+    List<List> list = new List<List>();*/
+
     //List mapEllementCoordonnee<> = n
 
     // Start is called before the first frame update
     void Start()
     {
+
         //GenerateMap();
+
     }
 
     // Update is called once per frame
@@ -42,13 +56,14 @@ public class MapGenerator : MonoBehaviour
         }*/
     public void GenerateMap(Tile[,] tiles)
     {
+
         GenerateExternWall();
         GenerateGround();
         GenerateHole();
         GenerateDoor();
         GenerateChest();
         GenerateEnemy();
-    }    
+    }
     public void GenerateExternWall()
     {
         //MUR EXTERIEUR//
@@ -86,30 +101,30 @@ public class MapGenerator : MonoBehaviour
     }
     public void GenerateGround()
     {
-        
+
         for (int i = 0; i < with; i++)
         {
-            Vector3 _groundPosition = new Vector3(1.0f+i, 0.0f, 1.0f);
-            
-            for (int j = 0; j< heigh; j++)
-            {                
+            Vector3 _groundPosition = new Vector3(1.0f + i, 0.0f, 1.0f);
+
+            for (int j = 0; j < heigh; j++)
+            {
                 Instantiate(ground[groundPrefab], _groundPosition, Quaternion.identity, this.transform);
-                _groundPosition.z++;                
+                _groundPosition.z++;
             }
-          
+
         }
     }
     public void GenerateHole()
     {
-        for (int i = 0; i<nbHole; i++)
+        for (int i = 0; i < nbHole; i++)
         {
-            int randomx = Random.Range(1, with);
-            int randomy = Random.Range(1, heigh);
+            int randomx = Random.Range(1, with - 1);
+            int randomy = Random.Range(1, heigh - 1);
             Vector3 holePosition = new Vector3(randomx, 0.0f, randomy);
             Instantiate(hole[holePrefab], holePosition, Quaternion.identity, this.transform);
-        }        
+        }
     }
-    public void GenerateDoor() 
+    public void GenerateDoor()
     {
         if (!startDoorIsPresent)
         {
@@ -117,7 +132,7 @@ public class MapGenerator : MonoBehaviour
             Quaternion _doorStartRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
             int _randomSide = Random.Range(0, 4);
             int _randDoorStartPositionWith = Random.Range(1, with);
-            int _randDoorStartPositionHeigh = Random.Range(1, heigh);            
+            int _randDoorStartPositionHeigh = Random.Range(1, heigh);
             if (_randomSide == 0)
             {
                 _doorStartPosition = new Vector3(0.0f, 0.0f, _randDoorStartPositionWith);
@@ -125,7 +140,7 @@ public class MapGenerator : MonoBehaviour
             }
             if (_randomSide == 1)
             {
-                _doorStartPosition = new Vector3(with+1, 0.0f, _randDoorStartPositionWith);
+                _doorStartPosition = new Vector3(with + 1, 0.0f, _randDoorStartPositionWith);
                 _doorStartRotation = Quaternion.Euler(0.0f, -90.0f, 0.0f);
             }
             if (_randomSide == 2)
@@ -135,7 +150,7 @@ public class MapGenerator : MonoBehaviour
             }
             if (_randomSide == 3)
             {
-                _doorStartPosition = new Vector3(_randDoorStartPositionHeigh, 0.0f, heigh+1);
+                _doorStartPosition = new Vector3(_randDoorStartPositionHeigh, 0.0f, heigh + 1);
                 _doorStartRotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
             }
             Instantiate(doorStart[doorStartPrefab], _doorStartPosition, _doorStartRotation, this.transform);
@@ -151,7 +166,7 @@ public class MapGenerator : MonoBehaviour
         int _randomSide = Random.Range(0, 4);
         int _randDoorEndPositionWith = Random.Range(1, with);
         int _randDoorEndPositionHeigh = Random.Range(1, heigh);
-        
+
         if (_randomSide == 0)
         {
             _doorEndPosition = new Vector3(0.0f, 0.0f, _randDoorEndPositionWith);
@@ -183,8 +198,9 @@ public class MapGenerator : MonoBehaviour
             int _myRandPositionX = Random.Range(1, 9);
             int _myRandPositionZ = Random.Range(1, 9);
             Vector3 _randomPosition = new Vector3(_myRandPositionX, 0.0f, _myRandPositionZ);
-            Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
-            nbChestSpawned++;            
+            //ElementGrid chest = Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
+            //addItemToList(item, position);
+            nbChestSpawned++;
         }
     }
     public void GenerateEnemy()
@@ -196,6 +212,11 @@ public class MapGenerator : MonoBehaviour
             Vector3 enemyPosition = new Vector3(randomx, 0.0f, randomy);
             Instantiate(enemy[enemyPrefab], enemyPosition, Quaternion.identity, this.transform);
         }
+    }
+
+    public void addItemToList(ElementGrid item, Tile position)
+    {
+
     }
 }
 
