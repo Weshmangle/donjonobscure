@@ -22,17 +22,20 @@ public class Game : MonoBehaviour
         {
             Game.game = this;
         }
-
-        this.room.grid.createGrid();
-        addEventsOnTiles();
-        character.Position = CharacterSpawnPosition;
-        //character.transform.SetParent(this.transform);
+        
+        this.initRoom();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         
+    }
+
+    protected void initRoom()
+    {
+        this.room.grid.createGrid();
+        addEventsOnTiles();
+        character.Position = CharacterSpawnPosition;
     }
 
     public void addEventsOnTiles()
@@ -88,7 +91,15 @@ public class Game : MonoBehaviour
                     break;
                 case Chest chest:
                     chest.Open();
-                    break;/*
+                    break;
+                case Hole hole:
+                    character.Move(new Vector2Int(tile.getPosition().x, tile.getPosition().y));
+                    Room newRoom = Instantiate((Resources.Load("Prefabs/Room") as GameObject).GetComponent<Room>());
+                    Destroy(this.room.gameObject);
+                    this.room = newRoom;
+                    initRoom();
+                    break;
+                    /*
                 case "MOB":
                     EnemyTurn();
                     break;
@@ -96,8 +107,6 @@ public class Game : MonoBehaviour
                     EnemyTurn();
                     break;
                 case "DOOR":
-                    break;
-                case "HOLE":
                     break;
                 case "WALL":
                     break;

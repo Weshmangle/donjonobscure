@@ -54,7 +54,7 @@ public class Tile : MonoBehaviour
     {
         if(this.content != null)
         {
-            this.content.transform.localScale = new Vector3(0,0,0);
+            Destroy(this.content.gameObject);
         }
         
         this.content = element;
