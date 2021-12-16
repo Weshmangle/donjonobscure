@@ -53,5 +53,11 @@ public class Tile : MonoBehaviour
     public void setContent(ElementGrid element)
     {
         this.content = element;
+        element.transform.SetParent(this.transform);
+    }
+
+    public Vector2 getPosition()
+    {
+        return this.position;
     }
 }

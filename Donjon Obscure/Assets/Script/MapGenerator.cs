@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public class MapGenerator : MonoBehaviour
-{   // controle la taille de la map (groundside est la taille d'une tuille)
+{// controle la taille de la map (groundside est la taille d'une tuille)
     [SerializeField] int with, heigh, groundSize; 
     // liste des prefab utilis� dans une map pour en ajouter des nouveau facilement
     [SerializeField] ElementGrid[] wall, hole,enemy, player, doorStart, doorEnd, chest, item, levier, key; 
@@ -36,14 +36,22 @@ public class MapGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
-    }
+
 
     // Update is called once per frame
     void Update()
     {
     }
-    public void GenerateMap()
+
+    /*
+        for (var i = 0; i < tiles.GetLength(0); i++)
+        {
+            for (int j = 0; j < tiles.GetLength(1); j++)
+            {
+                
+            }
+        }*/
+    public void GenerateMap(Tile[,] tiles)
     {
 
         GenerateExternWall();

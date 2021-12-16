@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lanterne : MonoBehaviour
+public class Lantern : MonoBehaviour
 {
     int fuelMax;
     int fuelReserve;
@@ -13,22 +13,10 @@ public class Lanterne : MonoBehaviour
 
     bool isActive;
 
-    int fuelConsumation;
-    int fuelConsumationMax;
+    int fuelConsumption;
+    int fuelConsumptionMax;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    public void SetActiveLanterne(bool active)
+    public void SetActiveLantern(bool active)
     {
         isActive = active;
     }
@@ -38,7 +26,7 @@ public class Lanterne : MonoBehaviour
     }
     public int ConsumeFuelStatus()
     {
-        return fuelConsumation;
+        return fuelConsumption;
     } 
     public int FuelInReserveStatus()
     {
@@ -56,7 +44,7 @@ public class Lanterne : MonoBehaviour
         }
         return radius;
     }    
-    public int IntensytyStatus()
+    public int IntensityStatus()
     {
         return intensity;
     }
