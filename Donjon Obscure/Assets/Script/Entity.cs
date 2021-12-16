@@ -30,11 +30,11 @@ public abstract class Entity : MonoBehaviour
     }
 
 
-    protected virtual void Move(Vector2 tilePosition)
+    public virtual void Move(Vector2 tilePosition)
     {
         transform.position = tilePosition;
     }
-    protected virtual void Attack(Entity target)
+    public void Attack(Entity target)
     {
         target.TakeDamage(attackStrenght);
     }
