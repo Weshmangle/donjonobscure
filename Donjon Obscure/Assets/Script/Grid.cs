@@ -69,10 +69,6 @@ public class Grid : MonoBehaviour
     private void OnDrawGizmos()
     {
         //createGrid();
-<<<<<<< HEAD
-=======
-        this.transform.
->>>>>>> d327a134655e079c54f53b8cc81046ede01305a7
         //this.listTiles = Instantiate(new GameObject(), transform.position, transform.rotation, this.transform);
     }
 }
