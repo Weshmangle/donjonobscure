@@ -52,8 +52,15 @@ public class Tile : MonoBehaviour
 
     public void setContent(ElementGrid element)
     {
+        if(this.content != null)
+        {
+            this.content.transform.localScale = new Vector3(0,0,0);
+        }
+        
         this.content = element;
+        
         element.transform.SetParent(this.transform);
+
         if(typeof(Hole).IsInstanceOfType(element))
         {
             this.GetComponentInChildren<Renderer>().enabled = false;

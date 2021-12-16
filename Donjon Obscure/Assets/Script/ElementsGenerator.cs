@@ -16,9 +16,14 @@ public class ElementsGenerator : MonoBehaviour
 
     int width = 10;
     int height = 10;
+    
+    
+    Quaternion rotationTop = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+    Quaternion rotationRight = Quaternion.Euler(0.0f, 90.0f, 0.0f);
+    Quaternion rotationBot = Quaternion.Euler(0.0f, 180.0f, 0.0f);
+    Quaternion rotationLeft = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 
     
-
     // Start is called before the first frame update
     void Start()
     {
@@ -54,50 +59,55 @@ public class ElementsGenerator : MonoBehaviour
     {
         for (int i = 0; i < width; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, 0].getPosition());
+            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, 0].getPosition(),rotationTop);
             tiles[i,0].setContent(wallExternElement);
             
         }
         for (int i = 0; i < width; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, width-1].getPosition());
+            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, width-1].getPosition(), rotationBot);
             tiles[i, width-1].setContent(wallExternElement);
             
         }
         for (int i = 0; i < height; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[0, i].getPosition());
+            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[0, i].getPosition(), rotationRight);
             tiles[0, i].setContent(wallExternElement);
             
         }
         for (int i = 0; i < height; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[height-1, i].getPosition());
+            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[height-1, i].getPosition(), rotationLeft);
             tiles[height-1, i].setContent(wallExternElement);
         }
 
     }
     public void GenerateDoor(Tile[,] tiles, bool isEndDoor)
     {
-        int _sideRandPosition = Random.Range(0, 4);        
+        int _sideRandPosition = Random.Range(0, 4);
         Tile currentTile = null;
+        Quaternion rotation = Quaternion.identity;
         do
         {
             int _myRandPosition = Random.Range(1, width);
+            
             switch (_sideRandPosition)
             {
                 case 0:
-                    currentTile = tiles[_myRandPosition, 0];                    
+                    currentTile = tiles[_myRandPosition, 0];
+                    rotation = rotationTop;
                     break;
                 case 1:
-                    currentTile = tiles[_myRandPosition, width-1];                    
+                    currentTile = tiles[_myRandPosition, width-1]; 
+                    rotation = rotationBot;
                     break;
                 case 2:
                     currentTile = tiles[0, _myRandPosition];
-                    
+                    rotation = rotationRight;
                     break;
                 case 3:
-                    currentTile = tiles[height-1, _myRandPosition];                    
+                    currentTile = tiles[height-1, _myRandPosition];
+                    rotation = rotationLeft;
                     break;
                 default:
                     Debug.Log("Provided stat does not exist.");
@@ -106,7 +116,7 @@ public class ElementsGenerator : MonoBehaviour
         }
         while (typeof(Gate).IsInstanceOfType(currentTile.getContent()));
 
-        ElementGrid doorElement = InstantiateElementGrid(prefabGate, currentTile.getPosition());
+        ElementGrid doorElement = InstantiateElementGrid(prefabGate, currentTile.getPosition(), rotation);
         currentTile.setContent(doorElement);
         
         }    
@@ -156,6 +166,10 @@ public class ElementsGenerator : MonoBehaviour
     {
         ElementGrid elementReturn = Instantiate(element, new Vector3(position.x, 0, position.y), Quaternion.identity, this.transform);
         return elementReturn;
+    }
+    public ElementGrid InstantiateElementGrid(ElementGrid element, Vector2Int position, Quaternion rotation)
+    {
+        return Instantiate(element, new Vector3(position.x, 0, position.y), rotation, this.transform);
     }
 
     /*
