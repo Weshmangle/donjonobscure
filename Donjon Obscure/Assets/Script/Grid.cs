@@ -7,7 +7,7 @@ public class Grid : MonoBehaviour
 {
     [SerializeField]
     protected Transform tile;
-    protected int WIDTH = 15;
+    protected int WIDTH = 10;
     protected int HEIGHT = 10;
     
     [SerializeField]
@@ -23,7 +23,6 @@ public class Grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public Tile[] getTiles()

@@ -6,18 +6,33 @@ using UnityEngine.Events;
 public class Tile : MonoBehaviour
 {
     [SerializeField]
-    protected IElementGrid content = null;
+    protected ElementGrid content;
+
+    [SerializeField]
+    protected GameObject Over;
+    
     [SerializeField]
     protected UnityEvent<Tile> uEvent;
     protected Vector2 position;
     
     void Start()
     {
+        Over.GetComponent<Renderer>().enabled = false;
     }
 
     private void OnMouseDown()
     {
         uEvent.Invoke(this);
+    }
+
+    private void OnMouseExit()
+    {
+        Over.GetComponent<Renderer>().enabled = false;
+    }
+
+    private void OnMouseOver()
+    {
+        Over.GetComponent<Renderer>().enabled = true;
     }
 
     void Update()
@@ -30,7 +45,7 @@ public class Tile : MonoBehaviour
         uEvent.AddListener(action);
     }
 
-    public IElementGrid getContent()
+    public ElementGrid getContent()
     {
         return this.content;
     }

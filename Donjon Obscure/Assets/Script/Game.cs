@@ -23,7 +23,7 @@ public class Game : MonoBehaviour
         
         addEventsOnTiles();
 
-        character.transform.SetParent(this.transform);
+        //character.transform.SetParent(this.transform);
     }
 
     // Update is called once per frame
@@ -51,9 +51,12 @@ public class Game : MonoBehaviour
         
         switch (tile.getContent())
         {
-            /*case IElementGrid game:
-                EnemyTurn();
+            case null:
+                Debug.Log("null " + tile.getContent());
                 break;
+            case Chest chest:
+                chest.Open();
+                break;/*
             case "MOB":
                 EnemyTurn();
                 break;
