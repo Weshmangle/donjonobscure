@@ -64,20 +64,22 @@ public class Game : MonoBehaviour
         }
     }
 
-    protected bool tileIsClickable()
+    protected bool tileIsClickable(Tile tile)
     {
-        return true;
+        float distance = Vector2Int.Distance(tile.getPosition(), character.Position);
+
+        return distance == 1 || distance == 0;
     }
 
     void CheckTileContent(Tile tile)
     {
-        if(tileIsClickable())
+        if(tileIsClickable(tile))
         {
             switch (tile.getContent())
             {
-                case null:
-                    character.Move(tile.getPosition());
-                    character.transform.position = tile.transform.position;
+                case null: 
+                    character.Move(tile.getPosition()); 
+                    character.transform.position = new Vector3(tile.getPosition().x, 0, tile.getPosition().y);
                     //tile.setContent(character);
                     break;
                 case Chest chest:

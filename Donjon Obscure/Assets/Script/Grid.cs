@@ -19,7 +19,7 @@ public class Grid : MonoBehaviour
 
     void Start()
     {
-        elementGenerator.GenerateElement(tiles);
+        //elementGenerator.GenerateElement(tiles);
     }
 
     // Update is called once per frame
