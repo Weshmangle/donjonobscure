@@ -18,6 +18,7 @@ public class Grid : MonoBehaviour
     
     void Start()
     {
+        mapGenerator.GenerateMap();
     }
 
     // Update is called once per frame
