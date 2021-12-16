@@ -15,7 +15,9 @@ public class Game : MonoBehaviour
     protected bool eventSet = false;
 
     static Vector2Int characterSpawnPosition;
+    
     static public Vector2Int CharacterSpawnPosition {get; set;}
+    
     void Awake()
     {
         if(Game.game == null)
@@ -73,8 +75,16 @@ public class Game : MonoBehaviour
 
     protected bool tileIsClickable(Tile tile)
     {
-        float distance = Vector2Int.Distance(tile.getPosition(), character.Position);
+        float distance = Vector2Int.Distance(tile.Position, character.Position);
         return distance == 1 || distance == 0;
+    }
+
+    protected void reloadRoom()
+    {
+        Room newRoom = Instantiate((Resources.Load("Prefabs/Room") as GameObject).GetComponent<Room>());
+        Destroy(this.room.gameObject);
+        this.room = newRoom;
+        initRoom();
     }
 
     void CheckTileContent(Tile tile)
@@ -84,8 +94,8 @@ public class Game : MonoBehaviour
             switch (tile.getContent())
             {
                 case null:
-                    //character.Move(tile.getPosition());
-                    character.Move(new Vector2Int(tile.getPosition().x, tile.getPosition().y));
+                    //character.Move(tile.getPosition);
+                    character.Move(new Vector2Int(tile.Position.x, tile.Position.y));
                     Debug.Log(character.Position);
                     //tile.setContent(character);
                     break;
@@ -93,11 +103,8 @@ public class Game : MonoBehaviour
                     chest.Open();
                     break;
                 case Hole hole:
-                    character.Move(new Vector2Int(tile.getPosition().x, tile.getPosition().y));
-                    Room newRoom = Instantiate((Resources.Load("Prefabs/Room") as GameObject).GetComponent<Room>());
-                    Destroy(this.room.gameObject);
-                    this.room = newRoom;
-                    initRoom();
+                    character.Move(tile.Position);
+                    this.reloadRoom();
                     break;
                     /*
                 case "MOB":

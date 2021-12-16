@@ -13,7 +13,6 @@ public class Character : Entity
     [SerializeField]
     public Lantern lantern;
 
-
     public Character(int _healthPointMax, int _mentalSanityMax, int _attackStrength)
     {
         healthPointMax = _healthPointMax;

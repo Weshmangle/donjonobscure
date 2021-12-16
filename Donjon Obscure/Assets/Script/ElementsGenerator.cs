@@ -59,25 +59,25 @@ public class ElementsGenerator : MonoBehaviour
     {
         for (int i = 0; i < width; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, 0].getPosition(),rotationTop);
+            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, 0].Position,rotationTop);
             tiles[i,0].setContent(wallExternElement);
             
         }
         for (int i = 0; i < width; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, width-1].getPosition(), rotationBot);
+            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, width-1].Position, rotationBot);
             tiles[i, width-1].setContent(wallExternElement);
             
         }
         for (int i = 0; i < height; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[0, i].getPosition(), rotationRight);
+            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[0, i].Position, rotationRight);
             tiles[0, i].setContent(wallExternElement);
             
         }
         for (int i = 0; i < height; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[height-1, i].getPosition(), rotationLeft);
+            ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[height-1, i].Position, rotationLeft);
             tiles[height-1, i].setContent(wallExternElement);
         }
 
@@ -98,22 +98,22 @@ public class ElementsGenerator : MonoBehaviour
                 case 0:
                     currentTile = tiles[_myRandPosition, 0];
                     rotation = rotationTop;
-                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.getPosition().x, currentTile.getPosition().y+1);
+                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.Position.x, currentTile.Position.y+1);
                     break;
                 case 1:
                     currentTile = tiles[_myRandPosition, width-1]; 
                     rotation = rotationBot;
-                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.getPosition().x, currentTile.getPosition().y - 1);
+                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.Position.x, currentTile.Position.y - 1);
                     break;
                 case 2:
                     currentTile = tiles[0, _myRandPosition];
                     rotation = rotationRight;
-                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.getPosition().x + 1, currentTile.getPosition().y);
+                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.Position.x + 1, currentTile.Position.y);
                     break;
                 case 3:
                     currentTile = tiles[height-1, _myRandPosition];
                     rotation = rotationLeft;
-                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.getPosition().x - 1, currentTile.getPosition().y);
+                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.Position.x - 1, currentTile.Position.y);
                     break;
                 default:
                         Debug.Log("Provided stat does not exist.");
@@ -122,7 +122,7 @@ public class ElementsGenerator : MonoBehaviour
         }
         while (typeof(Gate).IsInstanceOfType(currentTile.getContent()));
 
-        ElementGrid doorElement = InstantiateElementGrid(prefabGate, currentTile.getPosition(), rotation);
+        ElementGrid doorElement = InstantiateElementGrid(prefabGate, currentTile.Position, rotation);
         currentTile.setContent(doorElement);
         Game.CharacterSpawnPosition = characterSpawnPositionRelativeToDoor;
 
@@ -137,7 +137,7 @@ public class ElementsGenerator : MonoBehaviour
 
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
-                ElementGrid chestElement = InstantiateElementGrid(prefabChest, tiles[_myRandPositionX, _myRandPositionZ].getPosition());
+                ElementGrid chestElement = InstantiateElementGrid(prefabChest, tiles[_myRandPositionX, _myRandPositionZ].Position);
                 tiles[_myRandPositionX, _myRandPositionZ].setContent(chestElement);                
             }
         }
@@ -150,7 +150,7 @@ public class ElementsGenerator : MonoBehaviour
             int _myRandPositionZ = Random.Range(1, height);
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
-                ElementGrid holeElement = InstantiateElementGrid(prefabHole, tiles[_myRandPositionX, _myRandPositionZ].getPosition());
+                ElementGrid holeElement = InstantiateElementGrid(prefabHole, tiles[_myRandPositionX, _myRandPositionZ].Position);
                 tiles[_myRandPositionX, _myRandPositionZ].setContent(holeElement);
                 
             }
@@ -164,7 +164,7 @@ public class ElementsGenerator : MonoBehaviour
             int _myRandPositionZ = Random.Range(1, height);
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
-                ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tiles[i, 0].getPosition());
+                ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tiles[i, 0].Position);
                 tiles[_myRandPositionX, _myRandPositionZ].setContent(enemyElement);
                 
             }

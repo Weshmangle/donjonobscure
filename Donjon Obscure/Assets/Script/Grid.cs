@@ -24,13 +24,10 @@ public class Grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(this.listTiles.transform.childCount);
     }
 
     public Tile[] getTiles()
     {
-        //return listTiles.transform.GetComponentsInChildren<Tile>();
-        
         return listTiles.transform.GetComponentsInChildren<Tile>();
     }
 
@@ -58,7 +55,7 @@ public class Grid : MonoBehaviour
                 Debug.Log("createTile");
                 GameObject obj = Instantiate(Resources.Load("Prefabs/Tile"), new Vector3(x,0,y), transform.rotation, listTiles.transform) as GameObject;
                 Tile tile = obj.GetComponent<Tile>();
-                tile.setPosition(new Vector2Int(x,y));
+                tile.Position = new Vector2Int(x,y);
                 tiles[x,y] = obj.GetComponent<Tile>();
             }
         }
@@ -68,11 +65,5 @@ public class Grid : MonoBehaviour
     public void cleanGrid()
     {
         
-    }
-
-    private void OnDrawGizmos()
-    {
-        //createGrid();
-        //this.listTiles = Instantiate(new GameObject(), transform.position, transform.rotation, this.transform);
     }
 }

@@ -14,6 +14,12 @@ public class Tile : MonoBehaviour
     [SerializeField]
     protected UnityEvent<Tile> uEvent;
     protected Vector2Int position;
+
+    public Vector2Int Position
+    {
+        get{return position;}
+        set{position = value;}
+    }
     
     void Start()
     {
@@ -65,15 +71,5 @@ public class Tile : MonoBehaviour
         {
             this.GetComponentInChildren<Renderer>().enabled = false;
         }
-    }
-
-    public Vector2Int getPosition()
-    {
-        return new Vector2Int((int)this.transform.position.x, (int)this.transform.position.z);
-        //return this.position;
-    }
-    public void setPosition(Vector2Int position)
-    {
-        this.position = position;
     }
 }
