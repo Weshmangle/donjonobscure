@@ -42,7 +42,17 @@ public class Game : MonoBehaviour
 
     protected void EnemyTurn()
     {
-        
+        foreach (var enemy in game.room.getEnnemies())
+        {
+            if(enemy.canAttak(character))
+            {
+                //enemy.attak(character);
+            }
+            else
+            {
+                //enemy.Move(calculatePathfinding(enemy)[0]);
+            }
+        }
     }
 
     void CheckTileContent(Tile tile)

@@ -48,6 +48,12 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
+    public bool canAttak(Entity entity)
+    {
+        return false;
+        //return entity.position - this.position;
+    }
+
     protected virtual void Die()
     {
         Debug.Log("Entity died");
