@@ -52,7 +52,7 @@ public class Game : MonoBehaviour
         switch (tile.getContent())
         {
             case null:
-                Debug.Log("null " + tile.getContent());
+                character.Move(tile.getPosition());
                 break;
             case Chest chest:
                 chest.Open();
