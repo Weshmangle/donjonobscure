@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
     
     [SerializeField]
     protected UnityEvent<Tile> uEvent;
-    protected Vector2 position;
+    protected Vector2Int position;
     
     void Start()
     {
@@ -59,5 +59,9 @@ public class Tile : MonoBehaviour
     public Vector2 getPosition()
     {
         return this.position;
+    }
+    public void setPosition(Vector2Int position)
+    {
+        this.position = position;
     }
 }
