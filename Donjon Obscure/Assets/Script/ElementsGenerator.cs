@@ -41,7 +41,6 @@ public class ElementsGenerator : MonoBehaviour
     }
     public void GenerateExternWall(Tile[,] tiles)
     {
-        
         for (int i = 0; i < with; i++)
         {
             ElementGrid wallExternElement = InstantiateElementGrid(hole, tiles[i, 0].getPosition());
