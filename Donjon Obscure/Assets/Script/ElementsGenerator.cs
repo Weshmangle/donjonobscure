@@ -8,8 +8,8 @@ public class ElementsGenerator : MonoBehaviour
     
     [SerializeField] ElementGrid chest, hole, enemy, gate, wall;
 
-    int with = 10;
-    int heigh = 10;
+    int width = 10;
+    int height = 10;
 
     
 
@@ -39,28 +39,29 @@ public class ElementsGenerator : MonoBehaviour
     }
     public void GenerateExternWall(Tile[,] tiles)
     {
-        for (int i = 0; i < with; i++)
+        for (int i = 0; i < width; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(hole, tiles[i, 0].getPosition());
+            Debug.Log(tiles);
+            ElementGrid wallExternElement = InstantiateElementGrid(wall, tiles[i, 0].getPosition());
             tiles[i,0].setContent(wallExternElement);
             
         }
-        for (int i = 0; i < with; i++)
+        for (int i = 0; i < width; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(hole, tiles[i, 10].getPosition());
-            tiles[i, 10].setContent(wallExternElement);
+            ElementGrid wallExternElement = InstantiateElementGrid(wall, tiles[i, width-1].getPosition());
+            tiles[i, width-1].setContent(wallExternElement);
             
         }
-        for (int i = 0; i < heigh; i++)
+        for (int i = 0; i < height; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(hole, tiles[0, i].getPosition());
+            ElementGrid wallExternElement = InstantiateElementGrid(wall, tiles[0, i].getPosition());
             tiles[0, i].setContent(wallExternElement);
             
         }
-        for (int i = 0; i < heigh; i++)
+        for (int i = 0; i < height; i++)
         {
-            ElementGrid wallExternElement = InstantiateElementGrid(hole, tiles[10, i].getPosition());
-            tiles[10, i].setContent(wallExternElement);
+            ElementGrid wallExternElement = InstantiateElementGrid(wall, tiles[height-1, i].getPosition());
+            tiles[height-1, i].setContent(wallExternElement);
         }
 
     }
@@ -70,21 +71,21 @@ public class ElementsGenerator : MonoBehaviour
         Tile currentTile = null;
         do
         {
-            int _myRandPosition = Random.Range(1, with);
+            int _myRandPosition = Random.Range(1, width);
             switch (_sideRandPosition)
             {
                 case 0:
                     currentTile = tiles[_myRandPosition, 0];                    
                     break;
                 case 1:
-                    currentTile = tiles[_myRandPosition, 10];                    
+                    currentTile = tiles[_myRandPosition, width-1];                    
                     break;
                 case 2:
                     currentTile = tiles[0, _myRandPosition];
                     
                     break;
                 case 3:
-                    currentTile = tiles[10, _myRandPosition];                    
+                    currentTile = tiles[height-1, _myRandPosition];                    
                     break;
                 default:
                     Debug.Log("Provided stat does not exist.");
@@ -101,8 +102,8 @@ public class ElementsGenerator : MonoBehaviour
     {        
         for (int i = 0; i < nbChestToSpawn; i++)
         {
-            int _myRandPositionX = Random.Range(1, with);
-            int _myRandPositionZ = Random.Range(1, heigh);            
+            int _myRandPositionX = Random.Range(1, width);
+            int _myRandPositionZ = Random.Range(1, height);            
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
                 ElementGrid chestElement = InstantiateElementGrid(chest, tiles[i, 0].getPosition());
@@ -114,8 +115,8 @@ public class ElementsGenerator : MonoBehaviour
     {
         for (int i = 0; i < nbHoleToSpawn; i++)
         {
-            int _myRandPositionX = Random.Range(1, with);
-            int _myRandPositionZ = Random.Range(1, heigh);
+            int _myRandPositionX = Random.Range(1, width);
+            int _myRandPositionZ = Random.Range(1, height);
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
                 ElementGrid holeElement = InstantiateElementGrid(hole, tiles[_myRandPositionX, _myRandPositionZ].getPosition());
@@ -128,8 +129,8 @@ public class ElementsGenerator : MonoBehaviour
     {
         for (int i = 0; i < nbEnemyToSpawn; i++)
         {
-            int _myRandPositionX = Random.Range(1, with);
-            int _myRandPositionZ = Random.Range(1, heigh);
+            int _myRandPositionX = Random.Range(1, width);
+            int _myRandPositionZ = Random.Range(1, height);
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
                 ElementGrid enemyElement = InstantiateElementGrid(enemy, tiles[i, 0].getPosition());

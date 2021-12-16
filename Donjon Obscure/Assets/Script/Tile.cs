@@ -54,6 +54,10 @@ public class Tile : MonoBehaviour
     {
         this.content = element;
         element.transform.SetParent(this.transform);
+        if(typeof(Hole).IsInstanceOfType(element))
+        {
+            this.GetComponentInChildren<Renderer>().enabled = false;
+        }
     }
 
     public Vector2Int getPosition()

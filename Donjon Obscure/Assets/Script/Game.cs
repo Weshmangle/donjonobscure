@@ -20,7 +20,8 @@ public class Game : MonoBehaviour
         {
             Game.game = this;
         }
-        
+
+        this.room.grid.createGrid();
         addEventsOnTiles();
         //character.transform.SetParent(this.transform);
     }

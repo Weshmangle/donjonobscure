@@ -19,7 +19,6 @@ public class Grid : MonoBehaviour
 
     void Start()
     {
-        //elementGenerator.GenerateElement(tiles);
     }
 
     // Update is called once per frame
@@ -45,13 +44,11 @@ public class Grid : MonoBehaviour
     }
     
 
-    protected void createGrid()
+    public void createGrid()
     {
-        
         if(this.listTiles.transform.childCount != 0) return;
-        //Destroy(this.listTiles);
-
-        //this.listTiles = Instantiate(new GameObject(), transform);
+        
+        tiles = new Tile[WIDTH, HEIGHT];
 
         Debug.Log("Create MAP");
 
@@ -60,16 +57,22 @@ public class Grid : MonoBehaviour
             for (var y = 0; y < HEIGHT; y++)
             {
                 GameObject obj = Instantiate(Resources.Load("Prefabs/Tile"), new Vector3(x,0,y), transform.rotation, listTiles.transform) as GameObject;
-                //Tile tile = obj.GetComponent<Tile>();
-                //tile.setPosition(new Vector2Int(x,y));
-                //tiles[x,y] = obj.GetComponent<Tile>();
+                Tile tile = obj.GetComponent<Tile>();
+                tile.setPosition(new Vector2Int(x,y));
+                tiles[x,y] = obj.GetComponent<Tile>();
             }
         }
+        elementGenerator.GenerateElement(tiles);
+    }
+
+    public void cleanGrid()
+    {
+        
     }
 
     private void OnDrawGizmos()
     {
-        createGrid();
+        //createGrid();
         //this.listTiles = Instantiate(new GameObject(), transform.position, transform.rotation, this.transform);
     }
 }
