@@ -40,7 +40,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    protected void EnemyTurn()
+    protected void EnemyTurn(Tile tile)
     {
         foreach (var enemy in game.room.getEnnemies())
         {
@@ -51,6 +51,9 @@ public class Game : MonoBehaviour
             else
             {
                 //enemy.Move(calculatePathfinding(enemy)[0]);
+                Vector2Int vector2 = new Vector2Int((int)enemy.Position.x + Random.Range(0,2), (int)enemy.Position.y + Random.Range(0,2));
+                enemy.Position = vector2;
+                this.room.grid.getTiles();
             }
         }
     }

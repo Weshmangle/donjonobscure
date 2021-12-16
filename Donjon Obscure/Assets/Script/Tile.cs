@@ -56,7 +56,7 @@ public class Tile : MonoBehaviour
         element.transform.SetParent(this.transform);
     }
 
-    public Vector2 getPosition()
+    public Vector2Int getPosition()
     {
         return this.position;
     }
