@@ -49,8 +49,8 @@ public class ElementsGenerator : MonoBehaviour
         //GenerateChestList(tiles);
 
         GenerateExternWall(tiles);
-        GenerateDoor(tiles,true);
-        GenerateDoor(tiles,false);
+        GenerateGate(tiles,true);
+        GenerateGate(tiles,false);
         GenerateChest(tiles);
         GenerateHole(tiles);
         //GenerateEnemy(tiles);
@@ -82,7 +82,7 @@ public class ElementsGenerator : MonoBehaviour
         }
 
     }
-    public void GenerateDoor(Tile[,] tiles, bool isEndDoor)
+    public void GenerateGate(Tile[,] tiles, bool isExitGate)
     {
         
         int _sideRandPosition = Random.Range(0, 4);
@@ -122,7 +122,11 @@ public class ElementsGenerator : MonoBehaviour
         }
         while (typeof(Gate).IsInstanceOfType(currentTile.getContent()));
 
-        ElementGrid doorElement = InstantiateElementGrid(prefabGate, currentTile.getPosition(), rotation);
+        Gate doorElement = InstantiateElementGrid(prefabGate, currentTile.getPosition(), rotation) as Gate;
+        if(isExitGate)
+        {
+            doorElement.IsExitGate = true;
+        }
         currentTile.setContent(doorElement);
         Game.CharacterSpawnPosition = characterSpawnPositionRelativeToDoor;
 
