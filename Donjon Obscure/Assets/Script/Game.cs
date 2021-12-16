@@ -22,8 +22,7 @@ public class Game : MonoBehaviour
         }
         
         addEventsOnTiles();
-
-        //character.transform.SetParent(this.transform);
+        character.transform.SetParent(this.transform);
     }
 
     // Update is called once per frame
@@ -46,14 +45,21 @@ public class Game : MonoBehaviour
         {
             if(enemy.canAttak(character))
             {
-                //enemy.attak(character);
+                enemy.Attack(character);
             }
             else
             {
-                //enemy.Move(calculatePathfinding(enemy)[0]);
-                Vector2Int vector2 = new Vector2Int((int)enemy.Position.x + Random.Range(0,2), (int)enemy.Position.y + Random.Range(0,2));
+                //enemy.Move(calculatePathfinding(enemy)[0]);   
+                Vector2Int vector2;
+                ElementGrid elt = null;
+                do
+                {
+                    vector2 = new Vector2Int((int)enemy.Position.x + Random.Range(0,2), (int)enemy.Position.y + Random.Range(0,2));
+                    elt = this.room.grid.getTile(vector2).getContent();
+                }
+                while(elt != null);
                 enemy.Position = vector2;
-                this.room.grid.getTiles();
+                //this.room.grid.getTile(vector2).setContent(enemy);
             }
         }
     }

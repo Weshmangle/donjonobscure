@@ -136,6 +136,11 @@ public class ElementsGenerator : MonoBehaviour
 
     }
 
+    public int lol()
+    {
+        return 0;
+    }
+
     /*
     public void GenerateChestList(List<Tile> tiles)
     {
