@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Hole : MonoBehaviour
 {
-    //OnEntry(Entity entity)
-    //{
-    //    entity.TakeDamage();
-    //}
+    void OnEntry(Entity entity)
+    {
+        entity.KillEntity();
+    }
 }

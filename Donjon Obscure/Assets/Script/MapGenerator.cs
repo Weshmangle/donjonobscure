@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public class MapGenerator : MonoBehaviour
-{// controle la taille de la map (groundside est la taille d'une tuille)
+{   // controle la taille de la map (groundside est la taille d'une tuille)
     [SerializeField] int with, heigh, groundSize; 
     // liste des prefab utilis� dans une map pour en ajouter des nouveau facilement
     [SerializeField] GameObject[] wall, hole,enemy, player, doorStart, doorEnd, chest, item, levier, key; 
