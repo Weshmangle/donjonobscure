@@ -2,41 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Lantern : MonoBehaviour
 {
-    int fuelMax;
-    int fuelReserve;
+    [SerializeField]
+    Light light;
+    //public static Lantern Instance {get; private set;}
+
+    int fuelInReserveMax;
+    int currentFuelInReserve;
     int radiusMax;
     int radius;
     int intensity;
     int intensityMax;
 
     bool isActive;
+    [SerializeField, Range(0, 10)]
+    int fuelConsumptionCost;
 
-    int fuelConsumption;
-    int fuelConsumptionMax;
-
-    public void SetActiveLantern(bool active)
+    private void Awake()
     {
-        isActive = active;
+
+        //if (Instance)
+        //{
+        //    Debug.LogError("Instance not null");
+        //}
+
+        //Instance = this;
+    }
+
+    public void SetActiveLantern()
+    {
+        if(!IsActive() && currentFuelInReserve > 0)
+        {
+            ConsumeFuel();
+            isActive = true;
+        }
+        else isActive = false;
+
     }
     public bool IsActive()
     {
         return isActive;
     }
-    public int ConsumeFuelStatus()
+    
+    public void ConsumeFuel()
     {
-        return fuelConsumption;
+        currentFuelInReserve -= fuelConsumptionCost;
     } 
-    public int FuelInReserveStatus()
+    public void AddFuelInReserve(int fuelToAdd)
     {
-        if (fuelReserve > fuelMax)
+        if(currentFuelInReserve + fuelToAdd > fuelInReserveMax)
         {
-            fuelReserve = fuelMax;
+            currentFuelInReserve = fuelInReserveMax;
         }
-        return fuelReserve;
     }
-    public int LightRangeStatus()
+    public int LightRange()
     {
         if (radius > radiusMax)
         {
