@@ -21,9 +21,9 @@ public abstract class Entity : MonoBehaviour
     
     protected int attackStrenght;
 
-    protected Vector2 position;
+    protected Vector2Int position;
 
-    public Vector2 Position
+    public Vector2Int Position
     {
         get { return position; }
         set { position = value; }
