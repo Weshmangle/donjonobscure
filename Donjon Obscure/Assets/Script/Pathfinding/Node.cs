@@ -1,8 +1,8 @@
 public class Node
 {
-    protected float g;
-    protected float h;
-    protected float f;
+    public float g;
+    public float h;
+    public float f;
     protected Node parent;
     protected Node position;
 
@@ -11,8 +11,16 @@ public class Node
         
     }
 
-    public override bool Equals(Node other)
+    public override bool Equals(object other)
     {
-        return this.position == other.position;
+        if(other.GetType() == typeof(Node))
+        {
+            Node node = other as Node;
+            return this.position == node.position;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
