@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    bool playerCanPass;
+    bool isOpen, isLocked;
+    public void GameSetEnd()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    }
+    public void LoadNextRoom()
     {
-        
+
+    }
+    public void GoToNextRoom()
+    {
+
     }
 }
