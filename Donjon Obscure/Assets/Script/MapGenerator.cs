@@ -19,6 +19,18 @@ public class MapGenerator : MonoBehaviour
     public int originePositionInTabler;
     public int wallPrefab, groundPrefab, enemyPrefab, playerPrefab, doorStartPrefab, doorEndPrefab, holePrefab, chestPrefab, itemPrefab, levierPrefab, keyPrefab; // [le choix du skin] quel prefab de quel object on utilise dans la liste (exemple: chest[chestP] = je veux l'object chest avec le numero chestP de la liste) 
 
+    public List<GameObject> elements = new List<GameObject>();
+    public List<Tile> elementsPosition = new List<Tile>();
+
+    /*public class List
+    {
+        public List<Transform> elements = new List<Transform>();
+        // You can add some properties like interest of the path, the name, ...
+        public float intereset = 0f;
+    }
+
+    List<List> list = new List<List>();*/
+
     //List mapEllementCoordonnee<> = n
 
     // Start is called before the first frame update
