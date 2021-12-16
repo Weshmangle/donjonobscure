@@ -58,7 +58,7 @@ public class Tile : MonoBehaviour
 
     public Vector2Int getPosition()
     {
-        return new Vector2Int((int)this.transform.position.x, (int)this.transform.position.y);  
+        return new Vector2Int((int)this.transform.position.x, (int)this.transform.position.z);  
         //return this.position;
     }
     public void setPosition(Vector2Int position)
