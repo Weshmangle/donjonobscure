@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+public class Gate : ElementGrid
 {
     bool playerCanPass;
     bool isOpen, isLocked;

@@ -6,7 +6,7 @@ public class ElementsGenerator : MonoBehaviour
 {
     int nbChestToSpawn, nbHoleToSpawn, nbEnemyToSpawn;
     
-    [SerializeField] ElementGrid chest, hole, enemy, door, wall;
+    [SerializeField] ElementGrid chest, hole, enemy, gate, wall;
 
     int with = 10;
     int heigh = 10;
@@ -35,9 +35,7 @@ public class ElementsGenerator : MonoBehaviour
         GenerateDoor(tiles,false);
         GenerateChest(tiles);
         GenerateHole(tiles);
-        GenerateEnemy(tiles);
-
-
+        //GenerateEnemy(tiles);
     }
     public void GenerateExternWall(Tile[,] tiles)
     {
