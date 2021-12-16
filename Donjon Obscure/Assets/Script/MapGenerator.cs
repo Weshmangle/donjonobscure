@@ -198,7 +198,7 @@ public class MapGenerator : MonoBehaviour
             int _myRandPositionX = Random.Range(1, 9);
             int _myRandPositionZ = Random.Range(1, 9);
             Vector3 _randomPosition = new Vector3(_myRandPositionX, 0.0f, _myRandPositionZ);
-            ElementGrid chest = Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
+            //ElementGrid chest = Instantiate(chest[chestPrefab], _randomPosition, Quaternion.identity, this.transform);
             //addItemToList(item, position);
             nbChestSpawned++;
         }
