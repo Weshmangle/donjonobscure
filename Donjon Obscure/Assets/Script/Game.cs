@@ -13,7 +13,9 @@ public class Game : MonoBehaviour
     public static Game game = null;
 
     protected bool eventSet = false;
-    
+    [SerializeField]
+    Vector2Int characterSpawnPosition;
+
     void Start()
     {
         if(Game.game == null)
@@ -22,7 +24,8 @@ public class Game : MonoBehaviour
         }
         
         addEventsOnTiles();
-        //character.transform.SetParent(this.transform);
+
+        character.Position = characterSpawnPosition;
     }
 
     // Update is called once per frame
