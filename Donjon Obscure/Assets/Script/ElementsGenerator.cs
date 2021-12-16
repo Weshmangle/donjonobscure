@@ -84,8 +84,10 @@ public class ElementsGenerator : MonoBehaviour
     }
     public void GenerateDoor(Tile[,] tiles, bool isEndDoor)
     {
+        
         int _sideRandPosition = Random.Range(0, 4);
         Tile currentTile = null;
+        Vector2Int characterSpawnPositionRelativeToDoor = Vector2Int.zero;
         Quaternion rotation = Quaternion.identity;
         do
         {
@@ -96,21 +98,25 @@ public class ElementsGenerator : MonoBehaviour
                 case 0:
                     currentTile = tiles[_myRandPosition, 0];
                     rotation = rotationTop;
+                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.getPosition().x, currentTile.getPosition().y+1);
                     break;
                 case 1:
                     currentTile = tiles[_myRandPosition, width-1]; 
                     rotation = rotationBot;
+                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.getPosition().x, currentTile.getPosition().y - 1);
                     break;
                 case 2:
                     currentTile = tiles[0, _myRandPosition];
                     rotation = rotationRight;
+                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.getPosition().x + 1, currentTile.getPosition().y);
                     break;
                 case 3:
                     currentTile = tiles[height-1, _myRandPosition];
                     rotation = rotationLeft;
+                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.getPosition().x - 1, currentTile.getPosition().y);
                     break;
                 default:
-                    Debug.Log("Provided stat does not exist.");
+                        Debug.Log("Provided stat does not exist.");
                     break;
             }
         }
@@ -118,7 +124,9 @@ public class ElementsGenerator : MonoBehaviour
 
         ElementGrid doorElement = InstantiateElementGrid(prefabGate, currentTile.getPosition(), rotation);
         currentTile.setContent(doorElement);
-        
+        Game.CharacterSpawnPosition = characterSpawnPositionRelativeToDoor;
+
+
         }    
     public void GenerateChest(Tile[,] tiles)
     {

@@ -13,7 +13,9 @@ public class Game : MonoBehaviour
     public static Game game = null;
 
     protected bool eventSet = false;
-    
+
+    static Vector2Int characterSpawnPosition;
+    static public Vector2Int CharacterSpawnPosition {get; set;}
     void Awake()
     {
         if(Game.game == null)
@@ -23,6 +25,7 @@ public class Game : MonoBehaviour
 
         this.room.grid.createGrid();
         addEventsOnTiles();
+        character.Position = CharacterSpawnPosition;
         //character.transform.SetParent(this.transform);
     }
 
