@@ -91,7 +91,7 @@ public class ElementsGenerator : MonoBehaviour
         Quaternion rotation = Quaternion.identity;
         do
         {
-            int _myRandPosition = Random.Range(1, width);
+            int _myRandPosition = Random.Range(1, width-1);
             
             switch (_sideRandPosition)
             {
