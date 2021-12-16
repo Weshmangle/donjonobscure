@@ -22,7 +22,7 @@ public class Game : MonoBehaviour
         }
         
         addEventsOnTiles();
-        character.transform.SetParent(this.transform);
+        //character.transform.SetParent(this.transform);
     }
 
     // Update is called once per frame
