@@ -37,7 +37,7 @@ public class Game : MonoBehaviour
     {
         this.room.grid.createGrid();
         addEventsOnTiles();
-        character.Position = CharacterSpawnPosition;
+        character.TeleportTo(CharacterSpawnPosition);
         
     }
 
