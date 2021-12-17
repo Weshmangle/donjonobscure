@@ -46,3 +46,4 @@ MonoBehaviour:
   nbChestToSpawn: 4
   nbHoleToSpawn: 5
   nbEnemyToSpawn: 10
+  wallTransparentMat: {fileID: 2100000, guid: 9d32ea0af5302a94c8daca42773681f7, type: 2}
