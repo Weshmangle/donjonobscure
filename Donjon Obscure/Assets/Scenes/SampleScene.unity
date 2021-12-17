@@ -1296,6 +1296,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 113
       objectReference: {fileID: 0}
+    - target: {fileID: 2885637735588404244, guid: 315fe46607b5f0147b169d6f6794aa04, type: 3}
+      propertyPath: wallTransparentMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d32ea0af5302a94c8daca42773681f7, type: 2}
     - target: {fileID: 2892555567290386490, guid: 315fe46607b5f0147b169d6f6794aa04, type: 3}
       propertyPath: m_RootOrder
       value: 112
