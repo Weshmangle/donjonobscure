@@ -30,7 +30,7 @@ public class Game : MonoBehaviour
     
     void Update()
     {
-        
+        showTileInRangeLantern();
     }
 
     protected void initRoom()
@@ -86,6 +86,24 @@ public class Game : MonoBehaviour
         Destroy(this.room.gameObject);
         this.room = newRoom;
         initRoom();
+    }
+
+    protected void showTileInRangeLantern()
+    {
+        Lantern lantern = this.character.lantern;
+
+        if(lantern.IsActive())
+        {
+            for (var x = 0; x < lantern.LightRange()*2 +1; x++)
+            {
+                for (var y = 0; y < lantern.LightRange()*2 + 1; y++)
+                {
+                    int x1 = character.Position.x - lantern.LightRange() + x;
+                    int y1 = character.Position.y - lantern.LightRange() + y;
+                    room.grid.getTile(new Vector2Int(x1, y1));
+                }
+            }
+        }
     }
 
     void CheckTileContent(Tile tile)
