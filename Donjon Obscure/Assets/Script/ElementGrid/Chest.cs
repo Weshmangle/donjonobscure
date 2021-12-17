@@ -12,7 +12,7 @@ public class Chest : ElementGrid
     protected Item content = null;
 
     AudioSource chestsource;//source du son
-    AudioClip chestsound;//son qui serra joué
+    AudioClip chestsound;//son qui serra jouï¿½
     void Start()
     {
         this.open = false;

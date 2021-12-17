@@ -12,7 +12,7 @@ public class Lantern : MonoBehaviour
     int fuelInReserveMax;
     int currentFuelInReserve;
     int radiusMax;
-    int radius;
+    int radius = 1;
     int intensity;
     int intensityMax;
 
@@ -48,7 +48,6 @@ public class Lantern : MonoBehaviour
             this.GetComponent<AudioSource>().mute = false;
             
         }
-
     }
     public bool IsActive()
     {
@@ -68,10 +67,10 @@ public class Lantern : MonoBehaviour
     }
     public int LightRange()
     {
-        if (radius > radiusMax)
+        /*if (radius > radiusMax)
         {
             radius = radiusMax;
-        }
+        }*/
         return radius;
     }    
     public int IntensityStatus()
