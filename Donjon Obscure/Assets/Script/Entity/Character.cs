@@ -90,5 +90,7 @@ public class Character : Entity
     protected override void Die()
     {
         Debug.Log("Character is dead");
+        //jour le son de la mort
+        this.GetComponent<AudioSource>().PlayOneShot(this.GetComponent<AudioSource>().clip);
     }
 }

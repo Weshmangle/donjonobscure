@@ -38,6 +38,7 @@ public class Game : MonoBehaviour
         this.room.grid.createGrid();
         addEventsOnTiles();
         character.Position = CharacterSpawnPosition;
+        
     }
 
     public void addEventsOnTiles()

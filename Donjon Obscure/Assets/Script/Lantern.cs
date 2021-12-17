@@ -20,6 +20,8 @@ public class Lantern : MonoBehaviour
     [SerializeField, Range(0, 10)]
     int fuelConsumptionCost;
 
+
+    public AudioClip[] torchSound;
     private void Awake()
     {
 
@@ -33,12 +35,19 @@ public class Lantern : MonoBehaviour
 
     public void SetActiveLantern()
     {
-        if(!IsActive() && currentFuelInReserve > 0)
+        if (!IsActive() && currentFuelInReserve > 0)
         {
             ConsumeFuel();
             isActive = true;
+            this.GetComponent<AudioSource>().mute = true;
         }
-        else isActive = false;
+        else
+        {
+            isActive = false;            
+            this.GetComponent<AudioSource>().PlayOneShot(torchSound[1]);
+            this.GetComponent<AudioSource>().mute = false;
+            
+        }
 
     }
     public bool IsActive()

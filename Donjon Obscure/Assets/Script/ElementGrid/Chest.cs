@@ -10,10 +10,15 @@ public class Chest : ElementGrid
     protected GameObject head;
     
     protected Item content = null;
-    
+
+    AudioSource chestsource;//source du son
+    AudioClip chestsound;//son qui serra joué
     void Start()
     {
         this.open = false;
+        // je donne la source a audiosource et le clip a audioclip
+        chestsource = this.GetComponent<AudioSource>();
+        chestsound = this.GetComponent<AudioSource>().clip;
     }
 
     void Update()
@@ -26,17 +31,21 @@ public class Chest : ElementGrid
             {
                 this.head.transform.Rotate(new Vector3(-.25f,0,0), Space.World);
             }
+            
         }
     }
-    
-    
+
+
     public void Open()
     {
         this.open = true;
+        //quand le coffre s'ouvre on joue le son
+        chestsource.PlayOneShot(chestsound);
     }
 
     public bool isOpen()
     {
+        
         return this.open;
     }
 

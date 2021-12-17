@@ -9,7 +9,7 @@ public class Gate : ElementGrid
     bool isOpen, isLocked;
     public void GameSetEnd()
     {
-
+        this.GetComponent<AudioSource>().PlayOneShot(this.GetComponent<AudioSource>().clip);
     }
     public void LoadNextRoom()
     {
