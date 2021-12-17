@@ -52,6 +52,7 @@ public class Tile : MonoBehaviour
     public void showTile(bool show)
     {
         lighted.GetComponentInChildren<Renderer>().enabled = show;
+        
         if(content != null)
         {
             content.GetComponentInChildren<Renderer>().enabled = show;
