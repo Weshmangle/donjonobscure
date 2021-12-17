@@ -55,11 +55,20 @@ public class ElementsGenerator : MonoBehaviour
         GenerateHole(tiles);
         //GenerateEnemy(tiles);
     }
+    protected void setAlphaWall(ElementGrid wall, float alpha)
+    {
+         Renderer renderer = wall.GetComponentInChildren<Renderer>();
+        Color color = renderer.material.color;
+        color.a = alpha;
+        renderer.material.color = color;
+    }
+
     public void GenerateExternWall(Tile[,] tiles)
     {
         for (int i = 0; i < width; i++)
         {
             ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[i, 0].Position,rotationTop);
+            setAlphaWall(wallExternElement, 0);
             tiles[i,0].setContent(wallExternElement);
             
         }
@@ -72,6 +81,7 @@ public class ElementsGenerator : MonoBehaviour
         for (int i = 0; i < height; i++)
         {
             ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[0, i].Position, rotationRight);
+            setAlphaWall(wallExternElement, 0);
             tiles[0, i].setContent(wallExternElement);
             
         }
@@ -121,16 +131,14 @@ public class ElementsGenerator : MonoBehaviour
             }
         }
         while (typeof(Gate).IsInstanceOfType(currentTile.getContent()));
+        
+        Gate doorElement = InstantiateElementGrid(prefabGate, currentTile.Position, rotation) as Gate; 
 
-<<<<<<< HEAD
-        ElementGrid doorElement = InstantiateElementGrid(prefabGate, currentTile.Position, rotation);
-=======
-        Gate doorElement = InstantiateElementGrid(prefabGate, currentTile.getPosition(), rotation) as Gate;
         if(isExitGate)
         {
             doorElement.IsExitGate = true;
         }
->>>>>>> 40af8f11a50e3f46a346c93c8fc7e7e05fa619cd
+        
         currentTile.setContent(doorElement);
         Game.CharacterSpawnPosition = characterSpawnPositionRelativeToDoor;
 
