@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95462aeba688efe469516b3e8702ee34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothTime: 0
   lantern: {fileID: 6917229045273511985}
 --- !u!1001 &3473248291042715667
 PrefabInstance:
@@ -246,7 +247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1445611025738411178, guid: 76fd8da9cd0bf784faf7e86c47ab9b28, type: 3}
       propertyPath: m_Intensity
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1445611025738411178, guid: 76fd8da9cd0bf784faf7e86c47ab9b28, type: 3}
       propertyPath: m_SpotAngle

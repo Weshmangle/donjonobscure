@@ -12,7 +12,7 @@ public class Tile : MonoBehaviour
     protected GameObject Over;
     
     [SerializeField]
-    protected Renderer lighted;
+    protected GameObject lighted;
     
     [SerializeField]
     protected UnityEvent<Tile> uEvent;
@@ -51,7 +51,12 @@ public class Tile : MonoBehaviour
 
     public void showTile(bool show)
     {
-        lighted.GetComponent<Renderer>().enabled = show;
+        lighted.GetComponentInChildren<Renderer>().enabled = show;
+        
+        if(content != null)
+        {
+            content.GetComponentInChildren<Renderer>().enabled = show;
+        }
     }
 
     public void setEvent(UnityAction<Tile> action)

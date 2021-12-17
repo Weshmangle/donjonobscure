@@ -30,7 +30,6 @@ public class Game : MonoBehaviour
     
     void Update()
     {
-        showTileInRangeLantern();
     }
 
     protected void initRoom()
@@ -91,16 +90,37 @@ public class Game : MonoBehaviour
     protected void showTileInRangeLantern()
     {
         Lantern lantern = this.character.lantern;
-
-        if(lantern.IsActive())
+        //lantern.SetActiveLantern();
+        //if(lantern.IsActive())
+        if(true)
         {
-            for (var x = 0; x < lantern.LightRange()*2 +1; x++)
+            var x = 0;
+            var y = 0;
+
+            var width = 10;
+            
+            float distanceLight = Vector2Int.Distance(new Vector2Int(lantern.LightRange(), lantern.LightRange()),character.Position);
+
+            Debug.Log("lantern.LightRange() " + lantern.LightRange());
+            
+            foreach (var tile in room.grid.getTiles())
             {
-                for (var y = 0; y < lantern.LightRange()*2 + 1; y++)
+                float currentDistance = Vector2Int.Distance(character.Position, tile.Position);
+                bool showTile = Vector2Int.Distance(character.Position, tile.Position) < distanceLight;
+
+                if(showTile)
                 {
-                    int x1 = character.Position.x - lantern.LightRange() + x;
-                    int y1 = character.Position.y - lantern.LightRange() + y;
-                    room.grid.getTile(new Vector2Int(x1, y1));
+                    Debug.Log(character.Position + " " + tile.Position + " max " + distanceLight + " current" + currentDistance);
+                }
+
+                tile.showTile(!showTile);
+
+                x++;
+                
+                if(x == width)
+                {
+                    y++;
+                    x = 0;
                 }
             }
         }
@@ -113,10 +133,7 @@ public class Game : MonoBehaviour
             switch (tile.getContent())
             {
                 case null:
-                    //character.Move(tile.getPosition);
                     character.Move(tile.Position);
-                    Debug.Log(character.Position);
-                    //tile.setContent(character);
                     break;
                 case Chest chest:
                     chest.Open();
@@ -149,6 +166,7 @@ public class Game : MonoBehaviour
                 character.lantern.ConsumeFuel();
             }
         }
+        showTileInRangeLantern();
         EnemyTurn(tile);
     }
 }

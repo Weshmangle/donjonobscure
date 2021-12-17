@@ -15,7 +15,7 @@ public class Chest : ElementGrid
     Quaternion rot;
 
     AudioSource chestsource;//source du son
-    AudioClip chestsound;//son qui serra joué
+    AudioClip chestsound;//son qui serra jouï¿½
     void Awake()
     {
         rot = head.transform.rotation;
@@ -27,18 +27,13 @@ public class Chest : ElementGrid
 
     void Update()
     {
-        if(targetRotation == rot.w)
-        {
-            isAnimationOver = true;
-        }
         if(this.open)
         {
-
+            Quaternion rot = this.head.transform.rotation;
             
-            
-            if(rot.w > targetRotation)
+            if(rot.w > 0.75)
             {
-                head.transform.Rotate(new Vector3(-.25f,0,0), Space.World);
+                this.head.transform.Rotate(new Vector3(-.25f,0,0), Space.World);
             }
             
         }
