@@ -15,5 +15,13 @@ public class Enemy : Entity
     {
         Debug.Log("Enemy is dead");
         Destroy(this.gameObject);
+
     }
+
+    public void LookAtPlayer(Character player)
+    {
+        Debug.Log(player);
+        transform.LookAt(player.gameObject.transform);
+    }
+
 }
