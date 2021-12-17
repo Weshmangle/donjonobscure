@@ -16,6 +16,9 @@ public class ElementsGenerator : MonoBehaviour
 
     int width = 10;
     int height = 10;
+
+    [SerializeField]
+    Material wallTransparentMat;
     
     
     Quaternion rotationTop = Quaternion.Euler(0.0f, 0.0f, 0.0f);
@@ -57,10 +60,8 @@ public class ElementsGenerator : MonoBehaviour
     }
     protected void setAlphaWall(ElementGrid wall, float alpha)
     {
-         Renderer renderer = wall.GetComponentInChildren<Renderer>();
-        Color color = renderer.material.color;
-        color.a = alpha;
-        renderer.material.color = color;
+        Renderer renderer = wall.GetComponentInChildren<Renderer>();
+        renderer.material = wallTransparentMat;
     }
 
     public void GenerateExternWall(Tile[,] tiles)
