@@ -11,10 +11,19 @@ public class Chest : ElementGrid
     
     protected Item content = null;
 
+    float targetRotation = 0.75f;
+    Quaternion rot;
+
     AudioSource chestsource;//source du son
+<<<<<<< HEAD
     AudioClip chestsound;//son qui serra jouï¿½
     void Start()
+=======
+    AudioClip chestsound;//son qui serra joué
+    void Awake()
+>>>>>>> a79c18cbf1402d06bbec2a2747776e3338813e25
     {
+        rot = head.transform.rotation;
         this.open = false;
         // je donne la source a audiosource et le clip a audioclip
         chestsource = this.GetComponent<AudioSource>();
