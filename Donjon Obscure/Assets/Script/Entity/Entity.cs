@@ -33,6 +33,10 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+    }
+
     public virtual void Move(Vector2Int tilePosition)
     {
         Position = tilePosition;
