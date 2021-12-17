@@ -12,6 +12,9 @@ public class Tile : MonoBehaviour
     protected GameObject Over;
     
     [SerializeField]
+    protected Renderer lighted;
+    
+    [SerializeField]
     protected UnityEvent<Tile> uEvent;
     protected Vector2Int position;
 
@@ -44,6 +47,11 @@ public class Tile : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void showTile(bool show)
+    {
+        lighted.GetComponent<Renderer>().enabled = show;
     }
 
     public void setEvent(UnityAction<Tile> action)

@@ -12,7 +12,7 @@ public class ElementsGenerator : MonoBehaviour
     Chest prefabChest;
     Obstacle prefabObstacle;
     Gate prefabGate;
-    Gate prefabEnemy;
+    Enemy prefabEnemy;
 
     int width = 10;
     int height = 10;
@@ -46,7 +46,7 @@ public class ElementsGenerator : MonoBehaviour
          prefabChest = (Resources.Load("Prefabs/Chest") as GameObject).GetComponent<Chest>();
          prefabObstacle = (Resources.Load("Prefabs/Obstacle") as GameObject).GetComponent<Obstacle>();
          prefabGate = (Resources.Load("Prefabs/Gate") as GameObject).GetComponent<Gate>();
-         //prefabEnemy = (Resources.Load("Prefabs/Enemy") as GameObject).GetComponent<Enemy>();
+         prefabEnemy = (Resources.Load("Prefabs/Enemy") as GameObject).GetComponent<Enemy>();
 
         //Tile chestTile = tiles[0,0];
         //GenerateChestList(tiles);
@@ -56,14 +56,13 @@ public class ElementsGenerator : MonoBehaviour
         GenerateGate(tiles,false);
         GenerateChest(tiles);
         GenerateHole(tiles);
-        //GenerateEnemy(tiles);
+        GenerateEnemy(tiles);
     }
     protected void setAlphaWall(ElementGrid wall, float alpha)
     {
         Renderer renderer = wall.GetComponentInChildren<Renderer>();
         renderer.material = wallTransparentMat;
     }
-
     public void GenerateExternWall(Tile[,] tiles)
     {
         for (int i = 0; i < width; i++)
@@ -169,7 +168,6 @@ public class ElementsGenerator : MonoBehaviour
             {
                 ElementGrid holeElement = InstantiateElementGrid(prefabHole, tiles[_myRandPositionX, _myRandPositionZ].Position);
                 tiles[_myRandPositionX, _myRandPositionZ].setContent(holeElement);
-                
             }
         }
     }
@@ -179,19 +177,23 @@ public class ElementsGenerator : MonoBehaviour
         {
             int _myRandPositionX = Random.Range(1, width);
             int _myRandPositionZ = Random.Range(1, height);
-            if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
+
+            Tile tile = tiles[_myRandPositionX, _myRandPositionZ];
+
+            if (tile.getContent() == null)
             {
-                ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tiles[i, 0].Position);
-                tiles[_myRandPositionX, _myRandPositionZ].setContent(enemyElement);
-                
+                ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tile.Position);
+                tile.setContent(enemyElement);
+                (enemyElement as Enemy).TeleportTo(tile.Position);
             }
         }
     }
+
     public ElementGrid InstantiateElementGrid(ElementGrid element, Vector2Int position)
     {
-        ElementGrid elementReturn = Instantiate(element, new Vector3(position.x, 0, position.y), Quaternion.identity, this.transform);
-        return elementReturn;
+        return Instantiate(element, new Vector3(position.x, 0, position.y), Quaternion.identity, this.transform);
     }
+
     public ElementGrid InstantiateElementGrid(ElementGrid element, Vector2Int position, Quaternion rotation)
     {
         return Instantiate(element, new Vector3(position.x, 0, position.y), rotation, this.transform);

@@ -3604,6 +3604,10 @@ PrefabInstance:
       propertyPath: m_Lightmapping
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6781077701649794866, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: smoothTime
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 6781077701649794867, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: m_RootOrder
       value: 4
