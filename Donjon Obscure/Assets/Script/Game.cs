@@ -107,6 +107,10 @@ public class Game : MonoBehaviour
                     character.Move(tile.Position);
                     this.reloadRoom();
                     break;
+
+                case Enemy enemy:
+                    character.Attack(enemy);
+                    break;
                     /*
                 case "MOB":
                     EnemyTurn();
@@ -127,5 +131,6 @@ public class Game : MonoBehaviour
                 character.lantern.ConsumeFuel();
             }
         }
+        EnemyTurn(tile);
     }
 }

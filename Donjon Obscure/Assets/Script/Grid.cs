@@ -52,7 +52,6 @@ public class Grid : MonoBehaviour
         {
             for (var y = 0; y < HEIGHT; y++)
             {
-                Debug.Log("createTile");
                 GameObject obj = Instantiate(Resources.Load("Prefabs/Tile"), new Vector3(x,0,y), transform.rotation, listTiles.transform) as GameObject;
                 Tile tile = obj.GetComponent<Tile>();
                 tile.Position = new Vector2Int(x,y);

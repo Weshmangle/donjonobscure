@@ -13,10 +13,10 @@ public enum Stat
     MentalSanity,
     MentalSanityMax,
 }
-public abstract class Entity : MonoBehaviour
+public abstract class Entity : ElementGrid
 {
-
     protected int healthPoint;
+    
     protected int healthPointMax;
     
     protected int attackStrenght;
@@ -29,11 +29,10 @@ public abstract class Entity : MonoBehaviour
 
     public Vector2Int Position
     {
-        get { return position; }
+        get {return position;}
         set
         {
             position = value;
-            
         }
     }
 
@@ -46,11 +45,13 @@ public abstract class Entity : MonoBehaviour
     {
         Position = tilePosition;
     }
+
     public virtual void TeleportTo(Vector2Int tilePosition)
     {
         position = tilePosition;
         transform.position = new Vector3(tilePosition.x, 0, tilePosition.y) ;
     }
+    
     public void Attack(Entity target)
     {
         target.TakeDamage(attackStrenght);
@@ -104,5 +105,4 @@ public abstract class Entity : MonoBehaviour
                 break;
         }
     }
-        
 }
