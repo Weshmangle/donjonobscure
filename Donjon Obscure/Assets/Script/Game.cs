@@ -30,6 +30,7 @@ public class Game : MonoBehaviour
     
     void Update()
     {
+        showTileInRangeLantern();
     }
 
     protected void initRoom()
@@ -94,35 +95,23 @@ public class Game : MonoBehaviour
         //if(lantern.IsActive())
         if(true)
         {
-            var x = 0;
-            var y = 0;
-
-            var width = 10;
-            
-            float distanceLight = Vector2Int.Distance(new Vector2Int(lantern.LightRange(), lantern.LightRange()),character.Position);
-
-            Debug.Log("lantern.LightRange() " + lantern.LightRange());
-            
             foreach (var tile in room.grid.getTiles())
             {
-                float currentDistance = Vector2Int.Distance(character.Position, tile.Position);
-                bool showTile = Vector2Int.Distance(character.Position, tile.Position) < distanceLight;
-
-                if(showTile)
+                tile.showTile(false);
+            }
+            
+            for (var x = -character.lantern.LightRange(); x <= character.lantern.LightRange(); x++)
+            {
+                for (var y = -character.lantern.LightRange(); y <= character.lantern.LightRange(); y++)
                 {
-                    Debug.Log(character.Position + " " + tile.Position + " max " + distanceLight + " current" + currentDistance);
-                }
-
-                tile.showTile(!showTile);
-
-                x++;
-                
-                if(x == width)
-                {
-                    y++;
-                    x = 0;
+                    Debug.Log(x + " " + y);
+                    var vect = new Vector2Int(character.Position.x + x, character.Position.y + y);
+                    Tile tile = room.grid.getTile(vect);
+                    tile.showTile(true);
                 }
             }
+            
+            room.grid.getTile(new Vector2Int(1,1)).showTile(true);
         }
     }
 
@@ -166,7 +155,7 @@ public class Game : MonoBehaviour
                 character.lantern.ConsumeFuel();
             }
         }
-        showTileInRangeLantern();
+
         EnemyTurn(tile);
     }
 }

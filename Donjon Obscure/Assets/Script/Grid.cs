@@ -33,14 +33,15 @@ public class Grid : MonoBehaviour
 
     public Tile getTile(Vector2Int vector2)
     {
-        return this.getTiles()[0];
+        foreach (var tile in this.getTiles())
+        {
+            if(tile.Position.x == vector2.x && tile.Position.y == vector2.y )
+            {
+                return tile;
+            }
+        }
+        return null;
     }
-
-    protected IEnumerator lol()
-    {
-        yield return new WaitForSeconds(1.0f);
-    }
-    
 
     public void createGrid()
     {

@@ -51,12 +51,20 @@ public class Tile : MonoBehaviour
 
     public void showTile(bool show)
     {
-        lighted.GetComponentInChildren<Renderer>().enabled = show;
-        
+        lighted.GetComponentInChildren<Renderer>().enabled = !show;
+            
         if(content != null)
         {
-            content.GetComponentInChildren<Renderer>().enabled = show;
+            if(!typeof(Gate).IsInstanceOfType(content) && !typeof(Wall).IsInstanceOfType(content))
+            {
+                content.transform.localScale = show ? new Vector3(1,1,1) : new Vector3(0,0,0);
+            }
+            if(typeof(Hole).IsInstanceOfType(content))
+            {
+                 this.GetComponentInChildren<Renderer>().enabled = !show;
+            }
         }
+        
     }
 
     public void setEvent(UnityAction<Tile> action)
