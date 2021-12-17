@@ -96,7 +96,7 @@ public class Game : MonoBehaviour
             {
                 case null:
                     //character.Move(tile.getPosition);
-                    character.Move(new Vector2Int(tile.Position.x, tile.Position.y));
+                    character.Move(tile.Position);
                     Debug.Log(character.Position);
                     //tile.setContent(character);
                     break;
