@@ -13,7 +13,6 @@ public class ElementsGenerator : MonoBehaviour
     Obstacle prefabObstacle;
     Gate prefabGate;
     Enemy prefabEnemy;
-
     int width = 10;
     int height = 10;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Game : MonoBehaviour
     
     [SerializeField]
     protected Character character;
+
+    [SerializeField]
+    protected GameObject panelDie;
 
     public static Game game = null;
 
@@ -26,6 +30,7 @@ public class Game : MonoBehaviour
         }
         
         this.initRoom();
+        this.panelDie.SetActive(false);
     }
     
     void Update()
@@ -38,7 +43,9 @@ public class Game : MonoBehaviour
         this.room.grid.createGrid();
         addEventsOnTiles();
         character.TeleportTo(CharacterSpawnPosition);
-        
+        //tileCharacter = room.grid.getTile(CharacterSpawnPosition);
+        //tileCharacter.setContent(character);
+        room.grid.getTile(CharacterSpawnPosition).setContent(character);
     }
 
     public void addEventsOnTiles()
@@ -82,29 +89,27 @@ public class Game : MonoBehaviour
 
     protected void reloadRoom()
     {
-        Room newRoom = Instantiate((Resources.Load("Prefabs/Room") as GameObject).GetComponent<Room>());
+        this.panelDie.SetActive(true);
+        /*Room newRoom = Instantiate((Resources.Load("Prefabs/Room") as GameObject).GetComponent<Room>());
         Destroy(this.room.gameObject);
         this.room = newRoom;
-        initRoom();
+        initRoom();*/
     }
 
     protected void showTileInRangeLantern()
     {
         Lantern lantern = this.character.lantern;
-        //lantern.SetActiveLantern();
-        //if(lantern.IsActive())
-        if(true)
+        if(lantern.IsActive())
         {
             foreach (var tile in room.grid.getTiles())
             {
                 tile.showTile(false);
             }
-            
+
             for (var x = -character.lantern.LightRange(); x <= character.lantern.LightRange(); x++)
             {
                 for (var y = -character.lantern.LightRange(); y <= character.lantern.LightRange(); y++)
                 {
-                    Debug.Log(x + " " + y);
                     var vect = new Vector2Int(character.Position.x + x, character.Position.y + y);
                     Tile tile = room.grid.getTile(vect);
                     tile.showTile(true);
@@ -112,6 +117,27 @@ public class Game : MonoBehaviour
             }
             
             room.grid.getTile(new Vector2Int(1,1)).showTile(true);
+        }
+        else
+        {
+            Tile tileCharacter = null;
+
+            foreach (var tile in room.grid.getTiles())
+            {
+                tile.showTile(tile.getContent() as Character);
+                if(tile.getContent() as Character)
+                    tileCharacter = tile;
+            }
+
+            if(tileCharacter != null)
+            {
+                Vector2Int pos = tileCharacter.Position;
+                var positions = new Vector2Int[]{new Vector2Int(pos.x+1, pos.y), new Vector2Int(pos.x-1, pos.y), new Vector2Int(pos.x, pos.y+1), new Vector2Int(pos.x, pos.y-1)};
+                foreach (var position in positions)
+                {
+                    this.room.grid.getTile(position).showTile(true);
+                }
+            }
         }
     }
 
@@ -122,7 +148,22 @@ public class Game : MonoBehaviour
             switch (tile.getContent())
             {
                 case null:
+
+                    Tile tileCharacter = null;
+
+                    foreach (var tileGrid in this.room.grid.getTiles())
+                    {
+                        if(tileGrid.getContent() as Character)
+                        {
+                            tileCharacter = tileGrid;
+                        }
+                    }
                     character.Move(tile.Position);
+                    tile.setContent(character);
+                    if(tileCharacter != null)
+                    {
+                       tileCharacter.setContent(null);
+                    }
                     break;
                 case Chest chest:
                     chest.Open();
@@ -131,10 +172,16 @@ public class Game : MonoBehaviour
                     character.Move(tile.Position);
                     this.reloadRoom();
                     break;
-
                 case Enemy enemy:
                     character.Attack(enemy);
+                    if(enemy.isDie())
+                    {
+                        tile.setContent(null);
+                    }
                     break;
+                case Character contentCharacter:
+                    character.LightLantern();
+                break;
                     /*
                 case "MOB":
                     EnemyTurn();

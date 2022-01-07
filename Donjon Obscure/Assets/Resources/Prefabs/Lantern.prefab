@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light: {fileID: 1445611025738411178}
+  lightObj: {fileID: 1445611025738411178}
   fuelConsumptionCost: 0
+  torchSound: []
 --- !u!1 &6505320946774531158
 GameObject:
   m_ObjectHideFlags: 0

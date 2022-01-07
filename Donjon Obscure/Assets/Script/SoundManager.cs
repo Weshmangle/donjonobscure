@@ -11,7 +11,6 @@ public class SoundManager : MonoBehaviour
     {
         source = this.GetComponent<AudioSource>();
         sounds = this.GetComponent<AudioSource>().clip;
-        
     }
     
     

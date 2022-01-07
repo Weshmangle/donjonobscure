@@ -84,7 +84,6 @@ public class Character : Entity
     public void LightLantern()
     {
         lantern.SetActiveLantern();
-        
     }
 
     protected override void Die()

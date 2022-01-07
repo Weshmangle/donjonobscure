@@ -79,14 +79,13 @@ public class Tile : MonoBehaviour
 
     public void setContent(ElementGrid element)
     {
+        this.content = element;
+
         if(this.content != null)
         {
-            Destroy(this.content.gameObject);
+            //Destroy(this.content.gameObject);
+            element.transform.SetParent(this.transform);
         }
-        
-        this.content = element;
-        
-        element.transform.SetParent(this.transform);
 
         if(typeof(Hole).IsInstanceOfType(element))
         {

@@ -9,14 +9,14 @@ public class Lantern : MonoBehaviour
     Light light;
     //public static Lantern Instance {get; private set;}
 
-    int fuelInReserveMax;
-    int currentFuelInReserve;
+    int fuelInReserveMax = 10;
+    int currentFuelInReserve = 7;
     int radiusMax;
     int radius = 1;
     int intensity;
     int intensityMax;
 
-    bool isActive;
+    bool isActive = false;
     [SerializeField, Range(0, 10)]
     int fuelConsumptionCost;
 
@@ -39,14 +39,15 @@ public class Lantern : MonoBehaviour
         {
             ConsumeFuel();
             isActive = true;
+            light.enabled = true;
             this.GetComponent<AudioSource>().mute = true;
         }
         else
         {
-            isActive = false;            
+            isActive = false;
+            light.enabled = true;
             this.GetComponent<AudioSource>().PlayOneShot(torchSound[1]);
             this.GetComponent<AudioSource>().mute = false;
-            
         }
     }
     public bool IsActive()

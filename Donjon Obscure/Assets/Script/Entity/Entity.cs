@@ -24,8 +24,10 @@ public abstract class Entity : ElementGrid
     protected Vector2Int position;
 
     Vector3 velocity = Vector3.zero;
+
     [SerializeField, Range(0f, 300f)]
     float smoothTime = 150f;
+    public GameObject model3D;
 
     public Vector2Int Position
     {
@@ -52,6 +54,9 @@ public abstract class Entity : ElementGrid
 
     public virtual void Move(Vector2Int tilePosition)
     {
+        var pos = Position - tilePosition;
+        Debug.Log("pos " +  pos);
+        this.model3D.transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
         Position = tilePosition;
     }
 
@@ -81,10 +86,16 @@ public abstract class Entity : ElementGrid
         //return entity.position - this.position;
     }
 
+    public bool isDie()
+    {
+        return this.healthPoint <= 0;
+    }
+
     protected virtual void Die()
     {
         Debug.Log("Entity died");
     }
+    
     public virtual void KillEntity()
     {
         TakeDamage(healthPoint);

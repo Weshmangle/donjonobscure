@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartButon : MonoBehaviour
+public class PanelDie : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public void Scene1()
+
+    public void Retry()
     {
         SceneManager.LoadScene("Main");
+    }
+
+    public void backMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 }
