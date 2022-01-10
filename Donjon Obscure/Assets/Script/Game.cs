@@ -102,7 +102,7 @@ public class Game : MonoBehaviour
 
     protected void showTileInRangeLantern()
     {
-        Lantern lantern = this.character.lantern;
+        Lantern lantern = character.lantern;
         if(lantern.IsActive())
         {
             foreach (var tile in room.grid.getTiles())
