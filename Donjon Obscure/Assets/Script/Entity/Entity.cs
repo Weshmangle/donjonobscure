@@ -12,6 +12,8 @@ public enum Stat
     ArmorPointMax,
     MentalSanity,
     MentalSanityMax,
+    CurrentFuelInReserve,
+    FuelInReserveMax,
 }
 public abstract class Entity : ElementGrid
 {
