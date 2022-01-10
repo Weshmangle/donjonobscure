@@ -61,7 +61,6 @@ public class Lantern : MonoBehaviour
     } 
     public void AddFuelInReserve(int fuelToAdd)
     {
-        Debug.Log("Current fuel before if " + (currentFuelInReserve + fuelToAdd));
         if (currentFuelInReserve + fuelToAdd > fuelInReserveMax)
         {
             currentFuelInReserve = fuelInReserveMax;
@@ -70,7 +69,6 @@ public class Lantern : MonoBehaviour
         {
             currentFuelInReserve += fuelToAdd;
         }
-        Debug.Log("Current fuel after if " + (currentFuelInReserve));
     }
     public int LightRange()
     {
