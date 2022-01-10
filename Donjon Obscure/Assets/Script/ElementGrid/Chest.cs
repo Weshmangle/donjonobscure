@@ -4,30 +4,37 @@ using UnityEngine;
 
 public class Chest : ElementGrid
 {
-    protected bool open;
-    
     [SerializeField]
-    protected GameObject head;
+    GameObject head, lootPopup;
     
-    protected Item content = null;
+    Item content = null;
+    [SerializeField]
+    List<Item> loots;
+
+    bool isOpen;
 
     float targetRotation = 0.75f;
     Quaternion rot;
 
     AudioSource chestsource;//source du son
     AudioClip chestsound;//son qui serra jou�
+
+    Character character;
     void Awake()
     {
         rot = head.transform.rotation;
-        this.open = false;
+        isOpen = false;
         // je donne la source a audiosource et le clip a audioclip
         chestsource = this.GetComponent<AudioSource>();
         chestsound = this.GetComponent<AudioSource>().clip;
+
+        GenerateContent();
     }
 
     void Update()
     {
-        if(this.open)
+        
+        if (isOpen)
         {
             Quaternion rot = this.head.transform.rotation;
             
@@ -42,28 +49,31 @@ public class Chest : ElementGrid
 
     public void Open()
     {
-        this.open = true;
-        //quand le coffre s'ouvre on joue le son
-        chestsource.PlayOneShot(chestsound);
+        if(isOpen)
+        {
+            
+            Game.UpdateCharacter(TakeContent());
+        }
+        else
+        {
+            isOpen = true;
+            //quand le coffre s'ouvre on joue le son
+            chestsource.PlayOneShot(chestsound);
+            lootPopup.SetActive(true);
+        }
+
     }
 
-    public bool isOpen()
+    void GenerateContent()
     {
-        
-        return this.open;
+        content = loots[Random.Range(0, loots.Count)];
+        lootPopup.GetComponent<SpriteRenderer>().sprite = content.Artwork;
     }
 
-    public Item getContent()
+    Item TakeContent()
     {
-        return this.content;
-    }
-
-    public Item takeContent()
-    {
-        Item content = this.content;
-        
-        this.content = null;
-        
+        lootPopup.SetActive(false);
         return content;
+        
     }
 }

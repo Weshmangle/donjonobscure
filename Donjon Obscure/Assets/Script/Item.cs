@@ -2,19 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+
+[CreateAssetMenu(fileName = "New Item", menuName = "Item")]
+public class Item : ScriptableObject
 {
-    protected string type;
+    [SerializeField]
+    Stat bonusType;
+    [SerializeField]
+    new string name, description;
+    [SerializeField]
+    int bonusValue;
+
+    public int BonusValue
+    {
+        get { return bonusValue; }
+    }
+    [SerializeField]
+    Sprite artwork;
+
+    public Sprite Artwork
+    {
+        get { return artwork; }
+    }
+
+    public Stat BonusType
+    {
+        get { return bonusType; }
+    }
+
     
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-    }
 }
