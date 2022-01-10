@@ -9,11 +9,8 @@ public class Game : MonoBehaviour
     protected Room room;
     
     [SerializeField]
-    protected static Character character;
-    public static Character Character
-    {
-        get { return character; }
-    }
+    protected Character character;
+    
 
     [SerializeField]
     protected GameObject panelDie;
@@ -57,6 +54,30 @@ public class Game : MonoBehaviour
         foreach (var tile in this.room.grid.getTiles())
         {
             tile.setEvent(CheckTileContent);
+        }
+    }
+
+    public static void UpdateCharacter(Item item)
+    {
+        
+        switch (item.BonusType)
+        {
+            case Stat.HealthPoint:
+            case Stat.HealthPointMax:
+            case Stat.AttackStrength:
+            case Stat.ArmorPoint:
+            case Stat.ArmorPointMax:
+            case Stat.MentalSanity:
+            case Stat.MentalSanityMax:
+                game.character.UpdateStat(item.BonusValue, item.BonusType);
+                
+                break;
+            case Stat.CurrentFuelInReserve:
+            case Stat.FuelInReserveMax:
+                game.character.lantern.AddFuelInReserve(item.BonusValue);
+                break;
+            default:
+                break;
         }
     }
 
