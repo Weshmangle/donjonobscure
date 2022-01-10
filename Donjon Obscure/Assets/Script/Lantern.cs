@@ -10,6 +10,10 @@ public class Lantern : MonoBehaviour
     //public static Lantern Instance {get; private set;}
 
     int fuelInReserveMax = 10;
+    public int FuelInReserveMax
+    {
+        get; set;
+    }
     int currentFuelInReserve = 7;
     int radiusMax;
     int radius = 1;

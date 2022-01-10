@@ -73,8 +73,10 @@ public class Game : MonoBehaviour
                 
                 break;
             case Stat.CurrentFuelInReserve:
-            case Stat.FuelInReserveMax:
                 game.character.lantern.AddFuelInReserve(item.BonusValue);
+                break;
+            case Stat.FuelInReserveMax:
+                game.character.lantern.FuelInReserveMax = item.BonusValue;
                 break;
             default:
                 break;
