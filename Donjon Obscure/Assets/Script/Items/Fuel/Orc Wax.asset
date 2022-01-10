@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6c0d2f8496d2e47a9321c7b75da4da, type: 3}
   m_Name: Orc Wax
   m_EditorClassIdentifier: 
-  bonusType: 2
+  bonusType: 7
   name: Orc Wax
   description: Greasy oil made from orc ear wax
   bonusValue: 1
-  BonusValue: 0
   artwork: {fileID: 21300000, guid: 2cc6e691f3f33d14fa1d3779550de806, type: 3}
