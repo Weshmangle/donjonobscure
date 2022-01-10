@@ -9,7 +9,11 @@ public class Game : MonoBehaviour
     protected Room room;
     
     [SerializeField]
-    protected Character character;
+    protected static Character character;
+    public static Character Character
+    {
+        get { return character; }
+    }
 
     [SerializeField]
     protected GameObject panelDie;
