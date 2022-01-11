@@ -13,21 +13,19 @@ public class Chest : ElementGrid
 
     bool isOpen;
 
-    float targetRotation = 0.75f;
-    Quaternion rot;
+    //target rotation y is at 180 because the transform of the chest is 180 when generated to face the player.
+    Quaternion targetRotation = Quaternion.Euler(-25, 180, 0);
+    float smooth = 3;
 
     AudioSource chestsource;//source du son
     AudioClip chestsound;//son qui serra jou�
 
-    Character character;
     void Awake()
     {
-        rot = head.transform.rotation;
         isOpen = false;
         // je donne la source a audiosource et le clip a audioclip
         chestsource = this.GetComponent<AudioSource>();
         chestsound = this.GetComponent<AudioSource>().clip;
-
         GenerateContent();
     }
 
@@ -36,13 +34,7 @@ public class Chest : ElementGrid
         
         if (isOpen)
         {
-            Quaternion rot = this.head.transform.rotation;
-            
-            if(rot.w > 0.75)
-            {
-                this.head.transform.Rotate(new Vector3(-.25f,0,0), Space.World);
-            }
-            
+                head.transform.rotation = Quaternion.Slerp(head.transform.rotation, targetRotation, Time.deltaTime * smooth);
         }
     }
 

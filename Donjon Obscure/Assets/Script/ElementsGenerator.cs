@@ -152,7 +152,7 @@ public class ElementsGenerator : MonoBehaviour
 
             if (tiles[_myRandPositionX, _myRandPositionZ].getContent() == null)
             {
-                ElementGrid chestElement = InstantiateElementGrid(prefabChest, tiles[_myRandPositionX, _myRandPositionZ].Position);
+                ElementGrid chestElement = InstantiateElementGrid(prefabChest, tiles[_myRandPositionX, _myRandPositionZ].Position, Quaternion.Euler(0, 180, 0));
                 tiles[_myRandPositionX, _myRandPositionZ].setContent(chestElement);                
             }
         }
