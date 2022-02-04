@@ -5,7 +5,11 @@ using UnityEngine;
 public class Gate : ElementGrid
 {
     bool isExitGate = false;
-    public bool IsExitGate{ get; set; }
+    public bool IsExitGate
+    {
+        get { return isExitGate; } 
+        set { isExitGate = value; } 
+    }
     bool isOpen, isLocked;
     public void GameSetEnd()
     {

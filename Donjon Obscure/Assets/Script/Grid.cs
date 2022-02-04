@@ -17,14 +17,6 @@ public class Grid : MonoBehaviour
     [SerializeField]
     protected ElementsGenerator elementGenerator;
 
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     public Tile[] getTiles()
     {

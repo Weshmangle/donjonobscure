@@ -9,10 +9,12 @@ public class Item : ScriptableObject
     [SerializeField]
     Stat bonusType;
     [SerializeField]
-    new string name, description;
+    new string name;
+    [SerializeField]
+    string description;
     [SerializeField]
     int bonusValue;
-
+    
     public int BonusValue
     {
         get { return bonusValue; }
