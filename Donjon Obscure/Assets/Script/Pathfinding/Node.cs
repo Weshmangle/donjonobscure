@@ -1,31 +1,39 @@
-
+using UnityEngine;
 public class Node
 {
-    public float g;
-    public float h;
-    public float f;
-    public Node parent;
-    public Node position;
 
-    public Node(Node parent = null, Node position = null)
+    public Vector2Int position;
+    public float gCost;
+    public float heuristic;
+    public float fCost;
+    public GameObject nodePrefab;
+    public Node parent;
+
+    public Node(Vector2Int _position, float _gCost, float _heuristic, float _fCost, GameObject _nodePrefab, Node parent)
     {
         this.parent = parent;
-        this.position = position;
-        this.g = 0;
-        this.f = 0;
-        this.h = 0;
+        this.position = _position;
+        this.gCost = _gCost;
+        this.heuristic = _heuristic;
+        this.fCost = _fCost;
     }
 
     public override bool Equals(object other)
     {
         if(other.GetType() == typeof(Node))
         {
-            Node node = other as Node;
-            return this.position == node.position;
+            if ((other == null) || !this.GetType().Equals(other.GetType()))
+                return false;
+            else
+                return position.Equals(((Node)other).position);
         }
         else
         {
             return false;
         }
+    }
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

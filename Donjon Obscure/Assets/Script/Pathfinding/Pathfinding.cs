@@ -1,59 +1,89 @@
-    using System.Collections.Generic;
-public class PathFinding
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+public class PathFinding : MonoBehaviour
 {
-    public static List<Node> search(Node[,] grid, Node from, Node to)
+    public Grid grid;
+    public Material closedMaterial;
+    public Material openMaterial;
+
+    public List<Node> open = new List<Node>();
+    public List<Node> closed = new List<Node>();
+
+    public GameObject startNodePrefab;
+    public GameObject endNodePrefab;
+    public GameObject nodePrefab;
+
+    GameObject lastPostHightlight;
+
+    Node endNode;
+    Node startNode;
+    Node currentNode;
+
+    private void Awake()
     {
-        Node start =  new Node(null, from);
-        start.g = start.h = start.f = 0;
-        Node end =  new Node(null, to);
-        end.g = end.h = end.f = 0;
+        grid = Game.game.room.grid;
+    }
 
-        List<Node> open_list = new List<Node>();
-        List<Node> closed_list = new List<Node>();
+    void BeginSearch(Vector2Int startPosition, Vector2Int endPosition)
+    {
+        
+        //// get all locations of that aint a wall
+        //List<Vector2Int> positions = new List<Vector2Int>();
 
-        open_list.Add(start);
+        //for (int z = 1; z < grid.depth - 1; z++)
+        //{
+        //    for (int x = 1; x < grid.width - 1; x++)
+        //    {
+        //        if (grid.map[x, z] != 1)
+        //            locations.Add(new Vector2Int(x, z));
+        //    }
+        //}
 
-        while(open_list.Count > 0)
+        // pick start location
+        startNode = new Node(startPosition, 0, 0, 0, Instantiate(startNodePrefab, new Vector3(startPosition.x, 0, startPosition.y), Quaternion.identity), null);
+        // pick goal location
+        endNode = new Node(endPosition, 0, 0, 0, Instantiate(endNodePrefab, new Vector3(endPosition.x, 0, endPosition.y), Quaternion.identity), null);
+
+        open.Clear();
+        closed.Clear();
+
+        open.Add(startNode);
+        currentNode = startNode;
+
+        while (open.Count > 0)
         {
-            Node current_node = open_list[0];
-            int current_index = 0;
-
-            for (var index = 0; index < open_list.Count; index++)
+            currentNode = open.OrderBy(node => node.fCost).First();
+            for (int i = 1; i < open.Count; i++)
             {
-                Node item = open_list[index];
-                
-                if(item.f < current_node.f)
+                if (open[i].fCost < currentNode.fCost || open[i].fCost == currentNode.fCost)
                 {
-                    current_node = item;
-                    current_index = index;
+                    if (open[i].heuristic < currentNode.heuristic)
+                        currentNode = open[i];
                 }
+            }
 
-                open_list.RemoveAt(current_index);
-                closed_list.Add(current_node);
+            open.Remove(currentNode);
+            closed.Add(currentNode);
 
-                if(current_node == end)
-                {
-                    List<Node> path = new List<Node>();
-                    Node current = current_node;
-                    
-                    while(current != null)
-                    {
-                        path.Add(current.position);
-                        current = current.parent;
-                    }
-                    path.Reverse();
-                    return path;
-                }
+            if (currentNode == endNode)
+            {
+                RetracePath(startNode, endNode);
+                return;
+            }
 
-                List<Node> children = new List<Node>();
-                
-                foreach (var new_position in children)
-                {
-                    //new_position
-                }
-            } 
+            foreach (Vector2Int neighbour in grid.GetNeighbours(currentNode))
+            {
+                if (grid.getTile(new Vector2Int(neighbour.x, neighbour.y)).Content is Wall)
+                    continue;
+            }
         }
+    }
 
-        return new List<Node>();
+    private void RetracePath(Node startNode, Node endNode)
+    {
+        
     }
 }
