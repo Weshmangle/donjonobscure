@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
-    [SerializeField]
-    protected Room room;
+    public Room room;
     
     [SerializeField]
     protected Character character;
@@ -46,12 +45,12 @@ public class Game : MonoBehaviour
         character.TeleportTo(CharacterSpawnPosition);
         //tileCharacter = room.grid.getTile(CharacterSpawnPosition);
         //tileCharacter.setContent(character);
-        room.grid.getTile(CharacterSpawnPosition).setContent(character);
+        room.grid.getTile(CharacterSpawnPosition).Content = character;
     }
 
     public void addEventsOnTiles()
     {
-        foreach (var tile in this.room.grid.getTiles())
+        foreach (var tile in this.room.grid.GetTiles())
         {
             tile.setEvent(CheckTileContent);
         }
@@ -99,7 +98,7 @@ public class Game : MonoBehaviour
                 do
                 {
                     vector2 = new Vector2Int((int)enemy.Position.x + Random.Range(0,2), (int)enemy.Position.y + Random.Range(0,2));
-                    elt = this.room.grid.getTile(vector2).getContent();
+                    elt = this.room.grid.getTile(vector2).Content;
                 }
                 while(elt != null);
                 enemy.Position = vector2;
@@ -128,7 +127,7 @@ public class Game : MonoBehaviour
         Lantern lantern = character.lantern;
         if(lantern.IsActive())
         {
-            foreach (var tile in room.grid.getTiles())
+            foreach (var tile in room.grid.GetTiles())
             {
                 tile.showTile(false);
             }
@@ -149,10 +148,10 @@ public class Game : MonoBehaviour
         {
             Tile tileCharacter = null;
 
-            foreach (var tile in room.grid.getTiles())
+            foreach (var tile in room.grid.GetTiles())
             {
-                tile.showTile(tile.getContent() as Character);
-                if(tile.getContent() as Character)
+                tile.showTile(tile.Content as Character);
+                if(tile.Content as Character)
                     tileCharacter = tile;
             }
 
@@ -172,24 +171,24 @@ public class Game : MonoBehaviour
     {
         if(tileIsClickable(tile))
         {
-            switch (tile.getContent())
+            switch (tile.Content)
             {
                 case null:
 
                     Tile tileCharacter = null;
 
-                    foreach (var tileGrid in this.room.grid.getTiles())
+                    foreach (var tileGrid in this.room.grid.GetTiles())
                     {
-                        if(tileGrid.getContent() as Character)
+                        if(tileGrid.Content as Character)
                         {
                             tileCharacter = tileGrid;
                         }
                     }
                     character.Move(tile.Position);
-                    tile.setContent(character);
+                    tile.Content = character;
                     if(tileCharacter != null)
                     {
-                       tileCharacter.setContent(null);
+                       tileCharacter.Content = null;
                     }
                     break;
                 case Chest chest:
@@ -203,7 +202,7 @@ public class Game : MonoBehaviour
                     character.Attack(enemy);
                     if(enemy.isDie())
                     {
-                        tile.setContent(null);
+                        tile.Content = null;
                     }
                     break;
                 case Character contentCharacter:

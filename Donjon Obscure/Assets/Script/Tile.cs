@@ -7,6 +7,25 @@ public class Tile : MonoBehaviour
 {
     [SerializeField]
     protected ElementGrid content;
+    public ElementGrid Content
+    {
+        get => this.content;
+        set
+        {
+            this.content = value;
+
+            if (this.content != null)
+            {
+                //Destroy(this.content.gameObject);
+                value.transform.SetParent(this.transform);
+            }
+
+            if (typeof(Hole).IsInstanceOfType(value))
+            {
+                this.GetComponentInChildren<Renderer>().enabled = false;
+            }
+        }
+    }
 
     [SerializeField]
     protected GameObject Over;
@@ -72,24 +91,5 @@ public class Tile : MonoBehaviour
         uEvent.AddListener(action);
     }
 
-    public ElementGrid getContent()
-    {
-        return this.content;
-    }
-
-    public void setContent(ElementGrid element)
-    {
-        this.content = element;
-
-        if(this.content != null)
-        {
-            //Destroy(this.content.gameObject);
-            element.transform.SetParent(this.transform);
-        }
-
-        if(typeof(Hole).IsInstanceOfType(element))
-        {
-            this.GetComponentInChildren<Renderer>().enabled = false;
-        }
-    }
+    
 }
