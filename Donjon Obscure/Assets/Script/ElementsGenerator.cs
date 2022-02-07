@@ -25,19 +25,6 @@ public class ElementsGenerator : MonoBehaviour
     Quaternion rotationBot = Quaternion.Euler(0.0f, 180.0f, 0.0f);
     Quaternion rotationLeft = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void GenerateElement(Tile[,] tiles)
     {
          prefabWall = (Resources.Load("Prefabs/Wall") as GameObject).GetComponent<Wall>();
@@ -136,8 +123,11 @@ public class ElementsGenerator : MonoBehaviour
         if(isExitGate)
         {
             doorElement.IsExitGate = true;
+            Game.game.room.grid.Exit = currentTile;
+
         }
-        
+        else Game.game.room.grid.Exit = currentTile;
+
         currentTile.Content = doorElement;
         Game.CharacterSpawnPosition = characterSpawnPositionRelativeToDoor;
 
