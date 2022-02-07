@@ -57,7 +57,7 @@ public abstract class Entity : ElementGrid
     public virtual void Move(Vector2Int tilePosition)
     {
         var pos = Position - tilePosition;
-        Debug.Log("pos " +  pos);
+        //Debug.Log("pos " +  pos);
         this.model3D.transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
         Position = tilePosition;
     }
