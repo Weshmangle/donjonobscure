@@ -5,17 +5,16 @@ public class Node
     public Vector2Int position;
     public float gCost;
     public float heuristic;
-    public float fCost;
+    public float fCost
+    {
+        get { return gCost + heuristic; }
+    }
     public GameObject nodePrefab;
     public Node parent;
 
-    public Node(Vector2Int _position, float _gCost, float _heuristic, float _fCost, GameObject _nodePrefab, Node parent)
+    public Node(Vector2Int _position)
     {
-        this.parent = parent;
         this.position = _position;
-        this.gCost = _gCost;
-        this.heuristic = _heuristic;
-        this.fCost = _fCost;
     }
 
     public override bool Equals(object other)

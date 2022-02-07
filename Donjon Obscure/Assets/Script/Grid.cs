@@ -17,7 +17,9 @@ public class Grid : MonoBehaviour
     [SerializeField]
     protected ElementsGenerator elementGenerator;
 
-
+    public List<Node> path;
+    public Tile Entry;
+    public Tile Exit;
     public Tile[] GetTiles()
     {
         return listTiles.transform.GetComponentsInChildren<Tile>();
@@ -60,9 +62,9 @@ public class Grid : MonoBehaviour
     }
 
     // Up, down, left, right neighbours
-    internal List<Vector2Int> GetNeighbours(Node node)
+    internal List<Node> GetNeighbours(Node node)
     {
-        List<Vector2Int> neighbours = new List<Vector2Int>();
+        List<Node> neighbours = new List<Node>();
 
         for (int x = -1; x <= 1; x++)
         {
@@ -76,7 +78,7 @@ public class Grid : MonoBehaviour
 
                 if (checkX >= 0 && checkX < Width-1 && checkY >= 0 && checkY < Height-1)
                 {
-                    neighbours.Add(new Vector2Int(checkX, checkY));
+                    neighbours.Add(new Node(new Vector2Int(checkX, checkY)));
                 }
             }
         }

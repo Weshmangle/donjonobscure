@@ -27,25 +27,20 @@ public class PathFinding : MonoBehaviour
         grid = Game.game.room.grid;
     }
 
-    void BeginSearch(Vector2Int startPosition, Vector2Int endPosition)
+    private void Update()
     {
-        
-        //// get all locations of that aint a wall
-        //List<Vector2Int> positions = new List<Vector2Int>();
-
-        //for (int z = 1; z < grid.depth - 1; z++)
-        //{
-        //    for (int x = 1; x < grid.width - 1; x++)
-        //    {
-        //        if (grid.map[x, z] != 1)
-        //            locations.Add(new Vector2Int(x, z));
-        //    }
-        //}
-
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            FindPath(grid.Entry, grid.Exit);
+            Debug.Log("findingPath");
+        }
+    }
+    void FindPath(Tile startPosition, Tile endPosition)
+    {
         // pick start location
-        startNode = new Node(startPosition, 0, 0, 0, Instantiate(startNodePrefab, new Vector3(startPosition.x, 0, startPosition.y), Quaternion.identity), null);
+        startNode = new Node(startPosition.Position);
         // pick goal location
-        endNode = new Node(endPosition, 0, 0, 0, Instantiate(endNodePrefab, new Vector3(endPosition.x, 0, endPosition.y), Quaternion.identity), null);
+        endNode = new Node(endPosition.Position);
 
         open.Clear();
         closed.Clear();
@@ -74,16 +69,57 @@ public class PathFinding : MonoBehaviour
                 return;
             }
 
-            foreach (Vector2Int neighbour in grid.GetNeighbours(currentNode))
+            foreach (Node neighbour in grid.GetNeighbours(currentNode))
             {
-                if (grid.getTile(new Vector2Int(neighbour.x, neighbour.y)).Content is Wall)
+                ElementGrid content = grid.getTile(new Vector2Int(neighbour.position.x, neighbour.position.y)).Content;
+                if (content is Chest || content is Hole || closed.Contains(neighbour))
                     continue;
+
+                float newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, endNode);
+                if(newCostToNeighbour < neighbour.gCost || !open.Contains(neighbour))
+                {
+                    neighbour.gCost = newCostToNeighbour;
+                    neighbour.heuristic = GetDistance(neighbour, endNode);
+                    neighbour.parent = currentNode;
+
+                    if(!open.Contains(neighbour))
+                    {
+                        open.Add(neighbour);
+                    }
+                }
             }
         }
     }
 
-    private void RetracePath(Node startNode, Node endNode)
+
+    void RetracePath(Node startNode, Node endNode)
     {
-        
+        List<Node> path = new List<Node>();
+        Node currentNode = endNode;
+
+        while (currentNode != startNode)
+        {
+            path.Add(currentNode);
+            currentNode = currentNode.parent;
+        }
+        path.Reverse();
+        grid.path = path;
+        string pathLog = "";
+        foreach (Node node in path)
+        {
+            pathLog += "\n";
+            pathLog += node.position;
+
+        }
+        Debug.Log(pathLog);
+    }
+    int GetDistance(Node nodeA, Node nodeB)
+    {
+        int distanceX = Mathf.Abs(nodeA.position.x - nodeB.position.x);
+        int distanceY = Mathf.Abs(nodeA.position.y - nodeB.position.y);
+
+        if (distanceX > distanceY)
+            return 14 * distanceY + 10 * (distanceX - distanceY);
+        return 14 * distanceX + 10 * (distanceY - distanceX);
     }
 }
