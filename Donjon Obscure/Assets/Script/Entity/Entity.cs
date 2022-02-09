@@ -88,7 +88,7 @@ public abstract class Entity : ElementGrid
         //return entity.position - this.position;
     }
 
-    public bool isDie()
+    public bool IsDead()
     {
         return this.healthPoint <= 0;
     }

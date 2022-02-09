@@ -6,6 +6,8 @@ public class ElementsGenerator : MonoBehaviour
 {
     [SerializeField]
     int nbChestToSpawn, nbHoleToSpawn, nbEnemyToSpawn;
+
+    Grid grid;
     
     Wall prefabWall;
     Hole prefabHole;
@@ -25,8 +27,9 @@ public class ElementsGenerator : MonoBehaviour
     Quaternion rotationBot = Quaternion.Euler(0.0f, 180.0f, 0.0f);
     Quaternion rotationLeft = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 
-    public void GenerateElement(Tile[,] tiles)
+    public void GenerateElement(Tile[,] tiles, Grid _grid)
     {
+        grid = _grid;
          prefabWall = (Resources.Load("Prefabs/Wall") as GameObject).GetComponent<Wall>();
          prefabHole = (Resources.Load("Prefabs/Hole") as GameObject).GetComponent<Hole>();
          prefabChest = (Resources.Load("Prefabs/Chest") as GameObject).GetComponent<Chest>();
@@ -36,13 +39,14 @@ public class ElementsGenerator : MonoBehaviour
 
         //Tile chestTile = tiles[0,0];
         //GenerateChestList(tiles);
-
         GenerateExternWall(tiles);
-        GenerateGate(tiles,true);
-        GenerateGate(tiles,false);
+        GenerateGate(tiles, true);
+        GenerateGate(tiles, false);
         GenerateChest(tiles);
         GenerateHole(tiles);
         GenerateEnemy(tiles);
+        
+        
     }
     protected void setAlphaWall(ElementGrid wall, float alpha)
     {
@@ -137,26 +141,41 @@ public class ElementsGenerator : MonoBehaviour
     {
         for (int i = 0; i < nbChestToSpawn; i++)
         {
+            ElementGrid chestElement;
             int _myRandPositionX = Random.Range(1, width-1);
             int _myRandPositionZ = Random.Range(1, height-1);
 
             if (tiles[_myRandPositionX, _myRandPositionZ].Content == null)
             {
-                ElementGrid chestElement = InstantiateElementGrid(prefabChest, tiles[_myRandPositionX, _myRandPositionZ].Position, Quaternion.Euler(0, 180, 0));
-                tiles[_myRandPositionX, _myRandPositionZ].Content = chestElement;                
+                chestElement = InstantiateElementGrid(prefabChest, tiles[_myRandPositionX, _myRandPositionZ].Position, Quaternion.Euler(0, 180, 0));
+                tiles[_myRandPositionX, _myRandPositionZ].Content = chestElement;
+                if (!Pathfinding.FindPath(grid.Entry, grid.Exit, grid))
+                {
+                    tiles[_myRandPositionX, _myRandPositionZ].Content = null;
+                    Destroy(chestElement.gameObject.GetComponentInChildren<Chest>());
+                    i--;
+                }
             }
+            
         }
     }
     public void GenerateHole(Tile[,] tiles)
     {
         for (int i = 0; i < nbHoleToSpawn; i++)
         {
+            ElementGrid holeElement;
             int _myRandPositionX = Random.Range(1, width);
             int _myRandPositionZ = Random.Range(1, height);
             if (tiles[_myRandPositionX, _myRandPositionZ].Content == null)
             {
-                ElementGrid holeElement = InstantiateElementGrid(prefabHole, tiles[_myRandPositionX, _myRandPositionZ].Position);
+                holeElement = InstantiateElementGrid(prefabHole, tiles[_myRandPositionX, _myRandPositionZ].Position);
                 tiles[_myRandPositionX, _myRandPositionZ].Content = holeElement;
+                if (!Pathfinding.FindPath(grid.Entry, grid.Exit, grid))
+                {
+                    tiles[_myRandPositionX, _myRandPositionZ].Content = null;
+                    Destroy(holeElement.gameObject.GetComponentInChildren<Hole>());
+                    i--;
+                }
             }
         }
     }

@@ -115,7 +115,8 @@ public class Game : MonoBehaviour
 
     protected void reloadRoom()
     {
-        this.panelDie.SetActive(true);
+        SceneManager.LoadScene("Main");
+        
         /*Room newRoom = Instantiate((Resources.Load("Prefabs/Room") as GameObject).GetComponent<Room>());
         Destroy(this.room.gameObject);
         this.room = newRoom;
@@ -196,11 +197,11 @@ public class Game : MonoBehaviour
                     break;
                 case Hole hole:
                     character.Move(tile.Position);
-                    this.reloadRoom();
+                    this.panelDie.SetActive(true);
                     break;
                 case Enemy enemy:
                     character.Attack(enemy);
-                    if(enemy.isDie())
+                    if(enemy.IsDead())
                     {
                         tile.Content = null;
                     }
@@ -208,19 +209,23 @@ public class Game : MonoBehaviour
                 case Character contentCharacter:
                     character.LightLantern();
                 break;
-                    /*
-                case "MOB":
-                    EnemyTurn();
+
+                //case "MOB":
+                //    EnemyTurn();
+                //    break;
+                //case "EMPTY":
+                //    EnemyTurn();
+                //    break;
+                case Gate gate:
+                    if(gate.IsExitGate)
+                    {
+                        this.reloadRoom();
+                    }
                     break;
-                case "EMPTY":
-                    EnemyTurn();
-                    break;
-                case "DOOR":
-                    break;
-                case "WALL":
-                    break;
-                default:
-                    throw new System.Exception("ERROR - Quelqu'un n'a pas bien fait sont boulot ! ");*/
+                //case "WALL":
+                //    break;
+                //default:
+                //    throw new System.Exception("ERROR - Quelqu'un n'a pas bien fait sont boulot ! ");
             }
 
             if(character.lantern.IsActive())

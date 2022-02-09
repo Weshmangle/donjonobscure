@@ -57,7 +57,7 @@ public class Grid : MonoBehaviour
 
             }
         }
-        elementGenerator.GenerateElement(tiles);
+        elementGenerator.GenerateElement(tiles, this);
         
     }
 

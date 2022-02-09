@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gate : ElementGrid
 {
-    bool isExitGate = false;
+    public bool isExitGate = false;
     public bool IsExitGate
     {
         get { return isExitGate; } 
