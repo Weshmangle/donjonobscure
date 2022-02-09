@@ -3,26 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-public class PathFinding : MonoBehaviour
+public class Pathfinding : MonoBehaviour
 {
     public Grid grid;
-    public Material closedMaterial;
-    public Material openMaterial;
 
     public List<Node> open = new List<Node>();
     public List<Node> closed = new List<Node>();
-
-    public GameObject startNodePrefab;
-    public GameObject endNodePrefab;
-    public GameObject nodePrefab;
-
-    GameObject lastPostHightlight;
 
     Node endNode;
     Node startNode;
     Node currentNode;
 
-    private void Awake()
+    private void Start()
     {
         grid = Game.game.room.grid;
     }
@@ -31,16 +23,16 @@ public class PathFinding : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            FindPath(grid.Entry, grid.Exit);
-            Debug.Log("findingPath");
+            Debug.Log(FindPath(grid.Entry, grid.Exit));
         }
     }
-    void FindPath(Tile startPosition, Tile endPosition)
+    
+    public bool FindPath(Tile startPosition, Tile endPosition)
     {
         // pick start location
-        startNode = new Node(startPosition.Position);
+        startNode = grid.NodeFromTile(startPosition);
+        endNode = grid.NodeFromTile(endPosition);
         // pick goal location
-        endNode = new Node(endPosition.Position);
 
         open.Clear();
         closed.Clear();
@@ -50,12 +42,13 @@ public class PathFinding : MonoBehaviour
 
         while (open.Count > 0)
         {
+            
             currentNode = open.OrderBy(node => node.fCost).First();
             for (int i = 1; i < open.Count; i++)
             {
-                if (open[i].fCost < currentNode.fCost || open[i].fCost == currentNode.fCost)
+                if (open[i].fCost <= currentNode.fCost)
                 {
-                    if (open[i].heuristic < currentNode.heuristic)
+                    if (open[i].hCost < currentNode.hCost)
                         currentNode = open[i];
                 }
             }
@@ -63,32 +56,32 @@ public class PathFinding : MonoBehaviour
             open.Remove(currentNode);
             closed.Add(currentNode);
 
-            if (currentNode == endNode)
+            if (currentNode.Equals(endNode))
             {
                 RetracePath(startNode, endNode);
-                return;
+                return true;
+
             }
 
             foreach (Node neighbour in grid.GetNeighbours(currentNode))
             {
-                ElementGrid content = grid.getTile(new Vector2Int(neighbour.position.x, neighbour.position.y)).Content;
-                if (content is Chest || content is Hole || closed.Contains(neighbour))
+                if (!neighbour.Walkable || closed.Contains(neighbour))
                     continue;
-
                 float newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, endNode);
                 if(newCostToNeighbour < neighbour.gCost || !open.Contains(neighbour))
                 {
-                    neighbour.gCost = newCostToNeighbour;
-                    neighbour.heuristic = GetDistance(neighbour, endNode);
-                    neighbour.parent = currentNode;
 
-                    if(!open.Contains(neighbour))
+                    neighbour.gCost = newCostToNeighbour;
+                    neighbour.hCost = GetDistance(neighbour, endNode);
+                    neighbour.parent = currentNode;
+                        if (!open.Contains(neighbour))
                     {
                         open.Add(neighbour);
                     }
                 }
             }
         }
+        return false;
     }
 
 
@@ -104,14 +97,6 @@ public class PathFinding : MonoBehaviour
         }
         path.Reverse();
         grid.path = path;
-        string pathLog = "";
-        foreach (Node node in path)
-        {
-            pathLog += "\n";
-            pathLog += node.position;
-
-        }
-        Debug.Log(pathLog);
     }
     int GetDistance(Node nodeA, Node nodeB)
     {

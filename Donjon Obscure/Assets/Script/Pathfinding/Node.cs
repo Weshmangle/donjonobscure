@@ -4,12 +4,18 @@ public class Node
 
     public Vector2Int position;
     public float gCost;
-    public float heuristic;
+    public float hCost;
     public float fCost
     {
-        get { return gCost + heuristic; }
+        get { return gCost + hCost; }
     }
-    public GameObject nodePrefab;
+    bool walkable;
+    public bool Walkable 
+    {
+        get { return walkable; }
+        set { walkable = value; }
+    }
+
     public Node parent;
 
     public Node(Vector2Int _position)
@@ -24,7 +30,10 @@ public class Node
             if ((other == null) || !this.GetType().Equals(other.GetType()))
                 return false;
             else
+            {
                 return position.Equals(((Node)other).position);
+            }
+                
         }
         else
         {

@@ -126,7 +126,7 @@ public class ElementsGenerator : MonoBehaviour
             Game.game.room.grid.Exit = currentTile;
 
         }
-        else Game.game.room.grid.Exit = currentTile;
+        else Game.game.room.grid.Entry = currentTile;
 
         currentTile.Content = doorElement;
         Game.CharacterSpawnPosition = characterSpawnPositionRelativeToDoor;
