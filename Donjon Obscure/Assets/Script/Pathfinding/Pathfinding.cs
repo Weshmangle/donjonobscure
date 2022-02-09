@@ -3,36 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-public class Pathfinding : MonoBehaviour
+using UnityEditor;
+
+public static class Pathfinding
 {
-    public Grid grid;
+    public static Grid grid;
 
-    public List<Node> open = new List<Node>();
-    public List<Node> closed = new List<Node>();
+    public static List<Node> open = new List<Node>();
+    public static List<Node> closed = new List<Node>();
+    public static List<Node> path;
+    public static Node[,] nodeGrid;
 
-    Node endNode;
-    Node startNode;
-    Node currentNode;
+    static Node endNode;
+    static Node startNode;
+    static Node currentNode;
 
-    private void Start()
+    public static bool FindPath(Tile startPosition, Tile endPosition, Grid _grid)
     {
-        grid = Game.game.room.grid;
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log(FindPath(grid.Entry, grid.Exit));
-        }
-    }
-    
-    public bool FindPath(Tile startPosition, Tile endPosition)
-    {
+        grid = _grid;
+        CreateNodeGrid(grid.Width, grid.Height);
         // pick start location
-        startNode = grid.NodeFromTile(startPosition);
-        endNode = grid.NodeFromTile(endPosition);
+        startNode = NodeFromTile(startPosition);
+        endNode = NodeFromTile(endPosition);
         // pick goal location
+        
 
         open.Clear();
         closed.Clear();
@@ -63,7 +57,7 @@ public class Pathfinding : MonoBehaviour
 
             }
 
-            foreach (Node neighbour in grid.GetNeighbours(currentNode))
+            foreach (Node neighbour in GetNeighbours(currentNode))
             {
                 if (!neighbour.Walkable || closed.Contains(neighbour))
                     continue;
@@ -84,8 +78,63 @@ public class Pathfinding : MonoBehaviour
         return false;
     }
 
+    static void CreateNodeGrid(int width, int height)
+    {
+        nodeGrid = new Node[grid.Width, grid.Height];
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                nodeGrid[x, y] = new Node(new Vector2Int(x, y));
+            }
+        }
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (grid.tiles[x, y].Content is Chest || grid.tiles[x, y].Content is Hole || grid.tiles[x, y].Content is Wall)
+                {
+                    nodeGrid[x, y].Walkable = false;
+                }
+                else nodeGrid[x, y].Walkable = true;
 
-    void RetracePath(Node startNode, Node endNode)
+
+            }
+        }
+    }
+    static List<Node> GetNeighbours(Node node)
+    {
+        List<Node> neighbours = new List<Node>();
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (Mathf.Abs(x) == Mathf.Abs(y))
+                    continue;
+
+                int checkX = node.position.x + x;
+                int checkY = node.position.y + y;
+
+                if (checkX >= 0 && checkX < grid.Width && checkY >= 0 && checkY < grid.Height)
+                {
+                    neighbours.Add(nodeGrid[checkX, checkY]);
+                }
+                //if (checkX > 0 && checkX < Width - 1 && checkY > 0 && checkY < Height - 1)
+                //{
+                //    neighbours.Add(nodeGrid[checkX, checkY]);
+                //}
+            }
+        }
+
+        return neighbours;
+    }
+    static Node NodeFromTile(Tile _tile)
+    {
+        Tile tile = grid.getTile(_tile.Position);
+        return nodeGrid[tile.Position.x, tile.Position.y];
+    }
+
+    static void RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
@@ -96,9 +145,8 @@ public class Pathfinding : MonoBehaviour
             currentNode = currentNode.parent;
         }
         path.Reverse();
-        grid.path = path;
     }
-    int GetDistance(Node nodeA, Node nodeB)
+    static int GetDistance(Node nodeA, Node nodeB)
     {
         int distanceX = Mathf.Abs(nodeA.position.x - nodeB.position.x);
         int distanceY = Mathf.Abs(nodeA.position.y - nodeB.position.y);
@@ -106,5 +154,23 @@ public class Pathfinding : MonoBehaviour
         if (distanceX > distanceY)
             return 14 * distanceY + 10 * (distanceX - distanceY);
         return 14 * distanceX + 10 * (distanceY - distanceX);
+    }
+    static void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(Vector3.zero, new Vector3(grid.Width, 1, grid.Height));
+
+        if (nodeGrid != null)
+        {
+            foreach (Node n in nodeGrid)
+            {
+                Gizmos.color = (n.Walkable) ? Color.white : Color.red;
+                GUI.color = Color.cyan;
+                Handles.Label(new Vector3(n.position.x - .3f, 0, n.position.y + .3f), "" + n.fCost + " " + n.gCost + " " + n.hCost);
+                if (path != null)
+                    if (path.Contains(n))
+                        Gizmos.color = Color.black;
+                Gizmos.DrawCube(new Vector3(n.position.x, 0, n.position.y), Vector3.one * .3f);
+            }
+        }
     }
 }
