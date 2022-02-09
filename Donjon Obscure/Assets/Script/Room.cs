@@ -8,6 +8,12 @@ public class Room : MonoBehaviour
     protected object character;
     [SerializeField]
     protected List<Enemy> ennemies;
+    public List<Enemy> Enemies
+    {
+        get { return ennemies; }
+    }
+        
+
     [SerializeField]
     public Grid grid;
     // Start is called before the first frame update
@@ -22,8 +28,5 @@ public class Room : MonoBehaviour
         
     }
 
-    public List<Enemy> getEnnemies()
-    {
-        return this.ennemies;
-    }
+    
 }

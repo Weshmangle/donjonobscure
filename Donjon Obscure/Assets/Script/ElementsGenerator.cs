@@ -18,6 +18,9 @@ public class ElementsGenerator : MonoBehaviour
     int width = 10;
     int height = 10;
 
+    Vector2Int NextToExitGate;
+    Vector2Int NextToEntryGate;
+
     [SerializeField]
     Material wallTransparentMat;
     
@@ -87,7 +90,7 @@ public class ElementsGenerator : MonoBehaviour
         
         int _sideRandPosition = Random.Range(0, 4);
         Tile currentTile = null;
-        Vector2Int characterSpawnPositionRelativeToDoor = Vector2Int.zero;
+        Vector2Int NextToGatePosition = Vector2Int.zero;
         Quaternion rotation = Quaternion.identity;
         do
         {
@@ -98,22 +101,22 @@ public class ElementsGenerator : MonoBehaviour
                 case 0:
                     currentTile = tiles[_myRandPosition, 0];
                     rotation = rotationTop;
-                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.Position.x, currentTile.Position.y+1);
+                    NextToGatePosition = new Vector2Int(currentTile.Position.x, currentTile.Position.y+1);
                     break;
                 case 1:
                     currentTile = tiles[_myRandPosition, width-1]; 
                     rotation = rotationBot;
-                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.Position.x, currentTile.Position.y - 1);
+                    NextToGatePosition = new Vector2Int(currentTile.Position.x, currentTile.Position.y - 1);
                     break;
                 case 2:
                     currentTile = tiles[0, _myRandPosition];
                     rotation = rotationRight;
-                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.Position.x + 1, currentTile.Position.y);
+                    NextToGatePosition = new Vector2Int(currentTile.Position.x + 1, currentTile.Position.y);
                     break;
                 case 3:
                     currentTile = tiles[height-1, _myRandPosition];
                     rotation = rotationLeft;
-                    characterSpawnPositionRelativeToDoor = new Vector2Int(currentTile.Position.x - 1, currentTile.Position.y);
+                    NextToGatePosition = new Vector2Int(currentTile.Position.x - 1, currentTile.Position.y);
                     break;
                 default:
                         Debug.Log("Provided stat does not exist.");
@@ -122,18 +125,24 @@ public class ElementsGenerator : MonoBehaviour
         }
         while (typeof(Gate).IsInstanceOfType(currentTile.Content));
         
-        Gate doorElement = InstantiateElementGrid(prefabGate, currentTile.Position, rotation) as Gate; 
+        Gate doorElement = InstantiateElementGrid(prefabGate, currentTile.Position, rotation) as Gate;
 
-        if(isExitGate)
+        if (isExitGate)
         {
             doorElement.IsExitGate = true;
             Game.game.room.grid.Exit = currentTile;
+            NextToEntryGate = NextToGatePosition;
 
         }
-        else Game.game.room.grid.Entry = currentTile;
+        else
+        {
+            Game.game.room.grid.Entry = currentTile;
+            NextToExitGate = NextToGatePosition;
+        }
 
         currentTile.Content = doorElement;
-        Game.CharacterSpawnPosition = characterSpawnPositionRelativeToDoor;
+
+        Game.CharacterSpawnPosition = NextToGatePosition;
 
 
         }    
@@ -144,12 +153,12 @@ public class ElementsGenerator : MonoBehaviour
             ElementGrid chestElement;
             int _myRandPositionX = Random.Range(1, width-1);
             int _myRandPositionZ = Random.Range(1, height-1);
-
-            if (tiles[_myRandPositionX, _myRandPositionZ].Content == null)
+            Tile tile = tiles[_myRandPositionX, _myRandPositionZ];
+            if (tile.Content == null && tile.Position != NextToEntryGate && tile.Position != NextToExitGate)
             {
                 chestElement = InstantiateElementGrid(prefabChest, tiles[_myRandPositionX, _myRandPositionZ].Position, Quaternion.Euler(0, 180, 0));
                 tiles[_myRandPositionX, _myRandPositionZ].Content = chestElement;
-                if (!Pathfinding.FindPath(grid.Entry, grid.Exit, grid))
+                if (!Pathfinding.FindPathFromTile(grid.Entry, grid.Exit, grid))
                 {
                     tiles[_myRandPositionX, _myRandPositionZ].Content = null;
                     Destroy(chestElement.gameObject.GetComponentInChildren<Chest>());
@@ -166,11 +175,12 @@ public class ElementsGenerator : MonoBehaviour
             ElementGrid holeElement;
             int _myRandPositionX = Random.Range(1, width);
             int _myRandPositionZ = Random.Range(1, height);
-            if (tiles[_myRandPositionX, _myRandPositionZ].Content == null)
+            Tile tile = tiles[_myRandPositionX, _myRandPositionZ];
+            if (tile.Content == null && tile.Position != NextToEntryGate && tile.Position != NextToExitGate)
             {
                 holeElement = InstantiateElementGrid(prefabHole, tiles[_myRandPositionX, _myRandPositionZ].Position);
                 tiles[_myRandPositionX, _myRandPositionZ].Content = holeElement;
-                if (!Pathfinding.FindPath(grid.Entry, grid.Exit, grid))
+                if (!Pathfinding.FindPathFromTile(grid.Entry, grid.Exit, grid))
                 {
                     tiles[_myRandPositionX, _myRandPositionZ].Content = null;
                     Destroy(holeElement.gameObject.GetComponentInChildren<Hole>());
@@ -186,13 +196,15 @@ public class ElementsGenerator : MonoBehaviour
             int _myRandPositionX = Random.Range(1, width);
             int _myRandPositionZ = Random.Range(1, height);
 
-            Tile tile = tiles[_myRandPositionX, _myRandPositionZ];
 
-            if (tile.Content == null)
+            Tile tile = tiles[_myRandPositionX, _myRandPositionZ];
+            if (tile.Content == null && tile.Position != NextToEntryGate)
             {
                 ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tile.Position);
                 tile.Content = enemyElement;
+                Game.game.room.Enemies.Add(enemyElement as Enemy);
                 (enemyElement as Enemy).TeleportTo(tile.Position);
+
             }
         }
     }

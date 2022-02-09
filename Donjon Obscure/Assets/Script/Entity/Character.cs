@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class Character : Entity
 {
+    [SerializeField]
     int mentalSanity;
+    [SerializeField]
     int mentalSanityMax;
-
-    protected int armorPoint;
-    protected int armorPointMax;
+    [SerializeField]
+    int armorPoint;
+    [SerializeField]
+    int armorPointMax;
 
     [SerializeField]
     public Lantern lantern;
-
-    public Character(int _healthPointMax, int _mentalSanityMax, int _attackStrength)
+    void Awake()
     {
-        healthPointMax = _healthPointMax;
         healthPoint = healthPointMax;
-
-        mentalSanityMax = _mentalSanityMax;
         mentalSanity = mentalSanityMax;
-
-        attackStrenght = _attackStrength;
+        armorPoint = armorPointMax;
     }
-
-    public override void UpdateStat(int addedValue, Stat stat)
+    /// <summary>
+    /// Update one stat for the added value (can be negative)
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <param name="addedValue"></param>
+    public override void UpdateStat(Stat stat, int addedValue)
     {
         switch (stat)
         {

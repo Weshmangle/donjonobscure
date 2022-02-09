@@ -60,6 +60,28 @@ public class Grid : MonoBehaviour
         elementGenerator.GenerateElement(tiles, this);
         
     }
+    public Vector2Int RandomNeibgbour(Vector2Int position)
+    {
+        List<Vector2Int> neighbours = new List<Vector2Int>();
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (Mathf.Abs(x) == Mathf.Abs(y))
+                    continue;
+
+                int checkX = position.x + x;
+                int checkY = position.y + y;
+
+                if (checkX > 0 && checkX < Width - 1 && checkY > 0 && checkY < Height - 1)
+                {
+                    neighbours.Add(new Vector2Int(checkX, checkY));
+                }
+            }
+        }
+
+        return neighbours[Random.Range(0, neighbours.Count)];
+    }
 
     public void cleanGrid()
     {

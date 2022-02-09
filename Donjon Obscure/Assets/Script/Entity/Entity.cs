@@ -17,19 +17,18 @@ public enum Stat
 }
 public abstract class Entity : ElementGrid
 {
+    [SerializeField]
     protected int healthPoint;
-    
+    [SerializeField]
     protected int healthPointMax;
-    
+    [SerializeField]
     protected int attackStrenght;
-
     protected Vector2Int position;
 
     Vector3 velocity = Vector3.zero;
 
     [SerializeField, Range(0f, 300f)]
     float smoothTime = 150f;
-    public GameObject model3D;
 
     public Vector2Int Position
     {
@@ -58,7 +57,7 @@ public abstract class Entity : ElementGrid
     {
         var pos = Position - tilePosition;
         //Debug.Log("pos " +  pos);
-        this.model3D.transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
+        transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
         Position = tilePosition;
     }
 
@@ -75,15 +74,17 @@ public abstract class Entity : ElementGrid
 
     public virtual void TakeDamage(int damage)
     {
-        healthPoint =- damage;
+        healthPoint -= damage;
         if (healthPoint <= 0)
         {
             Die();
         }
     }
 
-    public bool canAttak(Entity entity)
+    public bool CanAttack(Entity entity)
     {
+        if (Pathfinding.GetPathFromPosition(position, entity.position, Game.game.room.grid).Count == 1)
+            return true;
         return false;
         //return entity.position - this.position;
     }
@@ -103,7 +104,7 @@ public abstract class Entity : ElementGrid
         TakeDamage(healthPoint);
     }
 
-    public virtual void UpdateStat(int addedValue, Stat stat)
+    public virtual void UpdateStat(Stat stat, int addedValue)
     {
         switch (stat)
         {

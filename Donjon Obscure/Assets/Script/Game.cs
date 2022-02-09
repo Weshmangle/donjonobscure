@@ -68,7 +68,7 @@ public class Game : MonoBehaviour
             case Stat.ArmorPointMax:
             case Stat.MentalSanity:
             case Stat.MentalSanityMax:
-                game.character.UpdateStat(item.BonusValue, item.BonusType);
+                game.character.UpdateStat(item.BonusType, item.BonusValue);
                 
                 break;
             case Stat.CurrentFuelInReserve:
@@ -84,26 +84,28 @@ public class Game : MonoBehaviour
 
     protected void EnemyTurn(Tile tile)
     {
-        foreach (var enemy in game.room.getEnnemies())
+        foreach (var enemy in game.room.Enemies)
         {
-            if(enemy.canAttak(character))
+            if (enemy.CanAttack(character))
             {
+                Debug.Log("Attacking player");
                 enemy.Attack(character);
             }
-            else
-            {
-                //enemy.Move(calculatePathfinding(enemy)[0]);   
-                Vector2Int vector2;
-                ElementGrid elt = null;
-                do
-                {
-                    vector2 = new Vector2Int((int)enemy.Position.x + Random.Range(0,2), (int)enemy.Position.y + Random.Range(0,2));
-                    elt = this.room.grid.getTile(vector2).Content;
-                }
-                while(elt != null);
-                enemy.Position = vector2;
-                //this.room.grid.getTile(vector2).setContent(enemy);
-            }
+            //else
+            //{
+            //    enemy.Move(character.Position);
+            //    Debug.Log("Enemy trying to move");
+            //    Vector2Int vector2;
+            //    ElementGrid elt = null;
+            //    do
+            //    {
+            //        vector2 = new Vector2Int((int)enemy.Position.x + Random.Range(0,2), (int)enemy.Position.y + Random.Range(0,2));
+            //        elt = this.room.grid.getTile(vector2).Content;
+            //    }
+            //    while(elt != null);
+            //    enemy.Position = vector2;
+            //    //this.room.grid.getTile(vector2).setContent(enemy);
+            //}
         }
     }
 

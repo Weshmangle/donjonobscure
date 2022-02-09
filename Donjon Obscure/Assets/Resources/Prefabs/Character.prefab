@@ -45,8 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95462aeba688efe469516b3e8702ee34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPoint: 0
+  healthPointMax: 10
+  attackStrenght: 2
   smoothTime: 0
-  model3D: {fileID: 4391604724946195778}
+  mentalSanity: 0
+  mentalSanityMax: 15
+  armorPoint: 0
+  armorPointMax: 1
   lantern: {fileID: 6917229045273511985}
 --- !u!1001 &3473248291042715667
 PrefabInstance:
