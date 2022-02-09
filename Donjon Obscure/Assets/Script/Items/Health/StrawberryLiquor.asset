@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d6c0d2f8496d2e47a9321c7b75da4da, type: 3}
-  m_Name: LeatherCrap
+  m_Name: StrawberryLiquor
   m_EditorClassIdentifier: 
-  bonusType: 3
-  name: Leather Crap
-  description: A leather tunic falling in pieces
-  bonusValue: 1
-  artwork: {fileID: 21300000, guid: beb2a5dc81d8cc94e8f16ea7af67d6a5, type: 3}
+  bonusType: 0
+  name: Strawberry Liquor
+  description: Liquor made from strawberries
+  bonusValue: 4
+  artwork: {fileID: 21300000, guid: 698e970132fb89a4d886e076aba1edd7, type: 3}
