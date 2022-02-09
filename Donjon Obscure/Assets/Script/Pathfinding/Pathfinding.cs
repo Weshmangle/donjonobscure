@@ -155,22 +155,22 @@ public static class Pathfinding
             return 14 * distanceY + 10 * (distanceX - distanceY);
         return 14 * distanceX + 10 * (distanceY - distanceX);
     }
-    static void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(grid.Width, 1, grid.Height));
+    //static void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireCube(Vector3.zero, new Vector3(grid.Width, 1, grid.Height));
 
-        if (nodeGrid != null)
-        {
-            foreach (Node n in nodeGrid)
-            {
-                Gizmos.color = (n.Walkable) ? Color.white : Color.red;
-                GUI.color = Color.cyan;
-                Handles.Label(new Vector3(n.position.x - .3f, 0, n.position.y + .3f), "" + n.fCost + " " + n.gCost + " " + n.hCost);
-                if (path != null)
-                    if (path.Contains(n))
-                        Gizmos.color = Color.black;
-                Gizmos.DrawCube(new Vector3(n.position.x, 0, n.position.y), Vector3.one * .3f);
-            }
-        }
-    }
+    //    if (nodeGrid != null)
+    //    {
+    //        foreach (Node n in nodeGrid)
+    //        {
+    //            Gizmos.color = (n.Walkable) ? Color.white : Color.red;
+    //            GUI.color = Color.cyan;
+    //            Handles.Label(new Vector3(n.position.x - .3f, 0, n.position.y + .3f), "" + n.fCost + " " + n.gCost + " " + n.hCost);
+    //            if (path != null)
+    //                if (path.Contains(n))
+    //                    Gizmos.color = Color.black;
+    //            Gizmos.DrawCube(new Vector3(n.position.x, 0, n.position.y), Vector3.one * .3f);
+    //        }
+    //    }
+    //}
 }
