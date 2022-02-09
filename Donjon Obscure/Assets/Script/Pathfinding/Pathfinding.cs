@@ -11,22 +11,22 @@ public static class Pathfinding
 
     public static List<Node> open = new List<Node>();
     public static List<Node> closed = new List<Node>();
-    public static List<Node> path;
     public static Node[,] nodeGrid;
 
     static Node endNode;
     static Node startNode;
     static Node currentNode;
-
-    public static bool FindPath(Tile startPosition, Tile endPosition, Grid _grid)
+    
+    public static List<Vector2Int> FindPath(Tile startTile, Tile endTile, Grid _grid)
     {
+        List<Vector2Int> path = new List<Vector2Int>();
         grid = _grid;
         CreateNodeGrid(grid.Width, grid.Height);
         // pick start location
-        startNode = NodeFromTile(startPosition);
-        endNode = NodeFromTile(endPosition);
+        startNode = NodeFromTile(startTile);
+        endNode = NodeFromTile(endTile);
         // pick goal location
-        
+
 
         open.Clear();
         closed.Clear();
@@ -36,7 +36,7 @@ public static class Pathfinding
 
         while (open.Count > 0)
         {
-            
+
             currentNode = open.OrderBy(node => node.fCost).First();
             for (int i = 1; i < open.Count; i++)
             {
@@ -52,9 +52,16 @@ public static class Pathfinding
 
             if (currentNode.Equals(endNode))
             {
-                RetracePath(startNode, endNode);
-                return true;
+                
+                Node currentNode = endNode;
 
+                while (currentNode != startNode)
+                {
+                    path.Add(currentNode.position);
+                    currentNode = currentNode.parent;
+                }
+                path.Reverse();
+                return path;
             }
 
             foreach (Node neighbour in GetNeighbours(currentNode))
@@ -62,20 +69,36 @@ public static class Pathfinding
                 if (!neighbour.Walkable || closed.Contains(neighbour))
                     continue;
                 float newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, endNode);
-                if(newCostToNeighbour < neighbour.gCost || !open.Contains(neighbour))
+                if (newCostToNeighbour < neighbour.gCost || !open.Contains(neighbour))
                 {
 
                     neighbour.gCost = newCostToNeighbour;
                     neighbour.hCost = GetDistance(neighbour, endNode);
                     neighbour.parent = currentNode;
-                        if (!open.Contains(neighbour))
+                    if (!open.Contains(neighbour))
                     {
                         open.Add(neighbour);
                     }
                 }
             }
         }
-        return false;
+        return path;
+    }
+    public static bool FindPathFromTile(Tile startTile, Tile endTile, Grid _grid)
+    {
+        if (FindPath(startTile, endTile, _grid) != null)
+            return true;
+        else return false;
+    }
+    public static bool FindPathFromPosition(Vector2Int startPosition, Vector2Int endPosition, Grid _grid)
+    {
+        if (FindPath(_grid.getTile(startPosition), _grid.getTile(endPosition), _grid) != null)
+            return true;
+        else return false;
+    }
+    public static List<Vector2Int> GetPathFromPosition(Vector2Int startPosition, Vector2Int endPosition, Grid _grid)
+    {
+        return FindPath(_grid.getTile(startPosition), _grid.getTile(endPosition), _grid);
     }
 
     static void CreateNodeGrid(int width, int height)
@@ -134,18 +157,6 @@ public static class Pathfinding
         return nodeGrid[tile.Position.x, tile.Position.y];
     }
 
-    static void RetracePath(Node startNode, Node endNode)
-    {
-        List<Node> path = new List<Node>();
-        Node currentNode = endNode;
-
-        while (currentNode != startNode)
-        {
-            path.Add(currentNode);
-            currentNode = currentNode.parent;
-        }
-        path.Reverse();
-    }
     static int GetDistance(Node nodeA, Node nodeB)
     {
         int distanceX = Mathf.Abs(nodeA.position.x - nodeB.position.x);
