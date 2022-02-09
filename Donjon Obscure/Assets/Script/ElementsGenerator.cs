@@ -131,13 +131,13 @@ public class ElementsGenerator : MonoBehaviour
         {
             doorElement.IsExitGate = true;
             Game.game.room.grid.Exit = currentTile;
-            NextToEntryGate = NextToGatePosition;
+            NextToExitGate = NextToGatePosition;
 
         }
         else
         {
             Game.game.room.grid.Entry = currentTile;
-            NextToExitGate = NextToGatePosition;
+            NextToEntryGate = NextToGatePosition;
         }
 
         currentTile.Content = doorElement;

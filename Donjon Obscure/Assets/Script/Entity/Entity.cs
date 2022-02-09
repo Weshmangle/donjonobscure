@@ -96,6 +96,7 @@ public abstract class Entity : ElementGrid
 
     protected virtual void Die()
     {
+
         Debug.Log("Entity died");
     }
     
