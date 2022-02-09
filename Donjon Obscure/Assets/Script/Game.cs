@@ -12,7 +12,7 @@ public class Game : MonoBehaviour
     
 
     [SerializeField]
-    protected GameObject panelDie;
+    public GameObject panelDie;
 
     public static Game game = null;
 
