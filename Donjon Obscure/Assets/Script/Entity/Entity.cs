@@ -109,7 +109,11 @@ public abstract class Entity : ElementGrid
         {
             case Stat.HealthPoint:
                 {
-                    healthPoint += addedValue;
+                    if (healthPoint + addedValue > healthPointMax)
+                    {
+                        healthPoint = healthPointMax;
+                    }
+                    else healthPoint += addedValue;
                 }
                 break;
             case Stat.HealthPointMax:

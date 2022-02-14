@@ -8,7 +8,7 @@ public class Game : MonoBehaviour
     public Room room;
     
     [SerializeField]
-    protected Character character;
+    internal Character character;
     
 
     [SerializeField]

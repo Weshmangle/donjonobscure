@@ -44,14 +44,14 @@ public class Lantern : MonoBehaviour
             ConsumeFuel();
             isActive = true;
             light.enabled = true;
-            this.GetComponent<AudioSource>().mute = true;
+            this.GetComponent<AudioSource>().PlayOneShot(torchSound[1]);
+            this.GetComponent<AudioSource>().mute = false;
         }
         else
         {
             isActive = false;
-            light.enabled = true;
-            this.GetComponent<AudioSource>().PlayOneShot(torchSound[1]);
-            this.GetComponent<AudioSource>().mute = false;
+            light.enabled = false;
+            this.GetComponent<AudioSource>().mute = true;
         }
     }
     public bool IsActive()

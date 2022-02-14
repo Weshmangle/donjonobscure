@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6c0d2f8496d2e47a9321c7b75da4da, type: 3}
   m_Name: LeatherCrap
   m_EditorClassIdentifier: 
-  bonusType: 3
+  bonusType: 4
   name: Leather Crap
   description: A leather tunic falling in pieces
   bonusValue: 1

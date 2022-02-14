@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Character : Entity
 {
+    public delegate void PlayerDamagedEventHandler(int health, int maxHealth, Stat stat);
+    public event PlayerDamagedEventHandler OnPlayerStatChange;
+
     [SerializeField]
     int mentalSanity;
     [SerializeField]
@@ -17,9 +20,24 @@ public class Character : Entity
     public Lantern lantern;
     void Awake()
     {
-        healthPoint = healthPointMax;
-        mentalSanity = mentalSanityMax;
-        armorPoint = armorPointMax;
+        if(healthPoint == 0)
+        {
+            healthPoint = healthPointMax;
+        }
+        if(mentalSanity == 0)
+        {
+            mentalSanity = mentalSanityMax;
+        }
+        if(armorPoint == 0)
+        {
+            armorPoint = armorPointMax;
+        }
+        
+    }
+    private void Start()
+    {
+        OnPlayerStatChange?.Invoke(healthPoint, healthPointMax, Stat.HealthPoint);
+        OnPlayerStatChange?.Invoke(mentalSanity, mentalSanityMax, Stat.MentalSanity);
     }
     /// <summary>
     /// Update one stat for the added value (can be negative)
@@ -32,12 +50,18 @@ public class Character : Entity
         {
             case Stat.HealthPoint:
                 {
-                    healthPoint += addedValue;
+                    if (healthPoint + addedValue > healthPointMax)
+                    {
+                        healthPoint = healthPointMax;
+                    }
+                    else healthPoint += addedValue;
+                    OnPlayerStatChange?.Invoke(healthPoint, healthPointMax, Stat.HealthPoint);
                 }
                 break;
             case Stat.HealthPointMax:
                 {
                     healthPointMax += addedValue;
+                    healthPoint = healthPointMax;
                 }
                 break;
             case Stat.AttackStrength:
@@ -47,27 +71,39 @@ public class Character : Entity
                 break;
             case Stat.ArmorPoint:
                 {
-                    armorPoint += addedValue;
+                    if (armorPoint + addedValue > armorPointMax)
+                    {
+                        armorPoint = armorPointMax;
+                    }
+                    else armorPoint += addedValue;
                 }
                 break;
             case Stat.ArmorPointMax:
                 {
                     armorPointMax += addedValue;
+                    armorPoint = armorPointMax;
                 }
                 break;
             case Stat.MentalSanity:
                 {
-                    mentalSanity += addedValue;
+                    if (mentalSanity + addedValue > mentalSanityMax)
+                    {
+                        mentalSanity = mentalSanityMax;
+                        OnPlayerStatChange?.Invoke(mentalSanity, mentalSanityMax, Stat.MentalSanity);
+                    }
+                    else mentalSanity += addedValue;
                 }
                 break;
             case Stat.MentalSanityMax:
                 {
                     mentalSanityMax += addedValue;
+                    mentalSanity = mentalSanityMax;
                 }
                 break;
             default:
                 Debug.Log("Provided stat does not exist.");
                 break;
+
         }
     }
     /// <summary>
@@ -80,6 +116,7 @@ public class Character : Entity
         if(damage > 0)
         {
             base.TakeDamage(damage);
+            OnPlayerStatChange?.Invoke(healthPoint, healthPointMax, Stat.HealthPoint);
         }
     }
 
