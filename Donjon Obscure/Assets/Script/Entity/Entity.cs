@@ -49,22 +49,20 @@ public abstract class Entity : ElementGrid
         {
             transform.position = Vector3.SmoothDamp(transform.position, new Vector3(position.x, 0, position.y), ref velocity, smoothTime * Time.deltaTime);
         }
-
-
     }
 
     public virtual void Move(Vector2Int tilePosition)
     {
-        var pos = Position - tilePosition;
-        //Debug.Log("pos " +  pos);
+        var pos = position - tilePosition;
+        Debug.Log("pos " +  pos);
         transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
         Position = tilePosition;
     }
-
-    public virtual void TeleportTo(Vector2Int tilePosition)
+    public virtual void TeleportTo(Vector2Int tilePosition, Vector2Int lookAt)
     {
         position = tilePosition;
-        transform.position = new Vector3(tilePosition.x, 0, tilePosition.y) ;
+        transform.position = new Vector3(tilePosition.x, 0, tilePosition.y);
+        transform.LookAt(new Vector3(lookAt.x, 0, lookAt.y));
     }
     
     public void Attack(Entity target)

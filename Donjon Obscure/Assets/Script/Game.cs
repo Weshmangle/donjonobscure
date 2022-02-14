@@ -42,7 +42,7 @@ public class Game : MonoBehaviour
     {
         this.room.grid.createGrid();
         addEventsOnTiles();
-        character.TeleportTo(CharacterSpawnPosition);
+        character.TeleportTo(CharacterSpawnPosition, CharacterSpawnPosition - (room.grid.Entry.Position - CharacterSpawnPosition));
         //tileCharacter = room.grid.getTile(CharacterSpawnPosition);
         //tileCharacter.setContent(character);
         room.grid.getTile(CharacterSpawnPosition).Content = character;
