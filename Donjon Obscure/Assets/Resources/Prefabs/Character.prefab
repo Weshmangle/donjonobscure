@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95462aeba688efe469516b3e8702ee34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoint: 0
+  healthPoint: 7
   healthPointMax: 10
   attackStrenght: 2
   smoothTime: 0
-  mentalSanity: 0
+  mentalSanity: 7
   mentalSanityMax: 15
   armorPoint: 0
   armorPointMax: 1
