@@ -138,11 +138,11 @@ public class ElementsGenerator : MonoBehaviour
         {
             Game.game.room.grid.Entry = currentTile;
             NextToEntryGate = NextToGatePosition;
+            Game.CharacterSpawnPosition = NextToGatePosition;
         }
 
         currentTile.Content = doorElement;
 
-        Game.CharacterSpawnPosition = NextToGatePosition;
 
 
         }    
@@ -203,8 +203,7 @@ public class ElementsGenerator : MonoBehaviour
                 ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tile.Position);
                 tile.Content = enemyElement;
                 Game.game.room.Enemies.Add(enemyElement as Enemy);
-                (enemyElement as Enemy).TeleportTo(tile.Position);
-
+                (enemyElement as Enemy).TeleportTo(tile.Position, tile.Position);
             }
         }
     }
