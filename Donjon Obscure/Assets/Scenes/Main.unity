@@ -3768,6 +3768,18 @@ PrefabInstance:
       propertyPath: m_Lightmapping
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4015466588297236472, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015466588297236472, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015466588297236472, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6781077701649794866, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: smoothTime
       value: 18
