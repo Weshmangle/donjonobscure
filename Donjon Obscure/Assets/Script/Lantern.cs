@@ -87,6 +87,7 @@ public class Lantern : MonoBehaviour
         {
             currentFuelInReserve += fuelToAdd;
         }
+        OnLanternOilInReserveChange?.Invoke(currentFuelInReserve, fuelInReserveMax, Stat.CurrentFuelInReserve);
     }
     public int LightRange()
     {
