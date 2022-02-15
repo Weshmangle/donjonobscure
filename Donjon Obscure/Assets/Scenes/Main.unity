@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -623,6 +623,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!108 &708246765 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 7606301247320370320, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+  m_PrefabInstance: {fileID: 2052236559}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &776365982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8635706446382604491, guid: 4b3bae9c94074634bb3acee80f1ab047, type: 3}
@@ -3664,6 +3669,10 @@ PrefabInstance:
       value: Character
       objectReference: {fileID: 0}
     - target: {fileID: 6917229045273511985, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: lantern
+      value: 
+      objectReference: {fileID: 708246765}
+    - target: {fileID: 6917229045273511985, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: fuelConsumptionCost
       value: 1
       objectReference: {fileID: 0}
@@ -3707,9 +3716,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 190.173
       objectReference: {fileID: 0}
+    - target: {fileID: 7606301247320370320, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_Range
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7606301247320370320, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7606301247320370320, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_DrawHalo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7606301247320370320, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_Intensity
+      value: 1.81
+      objectReference: {fileID: 0}
     - target: {fileID: 7695953161491121679, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087675290871694677, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087675290871694677, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087675290871694677, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.08865996
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087675290871694677, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087675290871694677, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.996062
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087675290871694677, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087675290871694677, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 190.173
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
@@ -3763,7 +3816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7169812, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

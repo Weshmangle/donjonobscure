@@ -6,7 +6,8 @@ using UnityEngine;
 public class Lantern : MonoBehaviour
 {
     [SerializeField]
-    Light light;
+    Light light, lantern;
+
     //public static Lantern Instance {get; private set;}
 
     int fuelInReserveMax = 10;
@@ -26,30 +27,21 @@ public class Lantern : MonoBehaviour
 
 
     public AudioClip[] torchSound;
-    private void Awake()
-    {
-
-        //if (Instance)
-        //{
-        //    Debug.LogError("Instance not null");
-        //}
-
-        //Instance = this;
-    }
 
     public void SetActiveLantern()
     {
         if (!IsActive() && currentFuelInReserve > 0)
         {
-            ConsumeFuel();
             isActive = true;
             light.enabled = true;
+            lantern.enabled = true;
             this.GetComponent<AudioSource>().PlayOneShot(torchSound[1]);
             this.GetComponent<AudioSource>().mute = false;
         }
         else
         {
             isActive = false;
+            lantern.enabled = false;
             light.enabled = false;
             this.GetComponent<AudioSource>().mute = true;
         }
@@ -61,7 +53,18 @@ public class Lantern : MonoBehaviour
     
     public void ConsumeFuel()
     {
-        currentFuelInReserve -= fuelConsumptionCost;
+        if (currentFuelInReserve - fuelConsumptionCost <= 0)
+        {
+            currentFuelInReserve = 0;
+        }
+        else
+        {
+            currentFuelInReserve -= fuelConsumptionCost;
+        }
+
+        if (currentFuelInReserve == 0)
+            SetActiveLantern();
+        
     } 
     public void AddFuelInReserve(int fuelToAdd)
     {
