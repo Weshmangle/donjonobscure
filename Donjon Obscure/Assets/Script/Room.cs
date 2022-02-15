@@ -7,10 +7,11 @@ public class Room : MonoBehaviour
     [SerializeField]
     protected object character;
     [SerializeField]
-    protected List<Enemy> ennemies;
+    protected List<Enemy> enemies;
     public List<Enemy> Enemies
     {
-        get { return ennemies; }
+        get { return enemies; }
+        set { enemies = value; }
     }
         
 
