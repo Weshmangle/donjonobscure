@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Lantern : MonoBehaviour
 {
+    public delegate void LanternOilInReserveEventHandler(int current, int max, Stat stat);
+    public event LanternOilInReserveEventHandler OnLanternOilInReserveChange;
+
     [SerializeField]
     Light light, lantern;
 
@@ -15,6 +18,7 @@ public class Lantern : MonoBehaviour
     {
         get; set;
     }
+    [SerializeField]
     int currentFuelInReserve = 7;
     int radiusMax;
     int radius = 1;
@@ -27,6 +31,11 @@ public class Lantern : MonoBehaviour
 
 
     public AudioClip[] torchSound;
+
+    private void Start()
+    {
+        OnLanternOilInReserveChange?.Invoke(currentFuelInReserve, fuelInReserveMax, Stat.CurrentFuelInReserve);
+    }
 
     public void SetActiveLantern()
     {
@@ -64,7 +73,9 @@ public class Lantern : MonoBehaviour
 
         if (currentFuelInReserve == 0)
             SetActiveLantern();
-        
+
+        OnLanternOilInReserveChange?.Invoke(currentFuelInReserve, fuelInReserveMax, Stat.CurrentFuelInReserve);
+
     } 
     public void AddFuelInReserve(int fuelToAdd)
     {

@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class UserInterface : MonoBehaviour
 {
     [SerializeField]
-    Image HealthBar, SanityBar;
+    Image HealthBar, SanityBar, OilBar;
     void Start()
     {
         Game.game.character.OnPlayerStatChange += PlayerStatChanged;
+        Game.game.character.lantern.OnLanternOilInReserveChange += PlayerStatChanged;
     }
 
     private void PlayerStatChanged(int current, int maximum, Stat stat)
@@ -34,6 +35,7 @@ public class UserInterface : MonoBehaviour
             case Stat.MentalSanityMax:
                 break;
             case Stat.CurrentFuelInReserve:
+                OilBar.fillAmount = current / (float)maximum;
                 break;
             case Stat.FuelInReserveMax:
                 break;

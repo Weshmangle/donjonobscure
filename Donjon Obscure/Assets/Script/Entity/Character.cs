@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Character : Entity
 {
-    public delegate void PlayerDamagedEventHandler(int health, int maxHealth, Stat stat);
-    public event PlayerDamagedEventHandler OnPlayerStatChange;
+    public delegate void PlayerStatChangedEventHandler(int health, int maxHealth, Stat stat);
+    public event PlayerStatChangedEventHandler OnPlayerStatChange;
 
     [SerializeField]
     int mentalSanity;
