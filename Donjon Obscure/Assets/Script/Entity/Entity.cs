@@ -81,9 +81,8 @@ public abstract class Entity : ElementGrid
 
     public bool CanAttack(Entity entity)
     {
-        if (Pathfinding.GetPathFromPosition(position, entity.position, Game.game.room.grid).Count == 1)
-            return true;
-        return false;
+
+        return Pathfinding.GetPathFromPosition(position, entity.position, Game.game.room.grid)[1] == entity.position;
         //return entity.position - this.position;
     }
 
