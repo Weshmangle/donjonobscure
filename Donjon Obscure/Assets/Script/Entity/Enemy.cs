@@ -14,13 +14,16 @@ public class Enemy : Entity
         Debug.Log("Enemy is dead");
         Destroy(this.gameObject);
     }
+
     public override void Move(Vector2Int tilePosition)
     {
-        //if (Pathfinding.FindPathFromPosition(position, tilePosition, Game.game.room.grid))
-        //    base.Move(Pathfinding.GetPathFromPosition(position, tilePosition, Game.game.room.grid)[1]);
-        //else base.Move(Game.game.room.grid.RandomNeibgbour(tilePosition));
+        if (Pathfinding.FindPathFromPosition(position, tilePosition, Game.game.room.grid))
+           base.Move(Pathfinding.GetPathFromPosition(position, tilePosition, Game.game.room.grid)[1]);
+        else
+            base.Move(Game.game.room.grid.RandomNeibgbour(tilePosition));
 
     }
+    
     public void LookAtPlayer(Character player)
     {
         Debug.Log(player);

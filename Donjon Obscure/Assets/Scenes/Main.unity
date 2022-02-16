@@ -4232,7 +4232,7 @@ PrefabInstance:
       objectReference: {fileID: 708246765}
     - target: {fileID: 6917229045273511985, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: fuelConsumptionCost
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6917229045273511985, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: currentFuelInReserve

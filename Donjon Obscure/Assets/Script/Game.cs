@@ -9,7 +9,6 @@ public class Game : MonoBehaviour
     
     [SerializeField]
     internal Character character;
-    
 
     [SerializeField]
     public GameObject panelDie;
@@ -21,6 +20,8 @@ public class Game : MonoBehaviour
     static Vector2Int characterSpawnPosition;
     
     static public Vector2Int CharacterSpawnPosition {get; set;}
+
+    public static bool DEBUG = true;
     
     void Awake()
     {
@@ -36,6 +37,14 @@ public class Game : MonoBehaviour
     void Update()
     {
         showTileInRangeLantern();
+
+        if(DEBUG)
+        {
+            foreach (var tile in room.grid.GetTiles())
+            {
+                tile.showTile(true);
+            }
+        }
     }
 
     protected void initRoom()
