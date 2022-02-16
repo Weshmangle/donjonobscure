@@ -1674,7 +1674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2966147048572817613, guid: ed7bb0c96699e394ca1c15fad6861455, type: 3}
       propertyPath: nbEnemyToSpawn
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4569927415835296146, guid: ed7bb0c96699e394ca1c15fad6861455, type: 3}
       propertyPath: m_Name
@@ -1963,10 +1963,6 @@ PrefabInstance:
     - target: {fileID: 6781077701649794877, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: m_Name
       value: Character
-      objectReference: {fileID: 0}
-    - target: {fileID: 7606301247320370320, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
-      propertyPath: m_DrawHalo
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
