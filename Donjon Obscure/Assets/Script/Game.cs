@@ -4,14 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
-{
-    public Room room;
-    
-    [SerializeField]
-    internal Character character;
+{   
+    [SerializeField] internal Character character;
 
-    [SerializeField]
-    public GameObject panelDie;
+    [SerializeField] public GameObject panelDie;
+    [SerializeField] public Grid grid;
+    [SerializeField] public List<Enemy> Enemies;
 
     public static Game game = null;
 
@@ -21,7 +19,7 @@ public class Game : MonoBehaviour
     
     static public Vector2Int CharacterSpawnPosition {get; set;}
 
-    public static bool DEBUG = true;
+    public static bool DEBUG = false;
     
     void Awake()
     {
@@ -40,7 +38,7 @@ public class Game : MonoBehaviour
 
         if(DEBUG)
         {
-            foreach (var tile in room.grid.GetTiles())
+            foreach (var tile in grid.GetTiles())
             {
                 tile.showTile(true);
             }
@@ -49,17 +47,17 @@ public class Game : MonoBehaviour
 
     protected void initRoom()
     {
-        this.room.grid.createGrid();
+        grid.createGrid();
         addEventsOnTiles();
-        character.TeleportTo(CharacterSpawnPosition, CharacterSpawnPosition - (room.grid.Entry.Position - CharacterSpawnPosition));
+        character.TeleportTo(CharacterSpawnPosition, CharacterSpawnPosition - (grid.Entry.Position - CharacterSpawnPosition));
         //tileCharacter = room.grid.getTile(CharacterSpawnPosition);
         //tileCharacter.setContent(character);
-        room.grid.getTile(CharacterSpawnPosition).Content = character;
+        grid.getTile(CharacterSpawnPosition).Content = character;
     }
 
     public void addEventsOnTiles()
     {
-        foreach (var tile in this.room.grid.GetTiles())
+        foreach (var tile in grid.GetTiles())
         {
             tile.setEvent(CheckTileContent);
         }
@@ -92,7 +90,7 @@ public class Game : MonoBehaviour
 
     protected void EnemyTurn(Tile tile)
     {
-        foreach (var enemy in game.room.Enemies)
+        foreach (var enemy in game.Enemies)
         {
             if (enemy.CanAttack(character))
             {
@@ -100,7 +98,9 @@ public class Game : MonoBehaviour
             }
             else
             {
-               enemy.Move(character.Position);
+                grid.SetTileContent(enemy.Position, null);
+                enemy.Move(character.Position);
+                grid.SetTileContent(enemy.Position, enemy);
             }
         }
     }
@@ -126,7 +126,7 @@ public class Game : MonoBehaviour
         Lantern lantern = character.lantern;
         if(lantern.IsActive())
         {
-            foreach (var tile in room.grid.GetTiles())
+            foreach (var tile in grid.GetTiles())
             {
                 tile.showTile(false);
             }
@@ -135,19 +135,19 @@ public class Game : MonoBehaviour
             {
                 for (var y = -character.lantern.LightRange(); y <= character.lantern.LightRange(); y++)
                 {
-                    var vect = new Vector2Int(Mathf.Clamp(character.Position.x + x, 0, room.grid.Width-1), Mathf.Clamp(character.Position.y + y, 0, room.grid.Height-1));
-                    Tile tile = room.grid.getTile(vect);
+                    var vect = new Vector2Int(Mathf.Clamp(character.Position.x + x, 0, grid.Width-1), Mathf.Clamp(character.Position.y + y, 0, grid.Height-1));
+                    Tile tile = grid.getTile(vect);
                     tile.showTile(true);
                 }
             }
             
-            room.grid.getTile(new Vector2Int(1,1)).showTile(true);
+            grid.getTile(new Vector2Int(1,1)).showTile(true);
         }
         else
         {
             Tile tileCharacter = null;
 
-            foreach (var tile in room.grid.GetTiles())
+            foreach (var tile in grid.GetTiles())
             {
                 tile.showTile(tile.Content as Character);
                 if(tile.Content as Character)
@@ -160,7 +160,7 @@ public class Game : MonoBehaviour
                 var positions = new Vector2Int[]{new Vector2Int(pos.x+1, pos.y), new Vector2Int(pos.x-1, pos.y), new Vector2Int(pos.x, pos.y+1), new Vector2Int(pos.x, pos.y-1)};
                 foreach (var position in positions)
                 {
-                    this.room.grid.getTile(position).showTile(true);
+                    grid.getTile(position).showTile(true);
                 }
             }
         }
@@ -176,7 +176,7 @@ public class Game : MonoBehaviour
 
                     Tile tileCharacter = null;
 
-                    foreach (var tileGrid in this.room.grid.GetTiles())
+                    foreach (var tileGrid in grid.GetTiles())
                     {
                         if(tileGrid.Content as Character)
                         {

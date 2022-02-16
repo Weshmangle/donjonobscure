@@ -21,7 +21,7 @@ public class Lantern : MonoBehaviour
     [SerializeField]
     int currentFuelInReserve = 7;
     int radiusMax;
-    int radius = 5;
+    int radius = 2;
     int intensity;
     int intensityMax;
 

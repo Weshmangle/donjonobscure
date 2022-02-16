@@ -17,19 +17,13 @@ public enum Stat
 }
 public abstract class Entity : ElementGrid
 {
-    [SerializeField]
-    protected int healthPoint;
-    [SerializeField]
-    protected int healthPointMax;
-    [SerializeField]
-    protected int attackStrenght;
-    protected Vector2Int position;
-
+    [SerializeField] protected int healthPoint;
+    [SerializeField] protected int healthPointMax;
+    [SerializeField] protected int attackStrenght;
+    [SerializeField, Range(0f, 300f)] float smoothTime = 150f;
+    [SerializeField] protected Vector2Int position;
     Vector3 velocity = Vector3.zero;
-
-    [SerializeField, Range(0f, 300f)]
-    float smoothTime = 150f;
-
+    
     public Vector2Int Position
     {
         get {return position;}
@@ -54,10 +48,10 @@ public abstract class Entity : ElementGrid
     public virtual void Move(Vector2Int tilePosition)
     {
         var pos = position - tilePosition;
-        Debug.Log("pos " +  pos);
         transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
         Position = tilePosition;
     }
+
     public virtual void TeleportTo(Vector2Int tilePosition, Vector2Int lookAt)
     {
         position = tilePosition;

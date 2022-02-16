@@ -129,13 +129,13 @@ public class ElementsGenerator : MonoBehaviour
         if (isExitGate)
         {
             doorElement.IsExitGate = true;
-            Game.game.room.grid.Exit = currentTile;
+            Game.game.grid.Exit = currentTile;
             NextToExitGate = NextToGatePosition;
 
         }
         else
         {
-            Game.game.room.grid.Entry = currentTile;
+            Game.game.grid.Entry = currentTile;
             NextToEntryGate = NextToGatePosition;
             Game.CharacterSpawnPosition = NextToGatePosition;
         }
@@ -201,7 +201,7 @@ public class ElementsGenerator : MonoBehaviour
             {
                 ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tile.Position);
                 tile.Content = enemyElement;
-                Game.game.room.Enemies.Add(enemyElement as Enemy);
+                Game.game.Enemies.Add(enemyElement as Enemy);
                 (enemyElement as Enemy).TeleportTo(tile.Position, tile.Position);
             }
         }

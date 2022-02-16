@@ -17,11 +17,10 @@ public static class Pathfinding
     static Node startNode;
     static Node currentNode;
     
-    public static List<Vector2Int> FindPath(Tile startTile, Tile endTile, Grid _grid)
+    public static List<Vector2Int> FindPath(Tile startTile, Tile endTile, Grid _grid, bool enemies)
     {
-        List<Vector2Int> path = new List<Vector2Int>();
         grid = _grid;
-        CreateNodeGrid(grid.Width, grid.Height);
+        CreateNodeGrid(grid.Width, grid.Height, enemies);
         // pick start location
         startNode = NodeFromTile(startTile);
         endNode = NodeFromTile(endTile);
@@ -51,10 +50,11 @@ public static class Pathfinding
 
             if (currentNode.Equals(endNode))
             {
+                List<Vector2Int> path = new List<Vector2Int>();
                 
                 Node currentNode = endNode;
 
-                while (currentNode != startNode)
+                while (currentNode != null)
                 {
                     path.Add(currentNode.position);
                     currentNode = currentNode.parent;
@@ -86,19 +86,20 @@ public static class Pathfinding
 
     public static bool FindPathFromTile(Tile startTile, Tile endTile, Grid _grid)
     {
-        var path = FindPath(startTile, endTile, _grid);
+        var path = FindPath(startTile, endTile, _grid, false);
         return path != null;
     }
     public static bool FindPathFromPosition(Vector2Int startPosition, Vector2Int endPosition, Grid _grid)
     {
-         return FindPath(_grid.getTile(startPosition), _grid.getTile(endPosition), _grid) != null;
+         return FindPath(_grid.getTile(startPosition), _grid.getTile(endPosition), _grid, true) != null;
     }
+    
     public static List<Vector2Int> GetPathFromPosition(Vector2Int startPosition, Vector2Int endPosition, Grid _grid)
     {
-        return FindPath(_grid.getTile(startPosition), _grid.getTile(endPosition), _grid);
+        return FindPath(_grid.getTile(startPosition), _grid.getTile(endPosition), _grid, true);
     }
 
-    static void CreateNodeGrid(int width, int height)
+    static void CreateNodeGrid(int width, int height, bool enemiesTest)
     {
         nodeGrid = new Node[grid.Width, grid.Height];
         for (int x = 0; x < width; x++)
@@ -110,7 +111,8 @@ public static class Pathfinding
                 nodeGrid[x, y].Walkable = !(
                     grid.tiles[x, y].Content is Chest ||
                     grid.tiles[x, y].Content is Hole || 
-                    grid.tiles[x, y].Content is Wall);
+                    grid.tiles[x, y].Content is Wall ||
+                    grid.tiles[x, y].Content is Enemy && enemiesTest);
             }
         }
     }

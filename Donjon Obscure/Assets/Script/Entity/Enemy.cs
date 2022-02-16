@@ -10,24 +10,23 @@ public class Enemy : Entity
     }
     protected override void Die()
     {
-        Game.game.room.Enemies.Remove(this);
+        Game.game.Enemies.Remove(this);
         Debug.Log("Enemy is dead");
         Destroy(this.gameObject);
     }
 
     public override void Move(Vector2Int tilePosition)
     {
-        if (Pathfinding.FindPathFromPosition(position, tilePosition, Game.game.room.grid))
-           base.Move(Pathfinding.GetPathFromPosition(position, tilePosition, Game.game.room.grid)[1]);
+        var path = Pathfinding.GetPathFromPosition(position, tilePosition, Game.game.grid);
+        
+        if (path != null)
+            base.Move(path[1]);
         else
-            base.Move(Game.game.room.grid.RandomNeibgbour(tilePosition));
-
+            base.Move(Game.game.grid.RandomNeibgbour(tilePosition));
     }
     
     public void LookAtPlayer(Character player)
     {
-        Debug.Log(player);
         transform.LookAt(player.gameObject.transform);
     }
-
 }
