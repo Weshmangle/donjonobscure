@@ -27,7 +27,6 @@ public static class Pathfinding
         endNode = NodeFromTile(endTile);
         // pick goal location
 
-
         open.Clear();
         closed.Clear();
 
@@ -84,9 +83,11 @@ public static class Pathfinding
         }
         return null;
     }
+
     public static bool FindPathFromTile(Tile startTile, Tile endTile, Grid _grid)
     {
-        return FindPath(startTile, endTile, _grid) != null;
+        var path = FindPath(startTile, endTile, _grid);
+        return path != null;
     }
     public static bool FindPathFromPosition(Vector2Int startPosition, Vector2Int endPosition, Grid _grid)
     {
@@ -105,26 +106,15 @@ public static class Pathfinding
             for (int y = 0; y < height; y++)
             {
                 nodeGrid[x, y] = new Node(new Vector2Int(x, y));
-                if (grid.tiles[x, y].Content is Chest || grid.tiles[x, y].Content is Hole || grid.tiles[x, y].Content is Wall)
-                {
-                    nodeGrid[x, y].Walkable = false;
-                }
+                // Assigner vrai a Walkable si le Content est un coffre, une trou ou un mur sinon faux.
+                nodeGrid[x, y].Walkable = !(
+                    grid.tiles[x, y].Content is Chest ||
+                    grid.tiles[x, y].Content is Hole || 
+                    grid.tiles[x, y].Content is Wall);
             }
         }
-        //for (int x = 0; x < width; x++)
-        //{
-        //    for (int y = 0; y < height; y++)
-        //    {
-        //        if (grid.tiles[x, y].Content is Chest || grid.tiles[x, y].Content is Hole || grid.tiles[x, y].Content is Wall)
-        //        {
-        //            nodeGrid[x, y].Walkable = false;
-        //        }
-        //        else nodeGrid[x, y].Walkable = true;
-
-
-        //    }
-        //}
     }
+    
     static List<Node> GetNeighbours(Node node)
     {
         List<Node> neighbours = new List<Node>();

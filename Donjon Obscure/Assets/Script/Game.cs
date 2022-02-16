@@ -87,24 +87,12 @@ public class Game : MonoBehaviour
         {
             if (enemy.CanAttack(character))
             {
-                Debug.Log("Attacking player");
                 enemy.Attack(character);
             }
-            //else
-            //{
-            //    enemy.Move(character.Position);
-            //    Debug.Log("Enemy trying to move");
-            //    Vector2Int vector2;
-            //    ElementGrid elt = null;
-            //    do
-            //    {
-            //        vector2 = new Vector2Int((int)enemy.Position.x + Random.Range(0,2), (int)enemy.Position.y + Random.Range(0,2));
-            //        elt = this.room.grid.getTile(vector2).Content;
-            //    }
-            //    while(elt != null);
-            //    enemy.Position = vector2;
-            //    //this.room.grid.getTile(vector2).setContent(enemy);
-            //}
+            else
+            {
+               enemy.Move(character.Position);
+            }
         }
     }
 
@@ -138,7 +126,7 @@ public class Game : MonoBehaviour
             {
                 for (var y = -character.lantern.LightRange(); y <= character.lantern.LightRange(); y++)
                 {
-                    var vect = new Vector2Int(character.Position.x + x, character.Position.y + y);
+                    var vect = new Vector2Int(Mathf.Clamp(character.Position.x + x, 0, room.grid.Width-1), Mathf.Clamp(character.Position.y + y, 0, room.grid.Height-1));
                     Tile tile = room.grid.getTile(vect);
                     tile.showTile(true);
                 }
