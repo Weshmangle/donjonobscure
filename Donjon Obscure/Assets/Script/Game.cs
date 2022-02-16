@@ -58,7 +58,6 @@ public class Game : MonoBehaviour
 
     public static void UpdateCharacter(Item item)
     {
-        
         switch (item.BonusType)
         {
             case Stat.HealthPoint:

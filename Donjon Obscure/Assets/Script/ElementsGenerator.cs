@@ -87,7 +87,6 @@ public class ElementsGenerator : MonoBehaviour
     }
     public void GenerateGate(Tile[,] tiles, bool isExitGate)
     {
-        
         int _sideRandPosition = Random.Range(0, 4);
         Tile currentTile = null;
         Vector2Int NextToGatePosition = Vector2Int.zero;

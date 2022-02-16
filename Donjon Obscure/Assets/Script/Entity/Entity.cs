@@ -81,9 +81,8 @@ public abstract class Entity : ElementGrid
 
     public bool CanAttack(Entity entity)
     {
-
-        return Pathfinding.GetPathFromPosition(position, entity.position, Game.game.room.grid)[1] == entity.position;
-        //return entity.position - this.position;
+        return Vector2.Distance(entity.position, this.position) == 1;
+        //return Pathfinding.GetPathFromPosition(position, entity.position, Game.game.room.grid)[1] == entity.position;
     }
 
     public bool IsDead()
