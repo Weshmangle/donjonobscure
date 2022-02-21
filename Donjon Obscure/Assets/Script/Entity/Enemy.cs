@@ -15,26 +15,26 @@ public class Enemy : Entity
         Destroy(this.gameObject);
     }
 
-    public override void Move(Vector2Int tilePosition)
+    public override void Move(Vector2Int playerTilePosition)
     {
-        var path = Pathfinding.GetPathFromPosition(position, tilePosition, Game.game.grid);
+        var path = Pathfinding.GetPathFromPosition(position, playerTilePosition, Game.game.grid);
 
         if (path != null)
         {
             base.Move(path[1]);
-            LookAtPlayer(tilePosition);
+            LookAtPlayer(playerTilePosition);
         }
-        else
-        {
-            Vector2Int randomPosition;
-            do
-            {
-                randomPosition = Game.game.grid.RandomNeibgbour(tilePosition);
-            } while (Pathfinding.FindPathFromPosition(tilePosition, randomPosition, Game.game.grid));
-            base.Move(randomPosition);
+        //else
+        //{
+        //    Vector2Int randomPosition;
+        //    do
+        //    {
+        //        randomPosition = Game.game.grid.RandomNeibgbour(tilePosition);
+        //    } while (Pathfinding.FindPathFromPosition(tilePosition, randomPosition, Game.game.grid));
+        //    base.Move(randomPosition);
 
-            LookAtPlayer(tilePosition);
-        }
+        //    LookAtPlayer(tilePosition);
+        //}
             
     }
     
