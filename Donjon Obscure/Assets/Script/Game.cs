@@ -6,12 +6,11 @@ using UnityEngine.SceneManagement;
 public class Game : MonoBehaviour
 {   
     [SerializeField] internal Character character;
-
     [SerializeField] public GameObject panelDie;
     [SerializeField] public Grid grid;
     [SerializeField] public List<Enemy> Enemies;
 
-    public static Game game = null;
+    public static Game Instance = null;
 
     protected bool eventSet = false;
 
@@ -23,9 +22,13 @@ public class Game : MonoBehaviour
     
     void Awake()
     {
-        if(Game.game == null)
+        if(Game.Instance == null)
         {
-            Game.game = this;
+            Game.Instance = this;
+        }
+        else
+        {
+            Debug.LogError("GAME IS ALREADY INSTANTIATE");
         }
         
         this.initRoom();
@@ -74,14 +77,14 @@ public class Game : MonoBehaviour
             case Stat.ArmorPointMax:
             case Stat.MentalSanity:
             case Stat.MentalSanityMax:
-                game.character.UpdateStat(item.BonusType, item.BonusValue);
+                Instance.character.UpdateStat(item.BonusType, item.BonusValue);
                 
                 break;
             case Stat.CurrentFuelInReserve:
-                game.character.lantern.AddFuelInReserve(item.BonusValue);
+                Instance.character.lantern.AddFuelInReserve(item.BonusValue);
                 break;
             case Stat.FuelInReserveMax:
-                game.character.lantern.FuelInReserveMax = item.BonusValue;
+                Instance.character.lantern.FuelInReserveMax = item.BonusValue;
                 break;
             default:
                 break;
@@ -90,7 +93,7 @@ public class Game : MonoBehaviour
 
     protected void EnemyTurn(Tile tile)
     {
-        foreach (var enemy in game.Enemies)
+        foreach (var enemy in Instance.Enemies)
         {
             if (enemy.CanAttack(character))
             {
@@ -110,11 +113,14 @@ public class Game : MonoBehaviour
         float distance = Vector2Int.Distance(tile.Position, character.Position);
         return distance == 1 || distance == 0;
     }
-
-    protected void reloadRoom()
+    
+    public void reloadRoom()
     {
         SceneManager.LoadScene("Main");
-        
+        /*Destroy(grid.gameObject);
+        var vec = new Vector2Int(0,0);
+        grid = Instantiate(grid);
+        initRoom();*/
         /*Room newRoom = Instantiate((Resources.Load("Prefabs/Room") as GameObject).GetComponent<Room>());
         Destroy(this.room.gameObject);
         this.room = newRoom;

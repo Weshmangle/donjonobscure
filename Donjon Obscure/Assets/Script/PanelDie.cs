@@ -8,7 +8,7 @@ public class PanelDie : MonoBehaviour
 
     public void Retry()
     {
-        SceneManager.LoadScene("Main");
+        Game.Instance.reloadRoom();
     }
 
     public void backMenu()

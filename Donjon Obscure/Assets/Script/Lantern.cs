@@ -26,8 +26,7 @@ public class Lantern : MonoBehaviour
     int intensityMax;
 
     bool isActive = false;
-    [SerializeField, Range(0, 10)]
-    int fuelConsumptionCost;
+    [SerializeField, Range(0, 10)] int fuelConsumptionCost;
 
 
     public AudioClip[] torchSound;

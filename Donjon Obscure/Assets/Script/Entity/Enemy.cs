@@ -10,14 +10,14 @@ public class Enemy : Entity
     }
     protected override void Die()
     {
-        Game.game.Enemies.Remove(this);
+        Game.Instance.Enemies.Remove(this);
         Debug.Log("Enemy is dead");
         Destroy(this.gameObject);
     }
 
     public override void Move(Vector2Int playerTilePosition)
     {
-        var path = Pathfinding.GetPathFromPosition(position, playerTilePosition, Game.game.grid);
+        var path = Pathfinding.GetPathFromPosition(position, playerTilePosition, Game.Instance.grid);
 
         if (path != null)
         {

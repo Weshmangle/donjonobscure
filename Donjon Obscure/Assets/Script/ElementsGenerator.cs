@@ -33,12 +33,12 @@ public class ElementsGenerator : MonoBehaviour
     public void GenerateElement(Tile[,] tiles, Grid _grid)
     {
         grid = _grid;
-         prefabWall = (Resources.Load("Prefabs/Wall") as GameObject).GetComponent<Wall>();
-         prefabHole = (Resources.Load("Prefabs/Hole") as GameObject).GetComponent<Hole>();
-         prefabChest = (Resources.Load("Prefabs/Chest") as GameObject).GetComponent<Chest>();
-         prefabObstacle = (Resources.Load("Prefabs/Obstacle") as GameObject).GetComponent<Obstacle>();
-         prefabGate = (Resources.Load("Prefabs/Gate") as GameObject).GetComponent<Gate>();
-         prefabEnemy = (Resources.Load("Prefabs/Enemy") as GameObject).GetComponent<Enemy>();
+        prefabWall = (Resources.Load("Prefabs/Wall") as GameObject).GetComponent<Wall>();
+        prefabHole = (Resources.Load("Prefabs/Hole") as GameObject).GetComponent<Hole>();
+        prefabChest = (Resources.Load("Prefabs/Chest") as GameObject).GetComponent<Chest>();
+        prefabObstacle = (Resources.Load("Prefabs/Obstacle") as GameObject).GetComponent<Obstacle>();
+        prefabGate = (Resources.Load("Prefabs/Gate") as GameObject).GetComponent<Gate>();
+        prefabEnemy = (Resources.Load("Prefabs/Enemy") as GameObject).GetComponent<Enemy>();
 
         //Tile chestTile = tiles[0,0];
         //GenerateChestList(tiles);
@@ -129,13 +129,13 @@ public class ElementsGenerator : MonoBehaviour
         if (isExitGate)
         {
             doorElement.IsExitGate = true;
-            Game.game.grid.Exit = currentTile;
+            Game.Instance.grid.Exit = currentTile;
             NextToExitGate = NextToGatePosition;
 
         }
         else
         {
-            Game.game.grid.Entry = currentTile;
+            Game.Instance.grid.Entry = currentTile;
             NextToEntryGate = NextToGatePosition;
             Game.CharacterSpawnPosition = NextToGatePosition;
         }
@@ -201,7 +201,7 @@ public class ElementsGenerator : MonoBehaviour
             {
                 ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tile.Position);
                 tile.Content = enemyElement;
-                Game.game.Enemies.Add(enemyElement as Enemy);
+                Game.Instance.Enemies.Add(enemyElement as Enemy);
                 (enemyElement as Enemy).TeleportTo(tile.Position, tile.Position);
             }
         }
