@@ -18,15 +18,28 @@ public class Enemy : Entity
     public override void Move(Vector2Int tilePosition)
     {
         var path = Pathfinding.GetPathFromPosition(position, tilePosition, Game.game.grid);
-        
+
         if (path != null)
+        {
             base.Move(path[1]);
+            LookAtPlayer(tilePosition);
+        }
         else
-            base.Move(Game.game.grid.RandomNeibgbour(tilePosition));
+        {
+            Vector2Int randomPosition;
+            do
+            {
+                randomPosition = Game.game.grid.RandomNeibgbour(tilePosition);
+            } while (Pathfinding.FindPathFromPosition(tilePosition, randomPosition, Game.game.grid));
+            base.Move(randomPosition);
+
+            LookAtPlayer(tilePosition);
+        }
+            
     }
     
-    public void LookAtPlayer(Character player)
+    public void LookAtPlayer(Vector2Int position)
     {
-        transform.LookAt(player.gameObject.transform);
+        transform.LookAt(new Vector3(position.x, 0, position.y));
     }
 }

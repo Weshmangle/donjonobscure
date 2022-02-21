@@ -19,7 +19,7 @@ public class Game : MonoBehaviour
     
     static public Vector2Int CharacterSpawnPosition {get; set;}
 
-    public static bool DEBUG = false;
+    public static bool DEBUG = true;
     
     void Awake()
     {
