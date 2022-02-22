@@ -43,8 +43,13 @@ public class ElementsGenerator : MonoBehaviour
         GenerateExternWall(tiles);
         GenerateGate(tiles, true);
         GenerateGate(tiles, false);
-        GenerateChest(tiles);
-        GenerateHole(tiles);
+        
+        /*GenerateChest(tiles);
+        GenerateHole(tiles);*/
+
+        GenerateElementsGrid(tiles, nbChestToSpawn, prefabHole);
+        GenerateElementsGrid(tiles, nbChestToSpawn, prefabChest);
+
         GenerateEnemy(tiles);
     }
 
@@ -143,47 +148,30 @@ public class ElementsGenerator : MonoBehaviour
 
     }
 
-    public void GenerateChest(Tile[,] tiles)
+    public void GenerateElementsGrid(Tile[,] tiles, int quantity, ElementGrid prefab)
     {
-        for (int i = 0; i < nbChestToSpawn; i++)
+        for (int i = 0; i < quantity; i++)
         {
             ElementGrid chestElement;
-            int _myRandPositionX = Random.Range(1, width-1);
-            int _myRandPositionZ = Random.Range(1, height-1);
-            Tile tile = tiles[_myRandPositionX, _myRandPositionZ];
-            if (tile.Content == null && tile.Position != NextToEntryGate && tile.Position != NextToExitGate)
-            {
-                chestElement = InstantiateElementGrid(prefabChest, tiles[_myRandPositionX, _myRandPositionZ].Position, Quaternion.Euler(0, 180, 0));
-                tiles[_myRandPositionX, _myRandPositionZ].Content = chestElement;
-                if (!Pathfinding.FindPathFromTile(grid.Entry, grid.Exit, grid))
-                {
-                    tiles[_myRandPositionX, _myRandPositionZ].Content = null;
-                    Destroy(chestElement.gameObject.GetComponentInChildren<Chest>());
-                    i--;
-                }
-            }
-        }
-    }
 
-    public void GenerateHole(Tile[,] tiles)
-    {
-        for (int i = 0; i < nbHoleToSpawn; i++)
-        {
-            ElementGrid holeElement;
-            int _myRandPositionX = Random.Range(1, width);
-            int _myRandPositionZ = Random.Range(1, height);
-            Tile tile = tiles[_myRandPositionX, _myRandPositionZ];
-            if (tile.Content == null && tile.Position != NextToEntryGate && tile.Position != NextToExitGate)
+            int _myRandPositionX;
+            int _myRandPositionZ;
+            
+            Tile tile;
+            do
             {
-                holeElement = InstantiateElementGrid(prefabHole, tiles[_myRandPositionX, _myRandPositionZ].Position);
-                tiles[_myRandPositionX, _myRandPositionZ].Content = holeElement;
-                if (!Pathfinding.FindPathFromTile(grid.Entry, grid.Exit, grid))
-                {
-                    tiles[_myRandPositionX, _myRandPositionZ].Content = null;
-                    Destroy(holeElement.gameObject.GetComponentInChildren<Hole>());
-                    i--;
-                }
+                _myRandPositionX = Random.Range(1, width-1);
+                _myRandPositionZ = Random.Range(1, height-1);
+                tile = tiles[_myRandPositionX, _myRandPositionZ];
             }
+            while(tile.Content != null ||
+                tile.Position == NextToEntryGate ||
+                tile.Position == NextToExitGate ||
+                !Pathfinding.FindPathFromTile(grid.Entry, grid.Exit, grid)
+            );
+            
+            chestElement = InstantiateElementGrid(prefab, tiles[_myRandPositionX, _myRandPositionZ].Position, Quaternion.Euler(0, 180, 0));
+            tiles[_myRandPositionX, _myRandPositionZ].Content = chestElement;
         }
     }
     
@@ -191,18 +179,19 @@ public class ElementsGenerator : MonoBehaviour
     {
         for (int i = 0; i < nbEnemyToSpawn; i++)
         {
-            int _myRandPositionX = Random.Range(1, width);
-            int _myRandPositionZ = Random.Range(1, height);
-
-
-            Tile tile = tiles[_myRandPositionX, _myRandPositionZ];
-            if (tile.Content == null && tile.Position != NextToEntryGate)
+            Tile tile;
+            do
             {
-                ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tile.Position);
-                tile.Content = enemyElement;
-                Game.Instance.Enemies.Add(enemyElement as Enemy);
-                (enemyElement as Enemy).TeleportTo(tile.Position, tile.Position);
+                int _myRandPositionX = Random.Range(1, width);
+                int _myRandPositionZ = Random.Range(1, height);
+                tile = tiles[_myRandPositionX, _myRandPositionZ];
             }
+            while(!(tile.Content == null && tile.Position != NextToEntryGate));
+
+            ElementGrid enemyElement = InstantiateElementGrid(prefabEnemy, tile.Position);
+            tile.Content = enemyElement;
+            Game.Instance.Enemies.Add(enemyElement as Enemy);
+            (enemyElement as Enemy).TeleportTo(tile.Position, tile.Position);
         }
     }
 
