@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Chest : ElementGrid
 {
-    [SerializeField]
-    GameObject head, lootPopup;
+    [SerializeField] GameObject head, lootPopup;
     
     Item content = null;
-    [SerializeField]
-    List<Item> loots;
+    [SerializeField] List<Item> loots;
 
     bool isOpen;
 
@@ -60,6 +58,7 @@ public class Chest : ElementGrid
     {
         content = loots[Random.Range(0, loots.Count)];
         lootPopup.GetComponent<SpriteRenderer>().sprite = content.Artwork;
+        lootPopup.GetComponentInChildren<TMPro.TextMeshPro>().text = content.BonusValue.ToString();
     }
 
     Item TakeContent()

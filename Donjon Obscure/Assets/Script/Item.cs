@@ -6,14 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 public class Item : ScriptableObject
 {
-    [SerializeField]
-    Stat bonusType;
-    [SerializeField]
-    new string name;
-    [SerializeField]
-    string description;
-    [SerializeField]
-    int bonusValue;
+    [SerializeField] Stat bonusType;
+    [SerializeField] new string name;
+    [SerializeField] string description;
+    [SerializeField] int bonusValue;
     
     public int BonusValue
     {
