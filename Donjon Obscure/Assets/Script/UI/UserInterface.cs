@@ -6,15 +6,14 @@ using UnityEngine.UI;
 
 public class UserInterface : MonoBehaviour
 {
-    [SerializeField]
-    Image HealthBar, SanityBar, OilBar;
+    [SerializeField] Image HealthBar, SanityBar, OilBar;
     void Start()
     {
         Game.Instance.character.OnPlayerStatChange += PlayerStatChanged;
         Game.Instance.character.lantern.OnLanternOilInReserveChange += PlayerStatChanged;
     }
 
-    private void PlayerStatChanged(int current, int maximum, Stat stat)
+    private void PlayerStatChanged(float current, float maximum, Stat stat)
     {
         switch (stat)
         {

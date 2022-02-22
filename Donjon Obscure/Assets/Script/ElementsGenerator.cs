@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ElementsGenerator : MonoBehaviour
 {
-    [SerializeField]
-    int nbChestToSpawn, nbHoleToSpawn, nbEnemyToSpawn;
+    [SerializeField] int nbChestToSpawn, nbHoleToSpawn, nbEnemyToSpawn;
 
     Grid grid;
     
@@ -23,7 +22,6 @@ public class ElementsGenerator : MonoBehaviour
 
     [SerializeField]
     Material wallTransparentMat;
-    
     
     Quaternion rotationTop = Quaternion.Euler(0.0f, 0.0f, 0.0f);
     Quaternion rotationRight = Quaternion.Euler(0.0f, 90.0f, 0.0f);
@@ -48,14 +46,14 @@ public class ElementsGenerator : MonoBehaviour
         GenerateChest(tiles);
         GenerateHole(tiles);
         GenerateEnemy(tiles);
-        
-        
     }
+
     protected void setAlphaWall(ElementGrid wall, float alpha)
     {
         Renderer renderer = wall.GetComponentInChildren<Renderer>();
         renderer.material = wallTransparentMat;
     }
+
     public void GenerateExternWall(Tile[,] tiles)
     {
         for (int i = 0; i < width; i++)
@@ -85,6 +83,7 @@ public class ElementsGenerator : MonoBehaviour
         }
 
     }
+
     public void GenerateGate(Tile[,] tiles, bool isExitGate)
     {
         int _sideRandPosition = Random.Range(0, 4);
@@ -142,9 +141,8 @@ public class ElementsGenerator : MonoBehaviour
 
         currentTile.Content = doorElement;
 
+    }
 
-
-        }    
     public void GenerateChest(Tile[,] tiles)
     {
         for (int i = 0; i < nbChestToSpawn; i++)
@@ -164,9 +162,9 @@ public class ElementsGenerator : MonoBehaviour
                     i--;
                 }
             }
-            
         }
     }
+
     public void GenerateHole(Tile[,] tiles)
     {
         for (int i = 0; i < nbHoleToSpawn; i++)
@@ -188,6 +186,7 @@ public class ElementsGenerator : MonoBehaviour
             }
         }
     }
+    
     public void GenerateEnemy(Tile[,] tiles)
     {
         for (int i = 0; i < nbEnemyToSpawn; i++)

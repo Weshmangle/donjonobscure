@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ItemType : MonoBehaviour
 {
-    public enum itemType { bonusWaepon, bonusArmour, bonusFuel, bonusHealthPoint, bonusSanityPoint };
-
-    
+    public enum itemType
+    {
+        BonusWaepon, 
+        BonusArmour, 
+        BonusFuel, 
+        BonusHealthPoint, 
+        BonusSanityPoint
+    };
 }

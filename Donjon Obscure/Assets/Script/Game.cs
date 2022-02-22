@@ -18,7 +18,7 @@ public class Game : MonoBehaviour
     
     static public Vector2Int CharacterSpawnPosition {get; set;}
 
-    public static bool DEBUG = true;
+    public static bool DEBUG = false;
     
     void Awake()
     {
@@ -137,17 +137,13 @@ public class Game : MonoBehaviour
                 tile.showTile(false);
             }
 
-            for (var x = -character.lantern.LightRange(); x <= character.lantern.LightRange(); x++)
+            for (int range = 0; range < character.lantern.LightRange(); range++)
             {
-                for (var y = -character.lantern.LightRange(); y <= character.lantern.LightRange(); y++)
+                foreach (var coordinate in GFG.MidPointCircleDraw(character.Position.x, character.Position.y, range))
                 {
-                    var vect = new Vector2Int(Mathf.Clamp(character.Position.x + x, 0, grid.Width-1), Mathf.Clamp(character.Position.y + y, 0, grid.Height-1));
-                    Tile tile = grid.getTile(vect);
-                    tile.showTile(true);
+                    grid.getTile(new Vector2Int(Mathf.Clamp(coordinate.Item1, 0, grid.Width-1), Mathf.Clamp(coordinate.Item2, 0, grid.Height-1))).showTile(true);
                 }
             }
-            
-            grid.getTile(new Vector2Int(1,1)).showTile(true);
         }
         else
         {

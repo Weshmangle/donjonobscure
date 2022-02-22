@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class Character : Entity
 {
-    public delegate void PlayerStatChangedEventHandler(int health, int maxHealth, Stat stat);
+    public delegate void PlayerStatChangedEventHandler(float health, float maxHealth, Stat stat);
     public event PlayerStatChangedEventHandler OnPlayerStatChange;
-
-    [SerializeField]
-    int mentalSanity;
-    [SerializeField]
-    int mentalSanityMax;
-    [SerializeField]
-    int armorPoint;
-    [SerializeField]
-    int armorPointMax;
-
-    [SerializeField]
-    public Lantern lantern;
+    [SerializeField] int mentalSanity;
+    [SerializeField] int mentalSanityMax;
+    [SerializeField] int armorPoint;
+    [SerializeField] int armorPointMax;
+    [SerializeField] public Lantern lantern;
+    
     void Awake()
     {
         if(healthPoint == 0)
