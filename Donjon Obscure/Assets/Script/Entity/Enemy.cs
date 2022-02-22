@@ -15,6 +15,11 @@ public class Enemy : Entity
         Destroy(this.gameObject);
     }
 
+    private void Update()
+    {
+        transform.LookAt(new Vector3(10, 0, 0));
+    }
+
     public override void Move(Vector2Int playerTilePosition)
     {
         var path = Pathfinding.GetPathFromPosition(position, playerTilePosition, Game.Instance.grid);

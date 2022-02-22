@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoint: 5
   healthPointMax: 5
-  attackStrenght: 2
+  attackStrenght: 0
   smoothTime: 18
   position: {x: 0, y: 0}
 --- !u!1001 &6493575585198156297

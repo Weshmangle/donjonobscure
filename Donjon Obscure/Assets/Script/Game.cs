@@ -18,7 +18,7 @@ public class Game : MonoBehaviour
     
     static public Vector2Int CharacterSpawnPosition {get; set;}
 
-    public static bool DEBUG = false;
+    public static bool DEBUG = true;
     
     void Awake()
     {
@@ -139,7 +139,7 @@ public class Game : MonoBehaviour
 
             for (int range = 0; range < character.lantern.LightRange(); range++)
             {
-                foreach (var coordinate in GFG.MidPointCircleDraw(character.Position.x, character.Position.y, range))
+                foreach (var coordinate in Utils.MidPointCircleDraw(character.Position.x, character.Position.y, range))
                 {
                     grid.getTile(new Vector2Int(Mathf.Clamp(coordinate.Item1, 0, grid.Width-1), Mathf.Clamp(coordinate.Item2, 0, grid.Height-1))).showTile(true);
                 }

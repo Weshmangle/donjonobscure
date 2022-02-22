@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-class GFG
+class Utils
 {	
 	public static List<(int, int)> MidPointCircleDraw(int x_centre, int y_centre, int r)
 	{

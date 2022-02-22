@@ -50,6 +50,7 @@ public class Lantern : MonoBehaviour
             this.GetComponent<AudioSource>().mute = true;
         }
     }
+    
     public bool IsActive()
     {
         return isActive;
