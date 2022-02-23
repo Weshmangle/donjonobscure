@@ -6,9 +6,10 @@ using System;
 public class GridSeedCreator : EditorWindow
 {
     static GridSeedCreator window;
-    int width = 10;
-    int height = 10;
+    int Row = 10;
+    int Column = 10;
     int maxGridSize = 300;
+    int SeedTileSize = 30;
     Vector2 offset;
     Vector2 drag;
     Vector2 nodePosition;
@@ -23,6 +24,7 @@ public class GridSeedCreator : EditorWindow
     static void ShowWindow()
     {
         window = GetWindow<GridSeedCreator>();
+        
         window.titleContent = new GUIContent("Grid Seed Creator");
 
     }
@@ -57,13 +59,13 @@ public class GridSeedCreator : EditorWindow
     void SetupNodes()
     {
         nodes = new List<List<SeedNode>>();
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < Row; i++)
         {
             nodes.Add(new List<SeedNode>());
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < Column; j++)
             {
-                nodePosition.Set(i*30, j*30);
-                nodes[i].Add(new SeedNode(nodePosition, 30, 30, empty));
+                nodePosition.Set(i*SeedTileSize, j*SeedTileSize);
+                nodes[i].Add(new SeedNode(nodePosition, SeedTileSize, SeedTileSize, empty));
             }
         }
     }
@@ -168,13 +170,14 @@ public class GridSeedCreator : EditorWindow
     }
     private void DrawNodes()
     {
-        Debug.Log(window.maxSize);
-        Rect gridPosition = new Rect(window.width/2, window.height/2, position.width, position.height);
+        int width = Row * SeedTileSize;
+        int height = Column * SeedTileSize;
+        Rect gridPosition = new Rect((position.width - width)/2, (position.height - height)/2, position.width, position.height);
         GUILayout.BeginArea(gridPosition);
 
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < Row; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < Column; j++)
             {
                 nodes[i][j].Draw();
             }
@@ -198,9 +201,9 @@ public class GridSeedCreator : EditorWindow
     void OnMouseDrag(Vector2 delta) 
         {
             drag = delta;
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < Row; i++)
             {
-                for (int j = 0; j < height; j++)
+                for (int j = 0; j < Column; j++)
                 {
                    nodes[i][j].Drag(delta);
                 }
