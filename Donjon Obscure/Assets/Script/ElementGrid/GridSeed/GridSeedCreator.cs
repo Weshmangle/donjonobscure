@@ -9,7 +9,7 @@ public class GridSeedCreator : EditorWindow
     int Row = 10;
     int Column = 10;
     int maxGridSize = 300;
-    int SeedTileSize = 30;
+    int SeedTileSize = 64;
     Vector2 offset;
     Vector2 drag;
     Vector2 nodePosition;
@@ -19,6 +19,13 @@ public class GridSeedCreator : EditorWindow
     SeedTileManager seedTileManager;
     bool iSErasing;
     string gridSeedName = "New Untilted Grid Seed";
+    Rect Centered()
+    {
+        int width = Row * SeedTileSize;
+        int height = Column * SeedTileSize;
+        // return new Rect((position.width - width)/2, (position.height - height)/2, position.width, position.height);
+        return new Rect(0, 0, position.width, position.height);
+    }
 
     [MenuItem("Donjon Obscure/GridSeed Creator")]
     static void ShowWindow()
@@ -31,13 +38,7 @@ public class GridSeedCreator : EditorWindow
     void OnEnable()
     {
         SetupSeedTileManager();
-        
         SetupNodes();
-    }
-
-    private void SetupMap()
-    {
-        try {} catch (Exception exception){}
     }
 
     private void SetupSeedTileManager()
@@ -71,6 +72,7 @@ public class GridSeedCreator : EditorWindow
     }
     void OnGUI()
     {
+        DrawCursorCoordinates();
         DrawGrid();
         DrawNodes();
         DrawMenuBar();
@@ -84,7 +86,46 @@ public class GridSeedCreator : EditorWindow
         
     }
 
-    private void DrawMenuBar()
+    private void DrawCursorCoordinates()
+    {
+        Rect gridPosition = new Rect(0, 0, position.width, position.height);
+        GUILayout.BeginArea(gridPosition);
+    }
+
+    void DrawGrid()
+    {
+        int widthDivider = Mathf.CeilToInt(position.width / SeedTileSize);
+        int heightDivider = Mathf.CeilToInt(position.height / SeedTileSize);
+        Rect gridPosition = new Rect(0, 0, position.width, position.height);
+        GUILayout.BeginArea(gridPosition);
+        Handles.color = new Color(0.5f, 0.5f, 0.5f, 0.2f);
+        offset += drag;
+        Vector3 newOffset = new Vector3(offset.x%SeedTileSize, offset.y%SeedTileSize, 0);
+        for (int i = 0; i < widthDivider; i++)
+        {
+            Handles.DrawLine(new Vector3(SeedTileSize*i, -SeedTileSize, 0)+newOffset, new Vector3(SeedTileSize*i, position.height, 0)+newOffset);
+        }
+        for (int i = 0; i < heightDivider; i++)
+        {
+            Handles.DrawLine(new Vector3(-SeedTileSize, SeedTileSize*i, 0)+newOffset, new Vector3(position.width, SeedTileSize*i, 0)+newOffset);
+        }
+        Handles.color = Color.white;
+        GUILayout.EndArea();
+    }
+    void DrawNodes()
+    {
+        
+
+        for (int i = 0; i < Row; i++)
+        {
+            for (int j = 0; j < Column; j++)
+            {
+                nodes[i][j].Draw();
+            }
+        }
+    }
+
+    void DrawMenuBar()
     {
         Rect menuBar = new Rect(0, 0, position.width, 32);
         GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
@@ -102,7 +143,7 @@ public class GridSeedCreator : EditorWindow
 
     private void DrawPaintingBar()
     {
-        Rect menuBar = new Rect(0, 24, position.width, 64);
+        Rect menuBar = new Rect(0, 21, position.width, 64);
         GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
         GUILayout.BeginHorizontal();
 
@@ -127,26 +168,23 @@ public class GridSeedCreator : EditorWindow
 
     private void ProcessNodes(Event _event)
     {
-        int Row = (int)((_event.mousePosition.x - offset.x) / 30);
-        int Column = (int)((_event.mousePosition.y - offset.y) / 30);
-        if (!((_event.mousePosition.x - offset.x) < 0 ||
-            (_event.mousePosition.x - offset.x) > maxGridSize ||
-            (_event.mousePosition.y - offset.y) < 0 ||
-            (_event.mousePosition.y - offset.y) > maxGridSize))
+        int Row = (int)((_event.mousePosition.x - offset.x) / SeedTileSize);
+        int Column = (int)((_event.mousePosition.y - offset.y) / SeedTileSize);
+        if (CursorInGrid(_event))
         {
-        if(_event.type == EventType.MouseDown)
-        {
-            if(nodes[Row][Column].style.normal.background.name == "Floor")
+            if(_event.type == EventType.MouseDown)
             {
-                iSErasing = false;
-                
+                if(nodes[Row][Column].style.normal.background.name == "Floor")
+                {
+                    iSErasing = false;
+                    
+                }
+                else
+                {
+                    iSErasing = true;
+                }
+                PaintNodes(Row, Column);
             }
-            else
-            {
-                iSErasing = true;
-            }
-            PaintNodes(Row, Column);
-        }
             if(_event.type == EventType.MouseDrag)
             {
                 PaintNodes(Row, Column);
@@ -155,34 +193,13 @@ public class GridSeedCreator : EditorWindow
         }
             
     }
-    void PaintNodes(int Row, int Column)
-    {
-        if(iSErasing)
-        {
-            nodes[Row][Column].SetStyle(empty);
-            GUI.changed = true;
-        }
-        else
-        {
-            nodes[Row][Column].SetStyle(currentStyle);
-            GUI.changed = true;
-        }
-    }
-    private void DrawNodes()
-    {
-        int width = Row * SeedTileSize;
-        int height = Column * SeedTileSize;
-        Rect gridPosition = new Rect((position.width - width)/2, (position.height - height)/2, position.width, position.height);
-        GUILayout.BeginArea(gridPosition);
 
-        for (int i = 0; i < Row; i++)
-        {
-            for (int j = 0; j < Column; j++)
-            {
-                nodes[i][j].Draw();
-            }
-        }
-        GUILayout.EndArea();
+    bool CursorInGrid(Event _event)
+    {
+        return !((_event.mousePosition.x - offset.x) < 0 ||
+            (_event.mousePosition.x - offset.x) > maxGridSize ||
+            (_event.mousePosition.y - offset.y) < 0 ||
+            (_event.mousePosition.y - offset.y) > maxGridSize);
     }
 
     void ProcessGrid(Event _event)
@@ -198,37 +215,31 @@ public class GridSeedCreator : EditorWindow
                 break;
         }
     }
-    void OnMouseDrag(Vector2 delta) 
+    void PaintNodes(int Row, int Column)
+    {
+        if(iSErasing)
         {
-            drag = delta;
-            for (int i = 0; i < Row; i++)
-            {
-                for (int j = 0; j < Column; j++)
-                {
-                   nodes[i][j].Drag(delta);
-                }
-            }
+            nodes[Row][Column].SetStyle(empty);
             GUI.changed = true;
         }
-    void DrawGrid()
-    {
-        int widthDivider = Mathf.CeilToInt(position.width / 20);
-        int heightDivider = Mathf.CeilToInt(position.height / 20);
-        Rect gridPosition = new Rect(0, 48, position.width, position.height);
-        GUILayout.BeginArea(gridPosition);
-        Handles.color = new Color(0.5f, 0.5f, 0.5f, 0.2f);
-        offset += drag;
-        Vector3 newOffset = new Vector3(offset.x%20, offset.y%20, 0);
-        for (int i = 0; i < widthDivider; i++)
+        else
         {
-            Handles.DrawLine(new Vector3(20*i, -20, 0)+newOffset, new Vector3(20*i, position.height, 0)+newOffset);
+            nodes[Row][Column].SetStyle(currentStyle);
+            GUI.changed = true;
         }
-        for (int i = 0; i < heightDivider; i++)
-        {
-            Handles.DrawLine(new Vector3(-20, 20*i, 0)+newOffset, new Vector3(position.width, 20*i, 0)+newOffset);
-        }
-        Handles.color = Color.white;
-        GUILayout.EndArea();
     }
+    void OnMouseDrag(Vector2 delta) 
+    {
+        drag = delta;
+        for (int i = 0; i < Row; i++)
+        {
+            for (int j = 0; j < Column; j++)
+            {
+                nodes[i][j].Drag(delta);
+            }
+        }
+        GUI.changed = true;
+    }
+    
     
 }
