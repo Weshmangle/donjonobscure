@@ -20,6 +20,7 @@ public class Game : MonoBehaviour
     static public Vector2Int CharacterSpawnPosition {get; set;}
 
     public static bool DEBUG = true;
+    [SerializeField] public Tile tileCliked;
     
     void Awake()
     {
@@ -39,6 +40,15 @@ public class Game : MonoBehaviour
     void Update()
     {
         showTileInRangeLantern();
+
+        if(tileCliked != null)
+        {
+            if(character.IsAnimationOver())
+            {
+                EnemyTurn(tileCliked);
+                tileCliked = null;
+            }
+        }
 
         if(DEBUG)
         {
@@ -168,11 +178,13 @@ public class Game : MonoBehaviour
             }
         }
     }
-
+//character.IsAnimationOver = true
     void CheckTileContent(Tile tile)
     {
-        if(tileIsClickable(tile))
+        if(tileIsClickable(tile) && character.IsAnimationOver())
         {
+            tileCliked = tile;
+
             switch (tile.Content)
             {
                 case null:
@@ -197,7 +209,7 @@ public class Game : MonoBehaviour
                     chest.Open();
                     break;
                 case Hole hole:
-                    character.Move(tile.Position);
+                    character.MoveOverHole(tile.Position);
                     this.panelDie.SetActive(true);
                     break;
                 case Enemy enemy:
@@ -233,8 +245,8 @@ public class Game : MonoBehaviour
             {
                 character.lantern.ConsumeFuel();
             }
-        }
 
-        EnemyTurn(tile);
+            tileCliked = tile;
+        }
     }
 }

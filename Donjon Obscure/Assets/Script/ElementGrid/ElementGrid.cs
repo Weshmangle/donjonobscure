@@ -2,11 +2,10 @@ using UnityEngine;
 
 public abstract class ElementGrid : MonoBehaviour
 {
-    protected bool isAnimationOver;
-    public bool IsAnimationOver
+    [SerializeField] protected bool animationOver;
+
+    public bool IsAnimationOver()
     {
-        get;
-        protected set;
+        return animationOver;
     }
-    
 }

@@ -9,7 +9,7 @@ public class GridSeedCreator : EditorWindow
     int Row = 10;
     int Column = 10;
     int maxGridSize = 300;
-    int SeedTileSize = 30;
+    int SeedTileSize = 64;
     Vector2 offset;
     Vector2 drag;
     Vector2 nodePosition;
@@ -19,6 +19,7 @@ public class GridSeedCreator : EditorWindow
     SeedTileManager seedTileManager;
     bool iSErasing;
     string gridSeedName = "New Untilted Grid Seed";
+    GUISkin customSkin;
 
     [MenuItem("Donjon Obscure/GridSeed Creator")]
     static void ShowWindow()
@@ -71,6 +72,7 @@ public class GridSeedCreator : EditorWindow
     }
     void OnGUI()
     {
+        GUI.skin = customSkin;
         DrawGrid();
         DrawNodes();
         DrawMenuBar();

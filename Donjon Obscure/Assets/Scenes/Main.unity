@@ -533,6 +533,7 @@ MonoBehaviour:
   grid: {fileID: 1433576381}
   Enemies: []
   cursor: {fileID: 1001927841}
+  tileCliked: {fileID: 0}
 --- !u!82 &550839177
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2587,6 +2588,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6781077701649794866, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: smoothTime
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 6781077701649794867, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: m_RootOrder
       value: 5

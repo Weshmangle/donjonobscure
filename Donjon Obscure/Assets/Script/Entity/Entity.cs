@@ -20,16 +20,16 @@ public abstract class Entity : ElementGrid
     [SerializeField] protected int healthPoint;
     [SerializeField] protected int healthPointMax;
     [SerializeField] protected int attackStrenght;
-    [SerializeField, Range(0f, 300f)] float smoothTime = 150f;
+    [SerializeField, Range(0f, 300f)] protected float smoothTime = 150f;
     [SerializeField] protected Vector2Int position;
-    Vector3 velocity = Vector3.zero;
+    protected Vector3 velocity = Vector3.zero;
     
     public Vector2Int Position
     {
         get {return position;}
         set
         {
-            isAnimationOver = false;
+            animationOver = false;
             position = value;
         }
     }
@@ -37,7 +37,7 @@ public abstract class Entity : ElementGrid
     {
         if (transform.position == new Vector3(position.x, 0, position.y))
         {
-            isAnimationOver = true;
+            animationOver = true;
         }
         else
         {
