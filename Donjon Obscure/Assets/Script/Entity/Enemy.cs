@@ -15,9 +15,10 @@ public class Enemy : Entity
         Destroy(this.gameObject);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        transform.LookAt(new Vector3(10, 0, 0));
+        //C POUR TEST
+        transform.LookAt(Game.Instance.cursor.transform.position);
     }
 
     public override void Move(Vector2Int playerTilePosition)

@@ -9,6 +9,7 @@ public class Game : MonoBehaviour
     [SerializeField] public GameObject panelDie;
     [SerializeField] public Grid grid;
     [SerializeField] public List<Enemy> Enemies;
+    [SerializeField] public GameObject cursor;
 
     public static Game Instance = null;
 
