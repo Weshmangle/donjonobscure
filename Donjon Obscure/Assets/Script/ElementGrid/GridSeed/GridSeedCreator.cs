@@ -19,9 +19,6 @@ public class GridSeedCreator : EditorWindow
     SeedTileManager seedTileManager;
     bool iSErasing;
     string gridSeedName = "New Untilted Grid Seed";
-<<<<<<< HEAD
-    GUISkin customSkin;
-=======
     Rect Centered()
     {
         int width = Row * SeedTileSize;
@@ -29,7 +26,6 @@ public class GridSeedCreator : EditorWindow
         // return new Rect((position.width - width)/2, (position.height - height)/2, position.width, position.height);
         return new Rect(0, 0, position.width, position.height);
     }
->>>>>>> fce222073322cd0dc77f5afe762c36c04486338b
 
     [MenuItem("Donjon Obscure/GridSeed Creator")]
     static void ShowWindow()
@@ -76,11 +72,7 @@ public class GridSeedCreator : EditorWindow
     }
     void OnGUI()
     {
-<<<<<<< HEAD
-        GUI.skin = customSkin;
-=======
         DrawCursorCoordinates();
->>>>>>> fce222073322cd0dc77f5afe762c36c04486338b
         DrawGrid();
         DrawNodes();
         DrawMenuBar();
