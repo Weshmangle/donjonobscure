@@ -18,7 +18,7 @@ public class Enemy : Entity
     private void FixedUpdate()
     {
         //C POUR TEST
-        transform.LookAt(Game.Instance.cursor.transform.position);
+        transform.LookAt(Game.Instance.cursor.transform.position); 
     }
 
     public override void Move(Vector2Int playerTilePosition)

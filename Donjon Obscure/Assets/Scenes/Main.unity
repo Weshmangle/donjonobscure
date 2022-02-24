@@ -128,7 +128,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6781077701649794866, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
   m_PrefabInstance: {fileID: 2052236559}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1001927841}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95462aeba688efe469516b3e8702ee34, type: 3}
@@ -532,7 +532,7 @@ MonoBehaviour:
   panelDie: {fileID: 1733740678}
   grid: {fileID: 1433576381}
   Enemies: []
-  cursor: {fileID: 0}
+  cursor: {fileID: 1001927841}
 --- !u!82 &550839177
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1291,6 +1291,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1001927841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6781077701649794877, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+  m_PrefabInstance: {fileID: 2052236559}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1105035010
 GameObject:
   m_ObjectHideFlags: 0
