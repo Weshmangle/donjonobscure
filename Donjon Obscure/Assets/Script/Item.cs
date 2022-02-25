@@ -27,6 +27,4 @@ public class Item : ScriptableObject
     {
         get { return bonusType; }
     }
-
-    
 }

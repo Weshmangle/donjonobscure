@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class Game : MonoBehaviour
 {   
@@ -32,9 +33,16 @@ public class Game : MonoBehaviour
         {
             Debug.LogError("GAME IS ALREADY INSTANTIATE");
         }
-        
+
         this.initRoom();
         this.panelDie.SetActive(false);
+
+        List<Enemy>.Enumerator enumerator = Enemies.GetEnumerator();
+        
+        foreach (var item in Enemies)
+        {
+            enumerator.MoveNext();
+        }
     }
     
     void Update()
