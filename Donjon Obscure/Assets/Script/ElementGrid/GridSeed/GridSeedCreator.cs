@@ -21,7 +21,7 @@ public class GridSeedCreator : EditorWindow
     GUIStyle brushToolbarVerticalStyle;
     SeedTileManager seedTileManager;
     bool iSErasing;
-    string gridSeedName = "New Untilted Grid Seed";
+    string gridSeedName = "New Untilted Seed";
     string SeedDescription = "Description of the Seed";
 
     Rect Centered()
@@ -155,15 +155,28 @@ public class GridSeedCreator : EditorWindow
         GUILayout.BeginHorizontal();
         SeedDescription = GUILayout.TextField(SeedDescription, GUILayout.MinWidth(600), GUILayout.Height(64));
         GUILayout.FlexibleSpace();
-        GUILayout.BeginVertical("Test");
+        GUILayout.BeginVertical();
             gridSeedName = GUILayout.TextField(gridSeedName, GUILayout.Width(144), GUILayout.Height(20));
             if(GUILayout.Button("Save Grid Seed", GUILayout.Width(144), GUILayout.Height(42)))
-            {
-                Debug.Log(gridSeedName);
-            }
+        {
+            string path = "Assets/Resources/Seeds/" + gridSeedName + ".asset";
+            GridSeed seed = GridSeed.CreateInstance<GridSeed>();
+            SetupSeedData(seed);
+            AssetDatabase.CreateAsset(seed, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = seed;
+        }
         GUILayout.EndVertical();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
+    }
+
+    private void SetupSeedData(GridSeed seed)
+    {
+        seed.Name = gridSeedName;
+        seed.Description = SeedDescription;
     }
 
     private void DrawPaintingBar()
