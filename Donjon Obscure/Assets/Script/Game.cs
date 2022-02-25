@@ -47,6 +47,15 @@ public class Game : MonoBehaviour
     
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            GridSeed seed = Resources.Load("Seeds/test") as GridSeed;
+            foreach(ElementData element in seed.ElementGrid)
+            {
+                    Debug.Log(element);
+                
+            }
+        }
         showTileInRangeLantern();
 
         if(tileCliked != null)

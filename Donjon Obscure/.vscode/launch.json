@@ -5,12 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Unity Editor",
-            "type": "unity",
-            "path": "/D:/Projects/donjonobscure/Donjon Obscure/Library/EditorInstance.json",
-            "request": "launch"
-        },
-        {
             "name": "Windows Player",
             "type": "unity",
             "request": "launch"

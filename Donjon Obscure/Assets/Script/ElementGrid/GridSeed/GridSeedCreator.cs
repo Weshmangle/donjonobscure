@@ -8,23 +8,30 @@ public class GridSeedCreator : EditorWindow
     static GridSeedCreator window;
     int Row = 10;
     int Column = 10;
-    int maxGridSize = 300;
     int SeedTileSize = 64;
+    
     Vector2 offset;
     Vector2 drag;
     Vector2 nodePosition;
     List<List<SeedNode>> nodes;
     GUIStyle empty;
     GUIStyle currentStyle;
-    SeedTileManager seedTileManager;
+    GUIStyle brushToggleStyle;
+    GUIStyle brushToolbarStyle;
+    GUIStyle brushToolbarVerticalStyle;
     bool iSErasing;
-    string gridSeedName = "New Untilted Grid Seed";
+    string gridSeedName = "New Untilted Seed";
+    string SeedDescription = "Description of the Seed";
+    ElementData[] elementsData;
+    ElementData emptyElementData;
+    ElementData currentElementData;
+
     Rect Centered()
     {
         int width = Row * SeedTileSize;
         int height = Column * SeedTileSize;
-        // return new Rect((position.width - width)/2, (position.height - height)/2, position.width, position.height);
-        return new Rect(0, 0, position.width, position.height);
+        return new Rect((position.width - width)/2, (position.height - height)/2, position.width, position.height);
+        // return new Rect(0, 0, position.width, position.height);
     }
 
     [MenuItem("Donjon Obscure/GridSeed Creator")]
@@ -33,27 +40,46 @@ public class GridSeedCreator : EditorWindow
         window = GetWindow<GridSeedCreator>();
         
         window.titleContent = new GUIContent("Grid Seed Creator");
+        
 
     }
     void OnEnable()
     {
-        SetupSeedTileManager();
+        SetupGUIStyle();
+        SetupSeedBrushes();
         SetupNodes();
+        SetPositionToCenter();
     }
 
-    private void SetupSeedTileManager()
+    private void SetupGUIStyle()
+    {
+        brushToggleStyle = new GUIStyle(EditorStyles.toolbarButton);
+        brushToggleStyle.fixedHeight = SeedTileSize;
+        brushToggleStyle.imagePosition = ImagePosition.ImageAbove;
+        brushToolbarStyle = new GUIStyle(EditorStyles.toolbar);
+        brushToolbarStyle.fixedHeight = 0;
+        brushToolbarVerticalStyle = new GUIStyle(brushToolbarStyle);
+        
+        brushToolbarStyle.fixedHeight = 0;
+        
+    }
+
+    private void SetupSeedBrushes()
     {
         try {
-            seedTileManager = GameObject.FindGameObjectWithTag("SeedTileManager").GetComponent<SeedTileManager>();
-            for (int i = 0; i < seedTileManager.seedTiles.Length; i++)
+            elementsData = Resources.Load<ElementDataContainer>("Elements/ElementDataInGame").Elements;
+            for (int i = 0; i < elementsData.Length; i++)
             {
-                seedTileManager.seedTiles[i].NodeStyle = new GUIStyle();
-                seedTileManager.seedTiles[i].NodeStyle.normal.background = seedTileManager.seedTiles[i].Icon;
+                elementsData[i].Style = new GUIStyle();
+                elementsData[i].Style.normal.background = elementsData[i].Icon;
             }
         }
         catch (Exception exception){}
-        empty =  seedTileManager.seedTiles[0].NodeStyle;
-        currentStyle =  seedTileManager.seedTiles[1].NodeStyle;
+        string stringToFind = "Floor";
+        empty =  elementsData[0].Style;
+        currentStyle =  elementsData[1].Style;
+        emptyElementData = elementsData[0];
+        currentElementData = elementsData[1];
         
     }
 
@@ -66,32 +92,35 @@ public class GridSeedCreator : EditorWindow
             for (int j = 0; j < Column; j++)
             {
                 nodePosition.Set(i*SeedTileSize, j*SeedTileSize);
-                nodes[i].Add(new SeedNode(nodePosition, SeedTileSize, SeedTileSize, empty));
+                nodes[i].Add(new SeedNode(nodePosition, SeedTileSize, SeedTileSize, empty, elementsData[0]));
             }
         }
     }
     void OnGUI()
     {
-        DrawCursorCoordinates();
-        DrawGrid();
-        DrawNodes();
         DrawMenuBar();
         DrawPaintingBar();
+        GUILayout.BeginArea(new Rect(0, 72, position.width - 81, position.height));
+        DrawGrid();
+        DrawNodes();
         ProcessNodes(Event.current);
         ProcessGrid(Event.current);
+        GUILayout.EndArea();
+        // DrawCursorCoordinates();
         if(GUI.changed)
         {
             Repaint();
         }
         
     }
-
     private void DrawCursorCoordinates()
     {
-        Rect gridPosition = new Rect(0, 0, position.width, position.height);
-        GUILayout.BeginArea(gridPosition);
+        string mousePosition = Event.current.mousePosition.ToString();
+        Rect gridPosition = new Rect(64, 128, position.width, 64);
+        GUILayout.BeginArea(gridPosition, EditorStyles.toolbar);
+        GUILayout.TextArea(mousePosition);
+        GUILayout.EndArea();
     }
-
     void DrawGrid()
     {
         int widthDivider = Mathf.CeilToInt(position.width / SeedTileSize);
@@ -99,6 +128,7 @@ public class GridSeedCreator : EditorWindow
         Rect gridPosition = new Rect(0, 0, position.width, position.height);
         GUILayout.BeginArea(gridPosition);
         Handles.color = new Color(0.5f, 0.5f, 0.5f, 0.2f);
+        
         offset += drag;
         Vector3 newOffset = new Vector3(offset.x%SeedTileSize, offset.y%SeedTileSize, 0);
         for (int i = 0; i < widthDivider; i++)
@@ -114,8 +144,6 @@ public class GridSeedCreator : EditorWindow
     }
     void DrawNodes()
     {
-        
-
         for (int i = 0; i < Row; i++)
         {
             for (int j = 0; j < Column; j++)
@@ -127,41 +155,76 @@ public class GridSeedCreator : EditorWindow
 
     void DrawMenuBar()
     {
-        Rect menuBar = new Rect(0, 0, position.width, 32);
-        GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
+        Rect menuBar = new Rect(0, 0, position.width, 72);
+        GUILayout.BeginArea(menuBar, brushToolbarStyle);
         GUILayout.BeginHorizontal();
-            gridSeedName = GUILayout.TextField(gridSeedName);
-            if(GUILayout.Button("Save Grid Seed"))
-            {
-                Debug.Log(gridSeedName);
-            }
-            
-        
+        SeedDescription = GUILayout.TextField(SeedDescription, GUILayout.MinWidth(600), GUILayout.Height(64));
+        GUILayout.FlexibleSpace();
+        GUILayout.BeginVertical();
+            gridSeedName = GUILayout.TextField(gridSeedName, GUILayout.Width(144), GUILayout.Height(20));
+            if(GUILayout.Button("Save Grid Seed", GUILayout.Width(144), GUILayout.Height(42)))
+        {
+            string path = "Assets/Resources/Seeds/" + gridSeedName + ".asset";
+            GridSeed seed = GridSeed.CreateInstance<GridSeed>();
+            SetupSeedData(seed);
+            AssetDatabase.CreateAsset(seed, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = seed;
+        }
+        GUILayout.EndVertical();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }
 
+    private void SetupSeedData(GridSeed seed)
+    {
+        seed.Name = gridSeedName;
+        seed.Description = SeedDescription;
+        seed.ElementGrid = new ElementData[Row*Column];
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            for (int j = 0; j < nodes[i].Count; j++)
+            {
+                seed.ElementGrid[j*nodes[i].Count+i] = nodes[i][j].elementType;
+            }
+        }
+        // foreach(List<SeedNode> nodeList in nodes)
+        // {
+        //     foreach(SeedNode node in nodeList)
+        //     {
+        //         seed.ElementGrid[seed.ElementGrid.Length-i] = node.elementType;
+        //         i++;
+        //     }
+            
+        // }
+    }
+
     private void DrawPaintingBar()
     {
-        Rect menuBar = new Rect(0, 21, position.width, 64);
-        GUILayout.BeginArea(menuBar, EditorStyles.toolbar);
+        
+        Rect menuBar = new Rect(0, 72, position.width, position.height);
+        GUILayout.BeginArea(menuBar);
         GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.BeginVertical(brushToolbarVerticalStyle, GUILayout.ExpandHeight(true));
 
-        for (int i = 0; i < seedTileManager.seedTiles.Length; i++)
+        for (int i = 0; i < elementsData.Length; i++)
         {
             if(GUILayout.Toggle(
-                currentStyle == seedTileManager.seedTiles[i].NodeStyle,
+                currentStyle == elementsData[i].Style,
                 new GUIContent(
-                    seedTileManager.seedTiles[i].Icon,
-                    seedTileManager.seedTiles[i].ButtonText),
-                EditorStyles.toolbarButton,
+                    elementsData[i].Name,
+                    elementsData[i].Icon), brushToggleStyle,
                 GUILayout.Width(80),
                 GUILayout.Height(64)))
             {
-                currentStyle = seedTileManager.seedTiles[i].NodeStyle;
+                currentStyle = elementsData[i].Style;
+                currentElementData = elementsData[i];
             }
         }
-        
+        GUILayout.EndVertical();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }
@@ -196,10 +259,13 @@ public class GridSeedCreator : EditorWindow
 
     bool CursorInGrid(Event _event)
     {
+        
+        int maxGridSizeWidth = Row * SeedTileSize;
+        int maxGridSizeHeight = Column * SeedTileSize;
         return !((_event.mousePosition.x - offset.x) < 0 ||
-            (_event.mousePosition.x - offset.x) > maxGridSize ||
+            (_event.mousePosition.x - offset.x) > maxGridSizeWidth ||
             (_event.mousePosition.y - offset.y) < 0 ||
-            (_event.mousePosition.y - offset.y) > maxGridSize);
+            (_event.mousePosition.y - offset.y) > maxGridSizeHeight);
     }
 
     void ProcessGrid(Event _event)
@@ -219,12 +285,12 @@ public class GridSeedCreator : EditorWindow
     {
         if(iSErasing)
         {
-            nodes[Row][Column].SetStyle(empty);
+            nodes[Row][Column].SetStyleAndElementType(empty, emptyElementData);
             GUI.changed = true;
         }
         else
         {
-            nodes[Row][Column].SetStyle(currentStyle);
+            nodes[Row][Column].SetStyleAndElementType(currentStyle, currentElementData);
             GUI.changed = true;
         }
     }
@@ -236,6 +302,20 @@ public class GridSeedCreator : EditorWindow
             for (int j = 0; j < Column; j++)
             {
                 nodes[i][j].Drag(delta);
+            }
+        }
+        GUI.changed = true;
+    }
+    void SetPositionToCenter()
+    {
+        int maxGridSizeWidth = Row * SeedTileSize;
+        int maxGridSizeHeight = Column * SeedTileSize;
+        drag = new Vector2((window.position.width - maxGridSizeWidth - 72) / 2, ((window.position.height- maxGridSizeHeight  - 72) / 2));
+        for (int i = 0; i < Row; i++)
+        {
+            for (int j = 0; j < Column; j++)
+            {
+                nodes[i][j].Drag(drag);
             }
         }
         GUI.changed = true;

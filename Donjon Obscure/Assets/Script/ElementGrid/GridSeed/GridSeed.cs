@@ -1,8 +1,10 @@
 using UnityEngine;
-
-
-[CreateAssetMenu(fileName = "New Grid Seed", menuName = "Grid Seed")]
+using System;
+[Serializable]
 public class GridSeed : ScriptableObject
 {
+    public string Description;
+    public string Name;
     
+    public ElementData[] ElementGrid;
 }
