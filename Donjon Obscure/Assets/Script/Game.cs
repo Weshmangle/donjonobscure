@@ -20,7 +20,7 @@ public class Game : MonoBehaviour
     
     static public Vector2Int CharacterSpawnPosition {get; set;}
 
-    public static bool DEBUG = true;
+    public static bool DEBUG = false;
     [SerializeField] public Tile tileCliked;
     
     void Awake()
