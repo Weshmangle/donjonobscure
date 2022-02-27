@@ -19,6 +19,10 @@ public class Noding
     {
         return ((Node)other) != null && position.Equals(((Node)other).position);
     }
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }
 
 public class PathFindinging
