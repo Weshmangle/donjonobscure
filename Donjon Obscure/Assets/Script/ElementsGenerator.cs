@@ -20,8 +20,9 @@ public class ElementsGenerator : MonoBehaviour
     Vector2Int NextToExitGate;
     Vector2Int NextToEntryGate;
 
-    [SerializeField]
-    Material wallTransparentMat;
+    [SerializeField] Material wallTransparentMat;
+    
+    [SerializeField] GridSeed [] levels;
     
     Quaternion rotationTop = Quaternion.Euler(0.0f, 0.0f, 0.0f);
     Quaternion rotationRight = Quaternion.Euler(0.0f, 90.0f, 0.0f);
@@ -38,14 +39,49 @@ public class ElementsGenerator : MonoBehaviour
         prefabGate = (Resources.Load("Prefabs/Gate") as GameObject).GetComponent<Gate>();
         prefabEnemy = (Resources.Load("Prefabs/Enemy") as GameObject).GetComponent<Enemy>();
 
+        var indexLevel = Random.Range(0, levels.Length);
+        var level = levels[indexLevel];
+        var index = 0;
+        foreach (var elementData in level.ElementGrid)
+        {
+            switch (elementData.name)
+            {
+                case "Floor":
+                    break;
+                case "Wall":
+                    ElementGrid wallExternElement = InstantiateElementGrid(prefabWall, tiles[index, width-1].Position, rotationBot);
+                    tiles[index, width-1].Content = wallExternElement;
+                    break;
+                case "Entry":
+                    break;
+                case "Goul":
+                    break;
+                case "Hole":
+                    break;
+                case "Exit":
+                    break;
+                case "Chest":
+                    break;
+            }
+            index = (index + 1) % width;
+        }
+    }
+    
+    public void OldGenerateElement(Tile[,] tiles, Grid _grid)
+    {
+        grid = _grid;
+        prefabWall = (Resources.Load("Prefabs/Wall") as GameObject).GetComponent<Wall>();
+        prefabHole = (Resources.Load("Prefabs/Hole") as GameObject).GetComponent<Hole>();
+        prefabChest = (Resources.Load("Prefabs/Chest") as GameObject).GetComponent<Chest>();
+        prefabObstacle = (Resources.Load("Prefabs/Obstacle") as GameObject).GetComponent<Obstacle>();
+        prefabGate = (Resources.Load("Prefabs/Gate") as GameObject).GetComponent<Gate>();
+        prefabEnemy = (Resources.Load("Prefabs/Enemy") as GameObject).GetComponent<Enemy>();
+
         //Tile chestTile = tiles[0,0];
         //GenerateChestList(tiles);
         GenerateExternWall(tiles);
         GenerateGate(tiles, true);
         GenerateGate(tiles, false);
-        
-        /*GenerateChest(tiles);
-        GenerateHole(tiles);*/
 
         GenerateElementsGrid(tiles, nbChestToSpawn, prefabHole);
         GenerateElementsGrid(tiles, nbChestToSpawn, prefabChest);

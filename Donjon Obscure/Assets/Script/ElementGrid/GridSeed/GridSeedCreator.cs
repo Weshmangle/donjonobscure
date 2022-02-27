@@ -11,7 +11,7 @@ public class GridSeedCreator : EditorWindow
     int SeedTileSize = 64;
     
     Vector2 offset;
-    Vector2 drag;
+    Vector2 drag; 
     Vector2 nodePosition;
     List<List<SeedNode>> nodes;
     GUIStyle empty;
@@ -161,8 +161,8 @@ public class GridSeedCreator : EditorWindow
         SeedDescription = GUILayout.TextField(SeedDescription, GUILayout.MinWidth(600), GUILayout.Height(64));
         GUILayout.FlexibleSpace();
         GUILayout.BeginVertical();
-            gridSeedName = GUILayout.TextField(gridSeedName, GUILayout.Width(144), GUILayout.Height(20));
-            if(GUILayout.Button("Save Grid Seed", GUILayout.Width(144), GUILayout.Height(42)))
+        gridSeedName = GUILayout.TextField(gridSeedName, GUILayout.Width(144), GUILayout.Height(20));
+        if(GUILayout.Button("Save Grid Seed", GUILayout.Width(144), GUILayout.Height(42)))
         {
             string path = "Assets/Resources/Seeds/" + gridSeedName + ".asset";
             GridSeed seed = GridSeed.CreateInstance<GridSeed>();
