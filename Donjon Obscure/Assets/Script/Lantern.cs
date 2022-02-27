@@ -7,7 +7,7 @@ public class Lantern : MonoBehaviour
 {
     public delegate void LanternOilInReserveEventHandler(float current, float max, Stat stat);
     public event LanternOilInReserveEventHandler OnLanternOilInReserveChange;
-    [SerializeField] Light light, lantern;
+    [SerializeField] Light lantern, lanternHalo;
 
     //public static Lantern Instance {get; private set;}
 
@@ -37,16 +37,16 @@ public class Lantern : MonoBehaviour
         if (!IsActive() && currentFuelInReserve > 0)
         {
             isActive = true;
-            light.enabled = true;
             lantern.enabled = true;
+            lanternHalo.enabled = true;
             this.GetComponent<AudioSource>().PlayOneShot(torchSound[1]);
             this.GetComponent<AudioSource>().mute = false;
         }
         else
         {
             isActive = false;
+            lanternHalo.enabled = false;
             lantern.enabled = false;
-            light.enabled = false;
             this.GetComponent<AudioSource>().mute = true;
         }
     }

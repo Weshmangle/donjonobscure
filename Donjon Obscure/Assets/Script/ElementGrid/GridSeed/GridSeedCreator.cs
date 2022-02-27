@@ -75,8 +75,7 @@ public class GridSeedCreator : EditorWindow
                 elementsData[i].Style.normal.background = elementsData[i].Icon;
             }
         }
-        catch (Exception exception){}
-        string stringToFind = "Floor";
+        catch (Exception exception){ Debug.LogError(exception);}
         empty =  elementsData[0].Style;
         currentStyle =  elementsData[1].Style;
         emptyElementData = elementsData[0];

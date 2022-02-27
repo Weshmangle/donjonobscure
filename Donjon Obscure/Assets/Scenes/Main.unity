@@ -1628,6 +1628,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246841053}
   m_CullTransparentMesh: 1
+--- !u!108 &1290645477 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 7606301247320370320, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+  m_PrefabInstance: {fileID: 2052236559}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1433576380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1916,6 +1921,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8635706446382604490, guid: 4b3bae9c94074634bb3acee80f1ab047, type: 3}
   m_PrefabInstance: {fileID: 1733740677}
   m_PrefabAsset: {fileID: 0}
+--- !u!108 &1844711067 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2631749107732510451, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+  m_PrefabInstance: {fileID: 2052236559}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2052236559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1925,7 +1935,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6781077701649794866, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: smoothTime
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6781077701649794867, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: m_RootOrder
@@ -1975,6 +1985,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
+    - target: {fileID: 6917229045273511985, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: lantern
+      value: 
+      objectReference: {fileID: 1844711067}
+    - target: {fileID: 6917229045273511985, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+      propertyPath: lanternHalo
+      value: 
+      objectReference: {fileID: 1290645477}
     - target: {fileID: 6917229045273511985, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
       propertyPath: fuelConsumptionCost
       value: 0.69
