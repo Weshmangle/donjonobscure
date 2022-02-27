@@ -40,6 +40,7 @@ public class GridSeedCreator : EditorWindow
         window = GetWindow<GridSeedCreator>();
         
         window.titleContent = new GUIContent("Grid Seed Creator");
+        window.Show();
         
 
     }
