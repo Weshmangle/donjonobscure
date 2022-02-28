@@ -29,6 +29,14 @@ public class ElementsGenerator : MonoBehaviour
     Quaternion rotationBot = Quaternion.Euler(0.0f, 180.0f, 0.0f);
     Quaternion rotationLeft = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 
+#region GenerateElementFromSeed
+    public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
+    {
+        this.grid = grid;
+        
+    }
+    
+#endregion
     public void GenerateElement(Tile[,] tiles, Grid _grid)
     {
         grid = _grid;
@@ -66,7 +74,7 @@ public class ElementsGenerator : MonoBehaviour
             index = (index + 1) % width;
         }
     }
-    
+    #region OldGenerateElement
     public void OldGenerateElement(Tile[,] tiles, Grid _grid)
     {
         grid = _grid;
@@ -253,3 +261,4 @@ public class ElementsGenerator : MonoBehaviour
     }
     */
 }
+#endregion
