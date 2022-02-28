@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a6f85c162029d4db4f81c0ea581500, type: 3}
   m_Name: Entry
   m_EditorClassIdentifier: 
-  Name: Entry Door
+  Name: Entry Gate
   Icon: {fileID: 2800000, guid: 06b08be7dec7a6347b70c4a7036a20da, type: 3}
-  prefab: {fileID: 0}
+  Prefab: {fileID: 8553075572381424701, guid: f7df3e4eab4d53f4db9483fbc6493f92, type: 3}
+  Type: {fileID: 1852783266266643916, guid: f7df3e4eab4d53f4db9483fbc6493f92, type: 3}
   Style:
     m_Name: 
     m_Normal:

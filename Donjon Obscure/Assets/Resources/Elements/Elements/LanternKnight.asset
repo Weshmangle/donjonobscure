@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Player
   Icon: {fileID: 2800000, guid: ce8c377eb7d62764bb7d3e1f2f5ffc32, type: 3}
-  prefab: {fileID: 0}
+  Prefab: {fileID: 6781077701649794877, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
+  Type: {fileID: 6781077701649794866, guid: 90df4147c0aadaf438a56a91c62a5942, type: 3}
   Style:
     m_Name: 
     m_Normal:
