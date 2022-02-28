@@ -7,7 +7,15 @@ public class ElementData : ScriptableObject
 {
     public string Name;
     public Texture2D Icon;
-    public GameObject prefab;
+    public GameObject Prefab
+    {
+        get { return Prefab; }
+        set{ Prefab = value;
+        Type = Prefab.GetComponent<ElementGrid>(); }
+    }
+    
+    public ElementGrid Type;
+    
     
     [HideInInspector]
     public GUIStyle Style;

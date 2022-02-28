@@ -188,6 +188,7 @@ public class GridSeedCreator : EditorWindow
             for (int j = 0; j < nodes[i].Count; j++)
             {
                 seed.ElementGrid[j*nodes[i].Count+i] = nodes[i][j].elementType;
+
             }
         }
         // foreach(List<SeedNode> nodeList in nodes)

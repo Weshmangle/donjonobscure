@@ -45,7 +45,7 @@ public class Grid : MonoBehaviour
             }
         }
 
-        GetComponent<ElementsGenerator>().GenerateElement(tiles, this);
+        GetComponent<ElementsGenerator>().OldGenerateElement(tiles, this);
     }
 
     public Vector2Int RandomNeibgbour(Vector2Int position)

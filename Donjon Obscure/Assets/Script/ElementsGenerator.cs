@@ -7,6 +7,7 @@ public class ElementsGenerator : MonoBehaviour
     [SerializeField] int nbChestToSpawn, nbHoleToSpawn, nbEnemyToSpawn;
 
     Grid grid;
+    Tile[,] tiles;
     
     Wall prefabWall;
     Hole prefabHole;
@@ -30,20 +31,16 @@ public class ElementsGenerator : MonoBehaviour
     Quaternion rotationLeft = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 
 #region GenerateElementFromSeed
-    public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
-    {
-        this.grid = grid;
-        
-    }
     
-#endregion
-public void GenerateFromSeed(GridSeed seed, Grid grid)
+public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
     {
         this.grid = grid;
+        this.tiles = tiles;
         ElementData[,] elementDataGrid = SeedElementDataArrayToElementDataGrid(seed);
+        PopulateTile(tiles, elementDataGrid);
+        
         
     }
-
     ElementData[,] SeedElementDataArrayToElementDataGrid(GridSeed seed)
     {
         ElementData[] elementDatas = (Resources.Load("Seeds/" + seed.Name) as GridSeed).ElementGrid;
@@ -52,17 +49,110 @@ public void GenerateFromSeed(GridSeed seed, Grid grid)
         int column = 0;
         foreach (ElementData elementData in elementDatas)
         {
-            elementDataGrid[row,column] = elementData;
+            elementDataGrid[row, column] = elementData;
             if (column == seed.Column - 1)
                 {
                     row++;
                     column = 0;
                 }
-                else column++;
+            else column++;
         }
         return elementDataGrid;
     }
-    public void GenerateElement(Tile[,] tiles, Grid _grid)
+    private void PopulateTile(Tile[,] tiles, ElementData[,] elementDataGrid)
+    {
+        for (int i = 0; i < tiles.GetLength(0); i++)
+        {
+            for (int j = 0; j < tiles.GetLength(1); j++)
+            {
+                Tile currentTile = tiles[i,j];
+                ElementData elementData = elementDataGrid[i,j];
+                Vector2Int elementPosition = new Vector2Int(i, j);
+                switch(elementData.Name)
+                {
+                    case "Floor":
+                        break;
+                    case "Wall":
+                        {
+                            GenerateWall(elementData, elementPosition);
+                            break;
+                        }
+                    case "Entry":
+                    case "Exit":
+                    {
+                        GenerateGate(elementData, elementPosition, currentTile);
+                        break;
+                    }
+                    case "Hole":
+                    case "Goul":
+                    case "Player":
+                    {
+                        GenerateElement(elementData, elementPosition);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void GenerateElement(ElementData elementData, Vector2Int elementPosition)
+    {
+        ElementGrid wallExternElement = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, Quaternion.identity);
+        tiles[elementPosition.x, elementPosition.y].Content = wallExternElement;
+    }
+
+    private void GenerateWall(ElementData elementData, Vector2Int elementPosition)
+    {
+        
+        ElementGrid wallExternElement = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, Orientation(ref elementPosition));
+        tiles[elementPosition.x, elementPosition.y].Content = wallExternElement;
+    }
+    void GenerateGate(ElementData elementData, Vector2Int elementPosition, Tile currentTile)
+    {
+        ElementGrid gate = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, Orientation(ref elementPosition));
+        tiles[elementPosition.x, elementPosition.y].Content = gate;
+        if(elementData.Name == "Entry")
+        {
+            NextToEntryGate = elementPosition;
+            Game.Instance.grid.Entry = currentTile;
+            Game.CharacterSpawnPosition = NextToEntryGate;
+        }
+        else if(elementData.Name == "Exit")
+        {
+            NextToExitGate = elementPosition;
+            
+            Game.Instance.grid.Exit = currentTile;
+        }
+        else
+        {
+            Debug.LogError("ElementData is not a Gate");
+        }
+    }
+    Quaternion Orientation(ref Vector2Int position)
+    {
+        Quaternion orientation = Quaternion.identity;
+        if (position.x == 0)
+        {
+            orientation = rotationTop;
+        }
+        else if (position.y == 9)
+        {
+            orientation = rotationBot;
+        }
+        else if (position.x == 9)
+        {
+            orientation = rotationRight;
+        }
+        else if (position.y == 0)
+        {
+            orientation = rotationLeft;
+        }
+
+        return orientation;
+    }
+    
+#endregion
+    public void GenerateElements(Tile[,] tiles, Grid _grid)
     {
         grid = _grid;
         prefabWall = (Resources.Load("Prefabs/Wall") as GameObject).GetComponent<Wall>();
@@ -99,6 +189,7 @@ public void GenerateFromSeed(GridSeed seed, Grid grid)
             index = (index + 1) % width;
         }
     }
+    
     #region OldGenerateElement
     public void OldGenerateElement(Tile[,] tiles, Grid _grid)
     {
@@ -113,8 +204,8 @@ public void GenerateFromSeed(GridSeed seed, Grid grid)
         //Tile chestTile = tiles[0,0];
         //GenerateChestList(tiles);
         GenerateExternWall(tiles);
-        GenerateGate(tiles, true);
-        GenerateGate(tiles, false);
+        OldGenerateGate(tiles, true);
+        OldGenerateGate(tiles, false);
 
         GenerateElementsGrid(tiles, nbChestToSpawn, prefabHole);
         GenerateElementsGrid(tiles, nbChestToSpawn, prefabChest);
@@ -158,7 +249,7 @@ public void GenerateFromSeed(GridSeed seed, Grid grid)
 
     }
 
-    public void GenerateGate(Tile[,] tiles, bool isExitGate)
+    public void OldGenerateGate(Tile[,] tiles, bool isExitGate)
     {
         int _sideRandPosition = Random.Range(0, 4);
         Tile currentTile = null;
