@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95462aeba688efe469516b3e8702ee34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationOver: 0
   healthPoint: 10
   healthPointMax: 10
   attackStrenght: 2
@@ -54,7 +55,7 @@ MonoBehaviour:
   mentalSanity: 15
   mentalSanityMax: 15
   armorPoint: 0
-  armorPointMax: 1
+  armorPointMax: 0
   lantern: {fileID: 6917229045273511985}
 --- !u!82 &370431815
 AudioSource:
@@ -534,7 +535,15 @@ PrefabInstance:
     - target: {fileID: 8031291862659928680, guid: 76fd8da9cd0bf784faf7e86c47ab9b28, type: 3}
       propertyPath: lantern
       value: 
+      objectReference: {fileID: 2631749107732510451}
+    - target: {fileID: 8031291862659928680, guid: 76fd8da9cd0bf784faf7e86c47ab9b28, type: 3}
+      propertyPath: lanternHalo
+      value: 
       objectReference: {fileID: 7606301247320370320}
+    - target: {fileID: 8031291862659928680, guid: 76fd8da9cd0bf784faf7e86c47ab9b28, type: 3}
+      propertyPath: fuelConsumptionCost
+      value: 0.69
+      objectReference: {fileID: 0}
     - target: {fileID: 8031291862659928680, guid: 76fd8da9cd0bf784faf7e86c47ab9b28, type: 3}
       propertyPath: currentFuelInReserve
       value: 10
@@ -574,6 +583,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001e354accb7ad2439d2e32f51a43dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!108 &2631749107732510451 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 1445611025738411178, guid: 76fd8da9cd0bf784faf7e86c47ab9b28, type: 3}
+  m_PrefabInstance: {fileID: 3497623793757477465}
+  m_PrefabAsset: {fileID: 0}
 --- !u!82 &7598834864162592742
 AudioSource:
   m_ObjectHideFlags: 0
