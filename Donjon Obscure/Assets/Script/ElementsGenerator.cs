@@ -37,6 +37,31 @@ public class ElementsGenerator : MonoBehaviour
     }
     
 #endregion
+public void GenerateFromSeed(GridSeed seed, Grid grid)
+    {
+        this.grid = grid;
+        ElementData[,] elementDataGrid = SeedElementDataArrayToElementDataGrid(seed);
+        
+    }
+
+    ElementData[,] SeedElementDataArrayToElementDataGrid(GridSeed seed)
+    {
+        ElementData[] elementDatas = (Resources.Load("Seeds/" + seed.Name) as GridSeed).ElementGrid;
+        ElementData[,] elementDataGrid = new ElementData[seed.Row, seed.Column];
+        int row = 0;
+        int column = 0;
+        foreach (ElementData elementData in elementDatas)
+        {
+            elementDataGrid[row,column] = elementData;
+            if (column == seed.Column - 1)
+                {
+                    row++;
+                    column = 0;
+                }
+                else column++;
+        }
+        return elementDataGrid;
+    }
     public void GenerateElement(Tile[,] tiles, Grid _grid)
     {
         grid = _grid;

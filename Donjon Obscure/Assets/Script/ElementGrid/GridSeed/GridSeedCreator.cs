@@ -48,7 +48,7 @@ public class GridSeedCreator : EditorWindow
     {
         SetupGUIStyle();
         SetupSeedBrushes();
-        SetupNodes();
+        SetupNodes(); 
         SetPositionToCenter();
     }
 
