@@ -28,17 +28,6 @@ public class Character : Entity
         }
         
     }
-    void Update()
-    {
-        if (transform.position == new Vector3(position.x, 0, position.y))
-        {
-            animationOver = true;
-        }
-        else
-        {
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(position.x, 0, position.y), ref velocity, smoothTime * Time.deltaTime);
-        }
-    }
     private void Start()
     {
         OnPlayerStatChange?.Invoke(healthPoint, healthPointMax, Stat.HealthPoint);
