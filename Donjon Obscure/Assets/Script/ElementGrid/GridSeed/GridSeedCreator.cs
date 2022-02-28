@@ -182,12 +182,20 @@ public class GridSeedCreator : EditorWindow
     {
         seed.Name = gridSeedName;
         seed.Description = SeedDescription;
+        seed.Row = Row;
+        seed.Column = Column;
         seed.ElementGrid = new ElementData[Row*Column];
         for (int i = 0; i < nodes.Count; i++)
         {
             for (int j = 0; j < nodes[i].Count; j++)
             {
+
                 seed.ElementGrid[j*nodes[i].Count+i] = nodes[i][j].elementType;
+                if(i == 1 && j == 1 )
+                {
+                    Debug.Log(seed.ElementGrid[j*nodes[i].Count+i]);
+                }
+                    
 
             }
         }

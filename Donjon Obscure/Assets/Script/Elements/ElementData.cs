@@ -7,12 +7,12 @@ public class ElementData : ScriptableObject
 {
     public string Name;
     public Texture2D Icon;
-    public GameObject Prefab
-    {
-        get { return Prefab; }
-        set{ Prefab = value;
-        Type = Prefab.GetComponent<ElementGrid>(); }
-    }
+    public GameObject Prefab;
+    //{
+    //    get { return Prefab; }
+    //    set{ Prefab = value;
+    //    Type = Prefab.GetComponent<ElementGrid>(); }
+    //}
     
     public ElementGrid Type;
     

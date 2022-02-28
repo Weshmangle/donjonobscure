@@ -45,7 +45,10 @@ public class Grid : MonoBehaviour
             }
         }
 
-        GetComponent<ElementsGenerator>().OldGenerateElement(tiles, this);
+        // GetComponent<ElementsGenerator>().OldGenerateElement(tiles, this);
+        GridSeed seed = Resources.Load("Seeds/test") as GridSeed;
+        GetComponent<ElementsGenerator>().GenerateElementFromSeed(tiles, seed, this);
+
     }
 
     public Vector2Int RandomNeibgbour(Vector2Int position)
