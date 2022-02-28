@@ -164,7 +164,7 @@ public class GridSeedCreator : EditorWindow
         gridSeedName = GUILayout.TextField(gridSeedName, GUILayout.Width(144), GUILayout.Height(20));
         if(GUILayout.Button("Save Grid Seed", GUILayout.Width(144), GUILayout.Height(42)))
         {
-            string path = "Assets/Resources/Seeds/" + gridSeedName + ".asset";
+            string path = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Seeds/" + gridSeedName + ".asset");
             GridSeed seed = GridSeed.CreateInstance<GridSeed>();
             SetupSeedData(seed);
             AssetDatabase.CreateAsset(seed, path);
