@@ -76,6 +76,7 @@ public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
                 switch(elementData.Name)
                 {
                     case "Floor":
+                        currentTile.Content = elementData.Type;
                         break;
                     case "Wall":
                         {
@@ -123,7 +124,7 @@ public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
     }
     void GenerateGate(ElementData elementData, Vector2Int elementPosition, Tile currentTile)
     {
-        ElementGrid gate = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, Orientation(ref elementPosition));
+        Gate gate = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, Orientation(ref elementPosition)) as Gate;
         tiles[elementPosition.x, elementPosition.y].Content = gate;
         if(elementData.Name == "Entry Gate")
         {
@@ -134,7 +135,8 @@ public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
         else if(elementData.Name == "Exit Gate")
         {
             NextToExitGate = NextToGate(elementPosition);
-            
+
+            gate.IsExitGate = true;
             Game.Instance.grid.Exit = currentTile;
         }
         else

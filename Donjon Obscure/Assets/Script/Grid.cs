@@ -10,7 +10,8 @@ public class Grid : MonoBehaviour
     public int Height = 10;
     public Tile Entry;
     public Tile Exit;
-    
+    private int currentLevelSeed = 0;
+
     public Tile[] GetTiles()
     {
         return transform.GetComponentsInChildren<Tile>();
@@ -49,6 +50,12 @@ public class Grid : MonoBehaviour
         GridSeed seed = Resources.Load("Seeds/test") as GridSeed;
         GetComponent<ElementsGenerator>().GenerateElementFromSeed(tiles, seed, this);
 
+    }
+    public void LoadNextLevel()
+    {
+        GridSeed seed = Resources.Load("Seeds/level" + currentLevelSeed.ToString()) as GridSeed;
+        GetComponent<ElementsGenerator>().GenerateElementFromSeed(tiles, seed, this);
+        currentLevelSeed++;
     }
 
     public Vector2Int RandomNeibgbour(Vector2Int position)

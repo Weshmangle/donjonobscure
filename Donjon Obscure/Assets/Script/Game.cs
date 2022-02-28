@@ -249,7 +249,9 @@ public class Game : MonoBehaviour
                 case Gate gate:
                     if(gate.IsExitGate)
                     {
-                        this.reloadRoom();
+                        grid.LoadNextLevel();
+                        character.TeleportTo(CharacterSpawnPosition, CharacterSpawnPosition - (grid.Entry.Position - CharacterSpawnPosition));
+                        grid.getTile(CharacterSpawnPosition).Content = character;
                     }
                     break;
                 //case "WALL":
