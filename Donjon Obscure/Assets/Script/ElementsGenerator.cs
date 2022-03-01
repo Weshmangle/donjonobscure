@@ -82,10 +82,10 @@ public class ElementsGenerator : MonoBehaviour
                         currentTile.Content = elementData.Type;
                         break;
                     case "Wall":
-                        {
-                            GenerateWall(elementData, elementPosition);
-                            break;
-                        }
+                    {
+                        GenerateWall(elementData, elementPosition);
+                        break;
+                    }
                     case "Entry Gate":
                     case "Exit Gate":
                     {
@@ -93,16 +93,21 @@ public class ElementsGenerator : MonoBehaviour
                         break;
                     }
                     case "Chest":
-                        {
-                            GenerateElement(elementData, elementPosition, rotationRight);
-                            break;
-                        }
+                    {
+                        GenerateElement(elementData, elementPosition, rotationRight);
+                        break;
+                    }
                     case "Hole":
-                    case "Goul":
                     {
                         GenerateElement(elementData, elementPosition, rotationTop);
                         break;
                     }
+                    case "Goul":
+                        {
+                            GenerateElement(elementData, elementPosition, Quaternion.identity);
+                            break;
+                        }
+
                     case "Player":
                     {
                         break;
