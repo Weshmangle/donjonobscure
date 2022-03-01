@@ -39,11 +39,24 @@ public class ElementsGenerator : MonoBehaviour
     {
         this.grid = grid;
         this.tiles = tiles;
+        ClearContentTile();
         ElementData[,] elementDataGrid = SeedElementDataArrayToElementDataGrid(seed);
         PopulateTile(tiles, elementDataGrid);
         
         
     }
+
+    private void ClearContentTile()
+    {
+        foreach(Tile tile in tiles)
+        {
+            if(tile.Content != null && !(tile.Content is Character) )
+            {
+                Destroy(tile.Content);
+            }
+        }
+    }
+
     ElementData[,] SeedElementDataArrayToElementDataGrid(GridSeed seed)
     {
         ElementData[] elementDatas = (Resources.Load("Seeds/" + seed.Name) as GridSeed).ElementGrid;
@@ -103,10 +116,10 @@ public class ElementsGenerator : MonoBehaviour
                         break;
                     }
                     case "Goul":
-                        {
-                            GenerateElement(elementData, elementPosition, Quaternion.identity);
-                            break;
-                        }
+                    {
+                        GenerateEnemy(elementData, elementPosition, Quaternion.identity);
+                        break;
+                    }
 
                     case "Player":
                     {
@@ -122,6 +135,14 @@ public class ElementsGenerator : MonoBehaviour
     {
         ElementGrid element = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, orientation);
         tiles[elementPosition.x, elementPosition.y].Content = element;
+    }
+    private void GenerateEnemy(ElementData elementData, Vector2Int elementPosition, Quaternion orientation)
+    {
+        Enemy enemy = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, orientation) as Enemy;
+        tiles[elementPosition.x, elementPosition.y].Content = enemy;
+
+        Game.Instance.Enemies.Add(enemy);
+        enemy.TeleportTo(elementPosition, elementPosition);
     }
 
     private void GenerateWall(ElementData elementData, Vector2Int elementPosition)
