@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3595859802168302342}
   - component: {fileID: 5283653342939220501}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Goul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0b67e24f834b3d14b8695885a9de56ea, type: 2}
     - target: {fileID: 919132149155446097, guid: 6460af52f7942d04ba05a3fac1d2cbb1, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Goul
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6460af52f7942d04ba05a3fac1d2cbb1, type: 3}
