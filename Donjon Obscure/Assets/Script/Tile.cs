@@ -20,10 +20,7 @@ public class Tile : MonoBehaviour
                 value.transform.SetParent(this.transform);
             }
 
-            if (typeof(Hole).IsInstanceOfType(value))
-            {
-                this.GetComponentInChildren<Renderer>().enabled = false;
-            }
+            this.GetComponentInChildren<Renderer>().enabled = !typeof(Hole).IsInstanceOfType(value);
         }
     }
 
@@ -91,5 +88,8 @@ public class Tile : MonoBehaviour
         uEvent.AddListener(action);
     }
 
-    
+    public override string ToString()
+    {
+        return "Tile -> " + ((content == null) ? "Empty" : content.name);
+    }
 }

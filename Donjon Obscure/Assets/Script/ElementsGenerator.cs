@@ -27,7 +27,6 @@ public class ElementsGenerator : MonoBehaviour
     [SerializeField] GridSeed[] levels;
 
 
-    
     Quaternion rotationLeft = Quaternion.Euler(0.0f, 0.0f, 0.0f);
     Quaternion rotationTop = Quaternion.Euler(0.0f, 90.0f, 0.0f);
     Quaternion rotationRight = Quaternion.Euler(0.0f, 180.0f, 0.0f);
@@ -39,22 +38,25 @@ public class ElementsGenerator : MonoBehaviour
     {
         this.grid = grid;
         this.tiles = tiles;
-        ClearContentTile();
+
+        ClearContentTile(tiles);
+        
         ElementData[,] elementDataGrid = SeedElementDataArrayToElementDataGrid(seed);
         PopulateTile(tiles, elementDataGrid);
-        
-        
     }
 
-    private void ClearContentTile()
+    public void ClearContentTile(Tile[,] tiles)
     {
         foreach(Tile tile in tiles)
         {
-            if(tile.Content != null && !(tile.Content is Character) )
+            if(tile.Content != null && tile.Content.GetType() != typeof(Character))
             {
-                Destroy(tile.Content);
+                Destroy(tile.Content.gameObject);
+                tile.Content = null;
             }
         }
+        
+        Game.Instance.Enemies = new List<Enemy>();
     }
 
     ElementData[,] SeedElementDataArrayToElementDataGrid(GridSeed seed)

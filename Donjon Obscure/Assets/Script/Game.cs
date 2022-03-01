@@ -23,6 +23,7 @@ public class Game : MonoBehaviour
     public static bool DEBUG = false;
     [SerializeField] public Tile tileCliked;
     
+    
     void Awake()
     {
         if(Game.Instance == null)
@@ -240,12 +241,6 @@ public class Game : MonoBehaviour
                     character.LightLantern();
                 break;
 
-                //case "MOB":
-                //    EnemyTurn();
-                //    break;
-                //case "EMPTY":
-                //    EnemyTurn();
-                //    break;
                 case Gate gate:
                     if(gate.IsExitGate)
                     {
