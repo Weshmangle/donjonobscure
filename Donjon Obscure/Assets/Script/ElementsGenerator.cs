@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ElementsGenerator : MonoBehaviour
 {
     [SerializeField] int nbChestToSpawn, nbHoleToSpawn, nbEnemyToSpawn;
 
     Grid grid;
     Tile[,] tiles;
-    
+
     Wall prefabWall;
     Hole prefabHole;
     Chest prefabChest;
@@ -22,17 +23,19 @@ public class ElementsGenerator : MonoBehaviour
     Vector2Int NextToEntryGate;
 
     [SerializeField] Material wallTransparentMat;
-    
-    [SerializeField] GridSeed [] levels;
+
+    [SerializeField] GridSeed[] levels;
+
+
     
     Quaternion rotationLeft = Quaternion.Euler(0.0f, 0.0f, 0.0f);
     Quaternion rotationTop = Quaternion.Euler(0.0f, 90.0f, 0.0f);
     Quaternion rotationRight = Quaternion.Euler(0.0f, 180.0f, 0.0f);
     Quaternion rotationBot = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 
-#region GenerateElementFromSeed
-    
-public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
+    #region GenerateElementFromSeed
+
+    public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
     {
         this.grid = grid;
         this.tiles = tiles;
@@ -90,10 +93,14 @@ public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
                         break;
                     }
                     case "Chest":
+                        {
+                            GenerateElement(elementData, elementPosition, rotationRight);
+                            break;
+                        }
                     case "Hole":
                     case "Goul":
                     {
-                        GenerateElement(elementData, elementPosition);
+                        GenerateElement(elementData, elementPosition, rotationTop);
                         break;
                     }
                     case "Player":
@@ -106,10 +113,10 @@ public void GenerateElementFromSeed(Tile[,] tiles, GridSeed seed, Grid grid)
         }
     }
 
-    private void GenerateElement(ElementData elementData, Vector2Int elementPosition)
+    private void GenerateElement(ElementData elementData, Vector2Int elementPosition, Quaternion orientation)
     {
-        ElementGrid wallExternElement = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, Quaternion.identity);
-        tiles[elementPosition.x, elementPosition.y].Content = wallExternElement;
+        ElementGrid element = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, orientation);
+        tiles[elementPosition.x, elementPosition.y].Content = element;
     }
 
     private void GenerateWall(ElementData elementData, Vector2Int elementPosition)
