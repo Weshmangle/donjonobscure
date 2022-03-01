@@ -47,8 +47,9 @@ public class Grid : MonoBehaviour
         }
 
         // GetComponent<ElementsGenerator>().OldGenerateElement(tiles, this);
-        GridSeed seed = Resources.Load("Seeds/test") as GridSeed;
-        GetComponent<ElementsGenerator>().GenerateElementFromSeed(tiles, seed, this);
+        //GridSeed seed = Resources.Load("Seeds/test") as GridSeed;
+        //GetComponent<ElementsGenerator>().GenerateElementFromSeed(tiles, seed, this);
+        LoadNextLevel();
 
     }
     public void LoadNextLevel()
