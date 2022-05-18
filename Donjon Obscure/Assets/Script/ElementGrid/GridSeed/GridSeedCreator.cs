@@ -26,6 +26,8 @@ public class GridSeedCreator : EditorWindow
     ElementData emptyElementData;
     ElementData currentElementData;
 
+    public bool lol = true; 
+
     Rect Centered()
     {
         int width = Row * SeedTileSize;
@@ -166,7 +168,7 @@ public class GridSeedCreator : EditorWindow
         {
             string path = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Seeds/" + gridSeedName + ".asset");
             GridSeed seed = GridSeed.CreateInstance<GridSeed>();
-            SetupSeedData(seed);
+            SetupSeedData(seed); 
             AssetDatabase.CreateAsset(seed, path);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -174,6 +176,23 @@ public class GridSeedCreator : EditorWindow
             Selection.activeObject = seed;
         }
         GUILayout.EndVertical();
+        
+        if(GUILayout.Button("Load Grid Seed", GUILayout.Width(144), GUILayout.Height(42)))
+        {
+            var path = EditorUtility.OpenFilePanel("Title", "Assets/Resources/Seeds/", "asset");
+            string[] values = path.Split('\\');
+            for (int i = 0; i < values.Length; i++)
+            {  
+                var val = values[i];
+                if(val == "Assets")
+                {
+                    path = String.Concat(path);
+                }
+            }
+            GridSeed s = AssetDatabase.LoadAssetAtPath<GridSeed>(path);
+            Debug.Log(s);
+        }
+        
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }
