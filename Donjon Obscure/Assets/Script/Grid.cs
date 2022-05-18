@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Grid : MonoBehaviour
 {
@@ -55,8 +54,16 @@ public class Grid : MonoBehaviour
     public void LoadNextLevel()
     {
         GridSeed seed = Resources.Load("Seeds/level" + currentLevelSeed.ToString()) as GridSeed;
-        GetComponent<ElementsGenerator>().GenerateElementFromSeed(tiles, seed, this);
-        currentLevelSeed++;
+        
+        if(seed)
+        {
+            GetComponent<ElementsGenerator>().GenerateElementFromSeed(tiles, seed, this);
+            currentLevelSeed++;
+        }
+        else
+        {
+            SceneManager.LoadScene("MenuScene");
+        }
     }
 
     public Vector2Int RandomNeibgbour(Vector2Int position)

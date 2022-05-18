@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class StartButon : MonoBehaviour
 {
     // Start is called before the first frame update
-    public void Scene1()
+    public void LoadMainScene()
     {
         SceneManager.LoadScene("Main");
     }

@@ -113,8 +113,8 @@ public class GridSeedCreator : EditorWindow
         {
             Repaint();
         }
-        
     }
+    
     private void DrawCursorCoordinates()
     {
         string mousePosition = Event.current.mousePosition.ToString();
