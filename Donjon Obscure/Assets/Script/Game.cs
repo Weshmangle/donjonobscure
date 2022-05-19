@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
@@ -261,6 +261,21 @@ public class Game : MonoBehaviour
             }
 
             tileCliked = tile;
+        }
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(.2f, 0.2f, .2f, .5f);
+        Gizmos.DrawCube(new Vector3(4.5f, 0, 4.5f), new Vector3(10, .1f, 10));
+        
+        Gizmos.color = new Color(.5f, 0.5f, .5f);
+        for (var i = 0; i < 10; i++)
+        {
+            for (var j = 0; j < 10; j++)
+            {
+                Handles.Label(new Vector3(i, 0, j), $"{i}, {j}");
+            }
         }
     }
 }
