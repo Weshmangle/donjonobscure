@@ -22,6 +22,7 @@ public abstract class Entity : ElementGrid
     [SerializeField] protected int attackStrenght;
     [SerializeField, Range(0f, 300f)] protected float smoothTime = 150f;
     [SerializeField] protected Vector2Int position;
+    [SerializeField] protected Vector2Int approximateTargetPosition;
     protected Vector3 velocity = Vector3.zero;
     
     public Vector2Int Position
@@ -35,6 +36,7 @@ public abstract class Entity : ElementGrid
     }
     void Update()
     {
+        
         if (transform.position == new Vector3(position.x, 0, position.y))
         {
             animationOver = true;
