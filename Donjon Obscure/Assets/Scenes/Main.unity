@@ -1582,6 +1582,10 @@ PrefabInstance:
       propertyPath: nbEnemyToSpawn
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2981522899569198568, guid: ed7bb0c96699e394ca1c15fad6861455, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4569927415835296146, guid: ed7bb0c96699e394ca1c15fad6861455, type: 3}
       propertyPath: m_Name
       value: Grid
