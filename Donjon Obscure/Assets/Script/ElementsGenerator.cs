@@ -84,6 +84,9 @@ public class ElementsGenerator : MonoBehaviour
     }
     private void PopulateTile(Tile[,] tiles, ElementData[,] elementDataGrid)
     {
+        List<Vector2> corners = new List<Vector2>();
+        corners.AddRange(new Vector2[]{new Vector2(0, 0), new Vector2(width-1, 0), new Vector2(0, height-1), new Vector2(width-1, height-1)});
+
         for (int i = 0; i < tiles.GetLength(0); i++)
         {
             for (int j = 0; j < tiles.GetLength(1); j++)
@@ -91,6 +94,7 @@ public class ElementsGenerator : MonoBehaviour
                 Tile currentTile = tiles[i,j];
                 ElementData elementData = elementDataGrid[i,j];
                 Vector2Int elementPosition = new Vector2Int(i, j);
+                
                 switch(elementData.Name)
                 {
                     case "Floor":
@@ -99,6 +103,33 @@ public class ElementsGenerator : MonoBehaviour
                     case "Wall":
                     {
                         GenerateWall(elementData, elementPosition);
+
+                        if(corners.Contains(new Vector2(i, j)))
+                        {    
+                            ElementGrid elementGrid = GenerateWall(elementData, elementPosition);
+                            Vector3 eulerAngles = elementGrid.transform.rotation.eulerAngles;
+                            var angle = 23;
+                            
+                            if(new Vector2(i,j) == corners[0])
+                            {
+                                angle = 0;
+                            }
+                            else if(new Vector2(i,j) == corners[1])
+                            {
+                                angle = 0;
+                            }
+                            else if(new Vector2(i,j) == corners[2])
+                            {
+                                angle = 0;
+                            }
+                            else if(new Vector2(i,j) == corners[3])
+                            {
+                                angle = -90;
+                            }
+                            
+                            eulerAngles.y = angle;
+                            elementGrid.transform.rotation = Quaternion.Euler(eulerAngles);
+                        }
                         break;
                     }
                     case "Entry Gate":
@@ -147,15 +178,15 @@ public class ElementsGenerator : MonoBehaviour
         enemy.TeleportTo(elementPosition, elementPosition);
     }
 
-    private void GenerateWall(ElementData elementData, Vector2Int elementPosition)
+    private ElementGrid GenerateWall(ElementData elementData, Vector2Int elementPosition)
     {
-
         ElementGrid wallExternElement = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, Orientation(ref elementPosition));
         if (Orientation(ref elementPosition) == rotationBot || Orientation(ref elementPosition) == rotationLeft)
         {
             setAlphaWall(wallExternElement, 0);
         }
         tiles[elementPosition.x, elementPosition.y].Content = wallExternElement;
+        return wallExternElement;
     }
     void GenerateGate(ElementData elementData, Vector2Int elementPosition, Tile currentTile)
     {
