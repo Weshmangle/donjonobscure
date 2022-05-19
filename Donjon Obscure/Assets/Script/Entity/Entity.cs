@@ -20,8 +20,9 @@ public abstract class Entity : ElementGrid
     [SerializeField] protected int healthPoint;
     [SerializeField] protected int healthPointMax;
     [SerializeField] protected int attackStrenght;
-    [SerializeField, Range(0f, 300f)] protected float smoothTime = 150f;
+    [SerializeField, Range(0f, 1f)] protected float smoothTime = .3f;
     [SerializeField] protected Vector2Int position;
+    [SerializeField] protected float reachedTargetPositionAccuracy;
     protected Vector3 velocity = Vector3.zero;
     
     public Vector2Int Position
@@ -35,13 +36,16 @@ public abstract class Entity : ElementGrid
     }
     void Update()
     {
-        if (transform.position == new Vector3(position.x, 0, position.y))
+        
+        // if (transform.position == new Vector3(position.x, 0, position.y))
+        Vector3 direction = new Vector3(position.x, 0, position.y) - this.transform.position;
+        if(direction.magnitude > reachedTargetPositionAccuracy)
         {
-            animationOver = true;
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(position.x, 0, position.y), ref velocity, smoothTime);
         }
         else
         {
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(position.x, 0, position.y), ref velocity, smoothTime * Time.deltaTime);
+            animationOver = true;
         }
     }
 

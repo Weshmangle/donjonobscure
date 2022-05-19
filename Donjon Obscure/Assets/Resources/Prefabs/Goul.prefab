@@ -48,8 +48,9 @@ MonoBehaviour:
   healthPoint: 5
   healthPointMax: 5
   attackStrenght: 1
-  smoothTime: 18
+  smoothTime: 0.3
   position: {x: 0, y: 0}
+  reachedTargetPositionAccuracy: 0.1
 --- !u!1001 &6493575585198156297
 PrefabInstance:
   m_ObjectHideFlags: 0

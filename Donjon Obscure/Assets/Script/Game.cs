@@ -199,7 +199,7 @@ public class Game : MonoBehaviour
 //character.IsAnimationOver = true
     void CheckTileContent(Tile tile)
     {
-        if(tileIsClickable(tile) /*&& character.IsAnimationOver()*/)
+        if(tileIsClickable(tile) && character.IsAnimationOver())
         {
             tileCliked = tile;
 
