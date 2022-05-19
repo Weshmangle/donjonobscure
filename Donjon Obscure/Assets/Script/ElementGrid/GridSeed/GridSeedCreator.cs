@@ -189,8 +189,9 @@ public class GridSeedCreator : EditorWindow
                     path = String.Concat(path);
                 }
             }
-            GridSeed s = AssetDatabase.LoadAssetAtPath<GridSeed>(path);
-            Debug.Log(s);
+            string[] pathSplited = path.Split('/');
+            GridSeed gridseed = AssetDatabase.LoadAssetAtPath<GridSeed>("Assets/Resources/Seeds/" + pathSplited[pathSplited.Length -1]);
+            Debug.Log(gridseed);
         }
         
         GUILayout.EndHorizontal();
