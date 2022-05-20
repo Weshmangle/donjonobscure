@@ -55,6 +55,10 @@ public abstract class Entity : ElementGrid
         transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
         Position = tilePosition;
     }
+    public virtual void LookAtPosition(Vector2Int tilePosition)
+    {
+        this.transform.LookAt(new Vector3(tilePosition.x, 0, tilePosition.y) );
+    }
 
     public virtual void TeleportTo(Vector2Int tilePosition, Vector2Int lookAt)
     {

@@ -226,6 +226,7 @@ public class Game : MonoBehaviour
                     break;
                 case Chest chest:
                     chest.Open();
+                    character.LookAtPosition(tile.Position);
                     break;
                 case Hole hole:
                     character.MoveOverHole(tile.Position);
@@ -233,6 +234,7 @@ public class Game : MonoBehaviour
                     break;
                 case Enemy enemy:
                     character.Attack(enemy);
+                    character.LookAtPosition(tile.Position);
                     if(enemy.IsDead())
                     {
                         tile.Content = null;
