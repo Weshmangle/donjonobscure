@@ -46,6 +46,23 @@ public abstract class Entity : ElementGrid
             position = value;
         }
     }
+    
+    /*void Update()
+    {
+        
+        // if (transform.position == new Vector3(position.x, 0, position.y))
+        Vector3 direction = new Vector3(position.x, 0, position.y) - this.transform.position;
+        if(direction.magnitude > reachedTargetPositionAccuracy)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(position.x, 0, position.y), ref velocity, smoothTime);
+        }
+        else
+        {
+            animationOver = true;
+            state = StateEntity.IDLE;
+        }
+    }*/
+    
     void Update()
     {
         switch(state)
@@ -55,7 +72,7 @@ public abstract class Entity : ElementGrid
                 break;
             case StateEntity.ON_FORWARD_ATTAK:
             case StateEntity.ON_BACKWARD_ATTAK:
-               //PerformAttak();
+               PerformAttak();
                 break;
         }
     }
@@ -73,7 +90,7 @@ public abstract class Entity : ElementGrid
             state = StateEntity.IDLE;
         }
     }
-
+    
     public virtual void Move(Vector2Int tilePosition)
     {
         var pos = position - tilePosition;
@@ -81,28 +98,15 @@ public abstract class Entity : ElementGrid
         Position = tilePosition;
         state = StateEntity.ON_MOVING;
     }
-
-    public virtual void LookAtPosition(Vector2Int tilePosition)
-    {
-        this.transform.LookAt(new Vector3(tilePosition.x, 0, tilePosition.y) );
-    }
-
-    public virtual void TeleportTo(Vector2Int tilePosition, Vector2Int lookAt)
-    {
-        position = tilePosition;
-        transform.position = new Vector3(tilePosition.x, 0, tilePosition.y);
-        transform.LookAt(new Vector3(lookAt.x, 0, lookAt.y));
-    }
     
     public void Attack(Entity target)
     {
         positionOrigin = Position;
         Position = target.Position;
-        target.TakeDamage(attackStrenght);
-        /*this.target = target;
-        state = StateEntity.ON_FORWARD_ATTAK;*/
+        this.target = target;
+        state = StateEntity.ON_FORWARD_ATTAK;
     }
-
+    
     private void PerformAttak()
     {
         Vector3 direction = new Vector3(position.x, 0, position.y) - this.transform.position;
@@ -122,8 +126,16 @@ public abstract class Entity : ElementGrid
             else if(state == StateEntity.ON_BACKWARD_ATTAK)
             {
                 animationOver = true;
+                state = StateEntity.IDLE;
             }
         }
+    }
+
+    public virtual void TeleportTo(Vector2Int tilePosition, Vector2Int lookAt)
+    {
+        position = tilePosition;
+        transform.position = new Vector3(tilePosition.x, 0, tilePosition.y);
+        transform.LookAt(new Vector3(lookAt.x, 0, lookAt.y));
     }
 
     public virtual void TakeDamage(int damage)
@@ -133,6 +145,11 @@ public abstract class Entity : ElementGrid
         {
             Die();
         }
+    }
+
+    public virtual void LookAtPosition(Vector2Int tilePosition)
+    {
+        this.transform.LookAt(new Vector3(tilePosition.x, 0, tilePosition.y) );
     }
 
     public bool CanAttack(Entity entity)

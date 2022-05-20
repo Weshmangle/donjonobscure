@@ -11,7 +11,6 @@ public class Enemy : Entity
     protected override void Die()
     {
         Game.Instance.Enemies.Remove(this);
-        Debug.Log("Enemy is dead");
         Destroy(this.gameObject);
     }
 
