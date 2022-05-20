@@ -1,0 +1,9 @@
+diff a/Donjon Obscure/Assets/Script/Entity/Entity.cs b/Donjon Obscure/Assets/Script/Entity/Entity.cs	(rejected hunks)
+@@ -79,6 +79,7 @@
+         var pos = position - tilePosition;
+         transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
+         Position = tilePosition;
++        state = StateEntity.ON_MOVING;
+     }
+ 
+     public virtual void LookAtPosition(Vector2Int tilePosition)
