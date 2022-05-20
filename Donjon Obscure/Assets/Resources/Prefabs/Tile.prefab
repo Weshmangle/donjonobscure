@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 211814806761328510}
   - component: {fileID: 211814806761328509}
-  - component: {fileID: 5512126552572155336}
+  - component: {fileID: 5946052370703179647}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -65,7 +65,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!65 &5512126552572155336
+--- !u!65 &5946052370703179647
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,7 +76,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1434061581417452624
 GameObject:
@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 8457205940502549073}
   - component: {fileID: 487053691231536860}
   - component: {fileID: 7602812129092776674}
-  - component: {fileID: 912921677659635394}
   m_Layer: 0
   m_Name: Ligthed
   m_TagString: Untagged
@@ -160,19 +159,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &912921677659635394
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1434061581417452624}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7944064208906382474
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +170,6 @@ GameObject:
   - component: {fileID: 8063930909125940289}
   - component: {fileID: 7672967131749833997}
   - component: {fileID: 3224762509300546863}
-  - component: {fileID: 2252924451006841354}
   m_Layer: 0
   m_Name: Over
   m_TagString: Untagged
@@ -255,19 +240,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2252924451006841354
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7944064208906382474}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7350567680482806878
 PrefabInstance:
   m_ObjectHideFlags: 0
