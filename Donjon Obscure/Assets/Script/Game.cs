@@ -64,7 +64,7 @@ public class Game : MonoBehaviour
         {
             if(character.IsAnimationOver())
             {
-                EnemyTurn(tileCliked);
+                //EnemyTurn(tileCliked);
                 tileCliked = null;
             }
         }
@@ -127,6 +127,7 @@ public class Game : MonoBehaviour
         {
             if (enemy.CanAttack(character))
             {
+                //enemy.Attack(character);
                 enemy.Attack(character);
             }
             else
@@ -233,6 +234,7 @@ public class Game : MonoBehaviour
                     this.panelDie.SetActive(true);
                     break;
                 case Enemy enemy:
+                    //character.Attack(enemy);
                     character.Attack(enemy);
                     character.LookAtPosition(tile.Position);
                     if(enemy.IsDead())

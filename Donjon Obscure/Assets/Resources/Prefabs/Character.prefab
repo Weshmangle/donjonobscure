@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95462aeba688efe469516b3e8702ee34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationOver: 0
+  animationOver: 1
   healthPoint: 10
   healthPointMax: 10
   attackStrenght: 2
   smoothTime: 18
   position: {x: 0, y: 0}
+  reachedTargetPositionAccuracy: 0
+  state: 0
   mentalSanity: 15
   mentalSanityMax: 15
   armorPoint: 0

@@ -15,6 +15,15 @@ public enum Stat
     CurrentFuelInReserve,
     FuelInReserveMax,
 }
+
+public enum StateEntity
+{
+    IDLE,
+    ON_FORWARD_ATTAK,
+    ON_BACKWARD_ATTAK,
+    ON_MOVING
+}
+
 public abstract class Entity : ElementGrid
 {
     [SerializeField] protected int healthPoint;
@@ -24,6 +33,9 @@ public abstract class Entity : ElementGrid
     [SerializeField] protected Vector2Int position;
     [SerializeField] protected float reachedTargetPositionAccuracy;
     protected Vector3 velocity = Vector3.zero;
+    public StateEntity state;
+    protected Vector2Int positionOrigin;
+    protected Entity target;
     
     public Vector2Int Position
     {
@@ -36,8 +48,20 @@ public abstract class Entity : ElementGrid
     }
     void Update()
     {
-        
-        // if (transform.position == new Vector3(position.x, 0, position.y))
+        switch(state)
+        {
+            case StateEntity.ON_MOVING:
+                PerformMove();
+                break;
+            case StateEntity.ON_FORWARD_ATTAK:
+            case StateEntity.ON_BACKWARD_ATTAK:
+               //PerformAttak();
+                break;
+        }
+    }
+
+    private void PerformMove()
+    {
         Vector3 direction = new Vector3(position.x, 0, position.y) - this.transform.position;
         if(direction.magnitude > reachedTargetPositionAccuracy)
         {
@@ -46,6 +70,7 @@ public abstract class Entity : ElementGrid
         else
         {
             animationOver = true;
+            state = StateEntity.IDLE;
         }
     }
 
@@ -54,7 +79,9 @@ public abstract class Entity : ElementGrid
         var pos = position - tilePosition;
         transform.rotation = Quaternion.LookRotation(new Vector3(-pos.x, 0, -pos.y));
         Position = tilePosition;
+        state = StateEntity.ON_MOVING;
     }
+
     public virtual void LookAtPosition(Vector2Int tilePosition)
     {
         this.transform.LookAt(new Vector3(tilePosition.x, 0, tilePosition.y) );
@@ -69,7 +96,34 @@ public abstract class Entity : ElementGrid
     
     public void Attack(Entity target)
     {
+        positionOrigin = Position;
+        Position = target.Position;
         target.TakeDamage(attackStrenght);
+        /*this.target = target;
+        state = StateEntity.ON_FORWARD_ATTAK;*/
+    }
+
+    private void PerformAttak()
+    {
+        Vector3 direction = new Vector3(position.x, 0, position.y) - this.transform.position;
+        
+        if(direction.magnitude > reachedTargetPositionAccuracy)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(position.x, 0, position.y), ref velocity, smoothTime);
+        }
+        else
+        {
+            if(state == StateEntity.ON_FORWARD_ATTAK)
+            {
+                Position = positionOrigin;
+                target.TakeDamage(attackStrenght);
+                state = StateEntity.ON_BACKWARD_ATTAK;
+            }
+            else if(state == StateEntity.ON_BACKWARD_ATTAK)
+            {
+                animationOver = true;
+            }
+        }
     }
 
     public virtual void TakeDamage(int damage)
