@@ -866,6 +866,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7507445082658372591, guid: 2a1b15364ca93ff40aecc4be2c5abc27, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7e73ccfcdd48ec44a8f31bdf8e5c5a0a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a1b15364ca93ff40aecc4be2c5abc27, type: 3}
 --- !u!1001 &779374422
@@ -1045,6 +1049,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster
       objectReference: {fileID: 0}
+    - target: {fileID: 4226144649672991911, guid: 39fa44063b1f18543b89477a8cde1400, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0b67e24f834b3d14b8695885a9de56ea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39fa44063b1f18543b89477a8cde1400, type: 3}
 --- !u!1001 &1114313149
