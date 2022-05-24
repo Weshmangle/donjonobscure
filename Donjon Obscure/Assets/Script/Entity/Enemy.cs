@@ -10,8 +10,11 @@ public class Enemy : Entity
     }
     protected override void Die()
     {
-        Game.Instance.Enemies.Remove(this);
-        Destroy(this.gameObject);
+        if(this)
+        {
+            Game.Instance.Enemies.Remove(this);
+            Destroy(this.gameObject);
+        }
     }
 
     private void FixedUpdate()
@@ -24,7 +27,7 @@ public class Enemy : Entity
     {
         var path = Pathfinding.GetPathFromPosition(position, playerTilePosition, Game.Instance.grid);
 
-        if (path != null)
+        if (path != null && path.Count > 1)
         {
             base.Move(path[1]);
             LookAtPlayer(playerTilePosition);
