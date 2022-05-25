@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Gate : ElementGrid
 {
+    public GameObject doorExit;
+    public GameObject doorEntrance;
     public bool isExitGate = false;
     public bool IsExitGate
     {
@@ -14,6 +16,14 @@ public class Gate : ElementGrid
     public void GameSetEnd()
     {
         this.GetComponent<AudioSource>().PlayOneShot(this.GetComponent<AudioSource>().clip);
+    }
+    private void Update()
+    {
+        if(doorEntrance && doorExit)
+        {
+            doorEntrance.SetActive(!isExitGate);
+            doorExit.SetActive(isExitGate);
+        }    
     }
     public void LoadNextRoom()
     {

@@ -11,6 +11,7 @@ public class ElementsGenerator : MonoBehaviour
     Tile[,] tiles;
 
     Wall prefabWall;
+    Wall prefabWallCorner;
     Hole prefabHole;
     Chest prefabChest;
     Obstacle prefabObstacle;
@@ -102,33 +103,38 @@ public class ElementsGenerator : MonoBehaviour
                         break;
                     case "Wall":
                     {
-                        GenerateWall(elementData, elementPosition);
 
                         if(corners.Contains(new Vector2(i, j)))
                         {    
-                            ElementGrid elementGrid = GenerateWall(elementData, elementPosition);
+                            ElementGrid elementGrid = GenerateWallCorner(elementPosition);
                             Vector3 eulerAngles = elementGrid.transform.rotation.eulerAngles;
                             var angle = 23;
                             
                             if(new Vector2(i,j) == corners[0])
                             {
                                 angle = 0;
+                                GenerateWall(elementData, elementPosition);
                             }
                             else if(new Vector2(i,j) == corners[1])
                             {
-                                angle = 0;
+                                angle = -90;
                             }
                             else if(new Vector2(i,j) == corners[2])
                             {
-                                angle = 0;
+                                angle = 90;
                             }
                             else if(new Vector2(i,j) == corners[3])
                             {
-                                angle = -90;
+                                angle = 180;
+                                GenerateWall(elementData, elementPosition);
                             }
                             
                             eulerAngles.y = angle;
                             elementGrid.transform.rotation = Quaternion.Euler(eulerAngles);
+                        }
+                        else
+                        {
+                            GenerateWall(elementData, elementPosition);
                         }
                         break;
                     }
@@ -188,6 +194,18 @@ public class ElementsGenerator : MonoBehaviour
         tiles[elementPosition.x, elementPosition.y].Content = wallExternElement;
         return wallExternElement;
     }
+
+    private ElementGrid GenerateWallCorner(Vector2Int elementPosition)
+    {
+        ElementGrid wallExternElement = InstantiateElementGrid((Resources.Load("Prefabs/WallCorner") as GameObject).GetComponent<Wall>(), tiles[elementPosition.x, elementPosition.y].Position, Orientation(ref elementPosition));
+        if (Orientation(ref elementPosition) == rotationBot || Orientation(ref elementPosition) == rotationLeft)
+        {
+            setAlphaWall(wallExternElement, 0);
+        }
+        tiles[elementPosition.x, elementPosition.y].Content = wallExternElement;
+        return wallExternElement;
+    }
+
     void GenerateGate(ElementData elementData, Vector2Int elementPosition, Tile currentTile)
     {
         Gate gate = InstantiateElementGrid(elementData.Type, tiles[elementPosition.x, elementPosition.y].Position, Orientation(ref elementPosition)) as Gate;
@@ -208,6 +226,11 @@ public class ElementsGenerator : MonoBehaviour
         else
         {
             Debug.LogError("ElementData is not a Gate" + elementData.Name);
+        }
+        if (gate.transform.rotation.eulerAngles.y == 0 || gate.transform.rotation.eulerAngles.y == 270) 
+        {
+            gate.doorEntrance.GetComponentInChildren<Renderer>().material = wallTransparentMat;
+            gate.doorExit.GetComponentInChildren<Renderer>().materials = new Material[]{wallTransparentMat};
         }
     }
     Vector2Int NextToGate(Vector2Int gatePosition)
@@ -236,7 +259,6 @@ public class ElementsGenerator : MonoBehaviour
     {
         Quaternion orientation = Quaternion.identity;
 
-
         if (position.x == 0)
         {
             orientation = rotationTop;
@@ -263,6 +285,7 @@ public class ElementsGenerator : MonoBehaviour
     {
         grid = _grid;
         prefabWall = (Resources.Load("Prefabs/Wall") as GameObject).GetComponent<Wall>();
+        prefabWallCorner = (Resources.Load("Prefabs/WallCorner") as GameObject).GetComponent<Wall>();
         prefabHole = (Resources.Load("Prefabs/Hole") as GameObject).GetComponent<Hole>();
         prefabChest = (Resources.Load("Prefabs/Chest") as GameObject).GetComponent<Chest>();
         prefabObstacle = (Resources.Load("Prefabs/Obstacle") as GameObject).GetComponent<Obstacle>();

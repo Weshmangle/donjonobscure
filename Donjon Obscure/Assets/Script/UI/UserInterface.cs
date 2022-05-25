@@ -7,10 +7,16 @@ using UnityEngine.UI;
 public class UserInterface : MonoBehaviour
 {
     [SerializeField] Image HealthBar, SanityBar, OilBar;
+    public Text textNameLevel;
     void Start()
     {
         Game.Instance.character.OnPlayerStatChange += PlayerStatChanged;
         Game.Instance.character.lantern.OnLanternOilInReserveChange += PlayerStatChanged;
+    }
+
+    private void Update()
+    {
+        textNameLevel.text = Game.Instance.grid.seed.name;   
     }
 
     private void PlayerStatChanged(float current, float maximum, Stat stat)

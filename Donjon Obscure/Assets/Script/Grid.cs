@@ -10,6 +10,7 @@ public class Grid : MonoBehaviour
     public Tile Entry;
     public Tile Exit;
     private int currentLevelSeed = 0;
+    public GridSeed seed;
 
     public Tile[] GetTiles()
     {
@@ -57,6 +58,7 @@ public class Grid : MonoBehaviour
         
         if(seed)
         {
+            this.seed = seed;
             GetComponent<ElementsGenerator>().GenerateElementFromSeed(tiles, seed, this);
             currentLevelSeed++;
         }

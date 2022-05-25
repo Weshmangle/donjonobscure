@@ -45,7 +45,7 @@ public class Tile : MonoBehaviour
         Over.GetComponent<Renderer>().enabled = false;
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         uEvent.Invoke(this);
     }
@@ -58,6 +58,23 @@ public class Tile : MonoBehaviour
     private void OnMouseOver()
     {
         Over.GetComponent<Renderer>().enabled = true;
+        
+        if(content is Enemy)
+        {
+            CursorManager.Instance.SetAttaktCursor();
+        }
+        else if(content is Chest || content is Gate || content is Hole || content is Chest)
+        {
+            CursorManager.Instance.SetInterractionCursor();
+        }
+        else if(!(content is Wall))
+        {
+            CursorManager.Instance.SetMovementCursor();
+        }
+        else
+        {
+            CursorManager.Instance.SetDefaultCursor();
+        }
     }
 
     void Update()
