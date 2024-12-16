@@ -4,6 +4,13 @@ Turn based 2D game, the player will be escape each room to going the next room. 
 
 **Features** : `Pathfinding` `Level Editor` `URP`
 
+## Run demo
+ 1. [Download the demo](https://github.com/Weshmangle/donjonobscure/releases/tag/2024_demo)
+ 2. Unzip the file downloaded
+ 3. Inside the folder unzipped, run the `Donjon Obscure.exe`
+ 4. Click on Start Game
+ 5. Have _fun_ (mdr)
+
 <img src="https://github.com/user-attachments/assets/1f6e73a2-59a2-4d0c-b49d-67d8ee743cdc" width = "100%"/>
 
 <img src="https://github.com/user-attachments/assets/3e33aa08-8a11-4dd9-a9af-0309d56e1789" width = "49%"/>
