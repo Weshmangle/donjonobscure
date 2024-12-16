@@ -5,7 +5,7 @@ Turn based 2D game, the player will be escape each room to going the next room. 
 **Features** : `Pathfinding` `Level Editor` `URP`
 
 ## Run demo
- 1. [Download the demo](https://github.com/Weshmangle/donjonobscure/releases/tag/2024_demo)
+ 1. Download the demo [from Github](https://github.com/Weshmangle/donjonobscure/releases/tag/2024_demo) or [Itch.io](https://the-wasmans.itch.io/donjon-obscure)
  2. Unzip the file downloaded
  3. Inside the folder unzipped, run the `Donjon Obscure.exe`
  4. Click on Start Game
